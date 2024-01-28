@@ -5,7 +5,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-
 import frc.robot.Constants;
 
 public class SliderIOSim implements SliderIO {
@@ -14,16 +13,19 @@ public class SliderIOSim implements SliderIO {
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
   private static final double sprocketDiameterMeter = Units.inchesToMeters(sprocketDiameterInch);
   private static final double simCarriageWeightKg = Constants.SliderSubsystem.simCarriageWeightKg;
-  private static final double sliderSoftLimitUpperMeters =  Units.inchesToMeters(Constants.SliderSubsystem.sliderSoftLimitUpperInch);
-  private static final double sliderSoftLimitLowerMeters =  Units.inchesToMeters(Constants.SliderSubsystem.sliderSoftLimitLowerInch);
-  private ElevatorSim sliderSim = new ElevatorSim(
-      DCMotor.getNEO(1),
-      gearRatio,
-      simCarriageWeightKg,
-      sprocketDiameterMeter,
-      sliderSoftLimitLowerMeters,
-      sliderSoftLimitUpperMeters,
-      false);
+  private static final double sliderSoftLimitUpperMeters =
+      Units.inchesToMeters(Constants.SliderSubsystem.sliderSoftLimitUpperInch);
+  private static final double sliderSoftLimitLowerMeters =
+      Units.inchesToMeters(Constants.SliderSubsystem.sliderSoftLimitLowerInch);
+  private ElevatorSim sliderSim =
+      new ElevatorSim(
+          DCMotor.getNEO(1),
+          gearRatio,
+          simCarriageWeightKg,
+          sprocketDiameterMeter,
+          sliderSoftLimitLowerMeters,
+          sliderSoftLimitUpperMeters,
+          false);
 
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
@@ -56,9 +58,7 @@ public class SliderIOSim implements SliderIO {
     positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
     pid.setSetpoint(positionMotorSetPointRot);
     // double pidout = pid.calculate(positionMotorShaftRot);
-    appliedVolts = MathUtil.clamp(
-        pid.calculate(positionMotorShaftRot) + ffVolts, -12.0,
-        12.0);
+    appliedVolts = MathUtil.clamp(pid.calculate(positionMotorShaftRot) + ffVolts, -12.0, 12.0);
 
     sliderSim.setInputVoltage(appliedVolts);
   }

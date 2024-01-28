@@ -1,16 +1,15 @@
 package frc.robot.subsystems.slider;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder; //or sparkmaxrelativeencoder?
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
-//import com.revrobotics.CANSparkMax.SoftLimitDirection;
+// import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
-
 
 public class SliderIOSparkMax implements SliderIO {
   private final CANSparkMax sliderMotor;
@@ -18,8 +17,10 @@ public class SliderIOSparkMax implements SliderIO {
   private final SparkMaxPIDController sliderPidController;
   private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
   private static final double sprocketDiameterInch = Constants.SliderSubsystem.sprocketDiameterInch;
-  //private static final double sliderSoftLimitUpper = Constants.SliderSubsystem.sliderSoftLimitUpperInch;
-  //private static final double sliderSoftLimitLower = Constants.SliderSubsystem.sliderSoftLimitLowerInch;
+  // private static final double sliderSoftLimitUpper =
+  // Constants.SliderSubsystem.sliderSoftLimitUpperInch;
+  // private static final double sliderSoftLimitLower =
+  // Constants.SliderSubsystem.sliderSoftLimitLowerInch;
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
   public double positionSliderSetPointInch = 0.0;
@@ -55,23 +56,25 @@ public class SliderIOSparkMax implements SliderIO {
 
   @Override
   public void setPosition(double positionSetInch, double ffVolts) {
-    if(positionSetInch < 0.5){
+    if (positionSetInch < 0.5) {
       ffVolts = 0.0;
     }
-    if(ffVolts< 0.1){
+    if (ffVolts < 0.1) {
       ffVolts = 0.0;
     }
     positionSliderSetPointInch = positionSetInch;
     positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
 
-    sliderPidController.setReference(positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
+    sliderPidController.setReference(
+        positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
+
   @Override
   public void updateState() {
     positionMotorShaftRot = sliderEncoder.getPosition();
     velocityMotorRPM = sliderEncoder.getVelocity();
-    positionSliderInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
-    velocitySliderInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
+    positionSliderInch = positionMotorShaftRot / gearRatio * sprocketCircumferenceInch;
+    velocitySliderInchPerSec = velocityMotorRPM / gearRatio * sprocketCircumferenceInch;
     appliedVolts = sliderMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = sliderMotor.getOutputCurrent();
   }
@@ -90,16 +93,18 @@ public class SliderIOSparkMax implements SliderIO {
     sliderMotor.enableVoltageCompensation(12.0);
     sliderMotor.setSmartCurrentLimit(Constants.SliderSubsystem.maxCurrentAmps);
 
-    //sliderMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (sliderSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
-    //sliderMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (sliderSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
+    // sliderMotor.setSoftLimit( SoftLimitDirection.kReverse, (float)
+    // (sliderSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
+    // sliderMotor.setSoftLimit( SoftLimitDirection.kForward, (float)
+    // (sliderSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
 
     sliderPidController.setP(kP);
     sliderPidController.setI(kI);
     sliderPidController.setD(kD);
-    //sliderPidController.setIZone(Constants.SliderSubsystem.kIz);
-    //sliderPidController.setFF(Constants.SliderSubsystem.kFF);
-    sliderPidController.setOutputRange(Constants.SliderSubsystem.kMinOutput,
-        Constants.SliderSubsystem.kMaxOutput);
+    // sliderPidController.setIZone(Constants.SliderSubsystem.kIz);
+    // sliderPidController.setFF(Constants.SliderSubsystem.kFF);
+    sliderPidController.setOutputRange(
+        Constants.SliderSubsystem.kMinOutput, Constants.SliderSubsystem.kMaxOutput);
 
     sliderPidController.setSmartMotionMaxVelocity(
         Constants.SliderSubsystem.maxAngularVelocityRPM, smartMotionSlot);
@@ -107,13 +112,9 @@ public class SliderIOSparkMax implements SliderIO {
         Constants.SliderSubsystem.minOutputVelocityRPM, smartMotionSlot);
     sliderPidController.setSmartMotionMaxAccel(
         Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    //sliderPidController.setSmartMotionAllowedClosedLoopError(
-    //Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
+    // sliderPidController.setSmartMotionAllowedClosedLoopError(
+    // Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
     sliderMotor.setIdleMode(IdleMode.kCoast);
     sliderMotor.burnFlash();
   }
 }
-
-
-
- 

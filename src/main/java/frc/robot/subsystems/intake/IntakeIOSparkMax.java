@@ -1,15 +1,15 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-//import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+// import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
 public class IntakeIOSparkMax implements IntakeIO {
@@ -48,22 +48,20 @@ public class IntakeIOSparkMax implements IntakeIO {
   public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
     motorVelocitySetPointRPM = motorVelocitySetRPM;
     intakePidController.setReference(
-        motorVelocitySetPointRPM,
-        ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
+        motorVelocitySetPointRPM, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   public void setVoltage(double voltageSet, double ffVolts) {
     motorVoltageSetPoint = voltageSet;
     intakePidController.setReference(
-        motorVoltageSetPoint,
-        ControlType.kVoltage, 0, ffVolts, ArbFFUnits.kVoltage);
+        motorVoltageSetPoint, ControlType.kVoltage, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   @Override
   public void stop() {
     intakeMotor.stopMotor();
   }
-  
+
   @Override
   public void setLEDsPurple() {
     lightStrips.set(0.91);
@@ -91,8 +89,8 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakePidController.setD(kD);
     intakePidController.setIZone(Constants.IntakeSubsystem.kIz);
     intakePidController.setFF(Constants.IntakeSubsystem.kFF);
-    intakePidController.setOutputRange(Constants.IntakeSubsystem.kMinOutput,
-        Constants.IntakeSubsystem.kMaxOutput);
+    intakePidController.setOutputRange(
+        Constants.IntakeSubsystem.kMinOutput, Constants.IntakeSubsystem.kMaxOutput);
     intakeMotor.setIdleMode(IdleMode.kCoast);
     intakeMotor.burnFlash();
   }

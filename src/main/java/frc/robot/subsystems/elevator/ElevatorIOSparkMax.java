@@ -1,24 +1,26 @@
 package frc.robot.subsystems.elevator;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder; //or sparkmaxrelativeencoder?
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
-//import com.revrobotics.CANSparkMax.SoftLimitDirection;
+// import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
-
 
 public class ElevatorIOSparkMax implements ElevatorIO {
   private final CANSparkMax elevatorMotor;
   private final RelativeEncoder elevatorEncoder;
   private final SparkMaxPIDController elevatorPidController;
   private static final double gearRatio = Constants.ElevatorSubsystem.gearRatio;
-  private static final double sprocketDiameterInch = Constants.ElevatorSubsystem.sprocketDiameterInch;
-  //private static final double elevatorSoftLimitUpper = Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch;
-  //private static final double elevatorSoftLimitLower = Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch;
+  private static final double sprocketDiameterInch =
+      Constants.ElevatorSubsystem.sprocketDiameterInch;
+  // private static final double elevatorSoftLimitUpper =
+  // Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch;
+  // private static final double elevatorSoftLimitLower =
+  // Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch;
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
   public double positionElevatorSetPointInch = 0.0;
@@ -54,23 +56,25 @@ public class ElevatorIOSparkMax implements ElevatorIO {
 
   @Override
   public void setPosition(double positionSetInch, double ffVolts) {
-    if(positionSetInch < 0.5){
+    if (positionSetInch < 0.5) {
       ffVolts = 0.0;
     }
-    if(ffVolts< 0.1){
+    if (ffVolts < 0.1) {
       ffVolts = 0.0;
     }
     positionElevatorSetPointInch = positionSetInch;
     positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
 
-    elevatorPidController.setReference(positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
+    elevatorPidController.setReference(
+        positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
+
   @Override
   public void updateState() {
     positionMotorShaftRot = elevatorEncoder.getPosition();
     velocityMotorRPM = elevatorEncoder.getVelocity();
-    positionElevatorInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
-    velocityElevatorInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
+    positionElevatorInch = positionMotorShaftRot / gearRatio * sprocketCircumferenceInch;
+    velocityElevatorInchPerSec = velocityMotorRPM / gearRatio * sprocketCircumferenceInch;
     appliedVolts = elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = elevatorMotor.getOutputCurrent();
   }
@@ -89,16 +93,18 @@ public class ElevatorIOSparkMax implements ElevatorIO {
     elevatorMotor.enableVoltageCompensation(12.0);
     elevatorMotor.setSmartCurrentLimit(Constants.ElevatorSubsystem.maxCurrentAmps);
 
-    //elevatorMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (elevatorSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
-    //elevatorMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (elevatorSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
+    // elevatorMotor.setSoftLimit( SoftLimitDirection.kReverse, (float)
+    // (elevatorSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
+    // elevatorMotor.setSoftLimit( SoftLimitDirection.kForward, (float)
+    // (elevatorSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
 
     elevatorPidController.setP(kP);
     elevatorPidController.setI(kI);
     elevatorPidController.setD(kD);
-    //elevatorPidController.setIZone(Constants.ElevatorSubsystem.kIz);
-    //elevatorPidController.setFF(Constants.ElevatorSubsystem.kFF);
-    elevatorPidController.setOutputRange(Constants.ElevatorSubsystem.kMinOutput,
-        Constants.ElevatorSubsystem.kMaxOutput);
+    // elevatorPidController.setIZone(Constants.ElevatorSubsystem.kIz);
+    // elevatorPidController.setFF(Constants.ElevatorSubsystem.kFF);
+    elevatorPidController.setOutputRange(
+        Constants.ElevatorSubsystem.kMinOutput, Constants.ElevatorSubsystem.kMaxOutput);
 
     elevatorPidController.setSmartMotionMaxVelocity(
         Constants.ElevatorSubsystem.maxAngularVelocityRPM, smartMotionSlot);
@@ -106,13 +112,9 @@ public class ElevatorIOSparkMax implements ElevatorIO {
         Constants.ElevatorSubsystem.minOutputVelocityRPM, smartMotionSlot);
     elevatorPidController.setSmartMotionMaxAccel(
         Constants.ElevatorSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    //elevatorPidController.setSmartMotionAllowedClosedLoopError(
-    //Constants.ElevatorSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
+    // elevatorPidController.setSmartMotionAllowedClosedLoopError(
+    // Constants.ElevatorSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
 
     elevatorMotor.burnFlash();
   }
 }
-
-
-
- 

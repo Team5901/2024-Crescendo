@@ -1,11 +1,10 @@
 package frc.robot.subsystems.intake;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-//import edu.wpi.first.math.util.Units;
+// import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Intake extends SubsystemBase {
   private final IntakeIO io;
@@ -25,25 +24,36 @@ public class Intake extends SubsystemBase {
     // separate robot with different tuning)
     switch (Constants.getMode()) {
       case REAL:
-        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
-        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+        ffModel =
+            new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(
+            Constants.IntakeSubsystem.kP,
+            Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
-            io.setLEDsYellow();
-            ConeMode = true;
+        io.setLEDsYellow();
+        ConeMode = true;
         break;
       case REPLAY:
-        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
-        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+        ffModel =
+            new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(
+            Constants.IntakeSubsystem.kP,
+            Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
         break;
       case SIM:
         ffModel = new SimpleMotorFeedforward(0.0, 0.00);
-        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+        io.configurePID(
+            Constants.IntakeSubsystem.kP,
+            Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
         break;
       default:
-        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
-        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+        ffModel =
+            new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(
+            Constants.IntakeSubsystem.kP,
+            Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
         break;
     }
@@ -62,44 +72,41 @@ public class Intake extends SubsystemBase {
   public void runVelocity(double wheelVelocitySetRPM) {
     wheelVelocitySetPointRPM = wheelVelocitySetRPM;
 
-    io.setVelocity(wheelVelocitySetPointRPM*gearRatio, 0.0); //ffModel.calculate(wheelVelocitySetRPM*gearRatio)
+    io.setVelocity(
+        wheelVelocitySetPointRPM * gearRatio,
+        0.0); // ffModel.calculate(wheelVelocitySetRPM*gearRatio)
 
     // Log intake setpoint
     Logger.getInstance().recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
   }
 
   public void intakeIn() {
-    if(ConeMode){
-      //runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
-      io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);  
+    if (ConeMode) {
+      // runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);
+    } else {
+      // runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeInCubeVoltage, 0.0);
     }
-    else{
-      //runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
-      io.setVoltage(Constants.IntakeSubsystem.intakeInCubeVoltage, 0.0);  
-    }
-
   }
 
-  public void intakeOut() {  
-    if(ConeMode){
-      io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);  
-    }
-    else{
-      io.setVoltage(Constants.IntakeSubsystem.intakeOutCubeVoltage, 0.0);  
+  public void intakeOut() {
+    if (ConeMode) {
+      io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);
+    } else {
+      io.setVoltage(Constants.IntakeSubsystem.intakeOutCubeVoltage, 0.0);
     }
   }
 
   /** Stops the intake. */
   public void holdCurrent() {
-    if(ConeMode){
-      io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);  
+    if (ConeMode) {
+      io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);
       io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
-    }
-    else{
-      io.setVoltage(Constants.IntakeSubsystem.holdCubeVoltage, 0.0); 
+    } else {
+      io.setVoltage(Constants.IntakeSubsystem.holdCubeVoltage, 0.0);
       io.setCurrentLimit(Constants.IntakeSubsystem.holdCubeCurrentAmps);
     }
-
   }
 
   /** Stops the intake. */
@@ -109,24 +116,25 @@ public class Intake extends SubsystemBase {
 
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {
-    return inputs.motorVelocityRPM/gearRatio;
+    return inputs.motorVelocityRPM / gearRatio;
   }
 
   public void flipIntakeMode() {
     ConeMode = !ConeMode;
-    if(ConeMode){
+    if (ConeMode) {
       io.setLEDsYellow();
-    }
-    else{
+    } else {
       io.setLEDsPurple();
     }
   }
-  public void setIntakeModeCone(){
+
+  public void setIntakeModeCone() {
     ConeMode = true;
     io.setLEDsYellow();
   }
+
   public void setIntakeModeCube() {
     ConeMode = false;
     io.setLEDsPurple();
-  } 
+  }
 }

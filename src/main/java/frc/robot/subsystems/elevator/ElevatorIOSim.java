@@ -5,27 +5,28 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-
 import frc.robot.Constants;
 
 public class ElevatorIOSim implements ElevatorIO {
   private static final double gearRatio = Constants.ElevatorSubsystem.gearRatio;
-  private static final double sprocketDiameterInch = Constants.ElevatorSubsystem.sprocketDiameterInch;
+  private static final double sprocketDiameterInch =
+      Constants.ElevatorSubsystem.sprocketDiameterInch;
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
   private static final double sprocketDiameterMeter = Units.inchesToMeters(sprocketDiameterInch);
   private static final double simCarriageWeightKg = Constants.ElevatorSubsystem.simCarriageWeightKg;
-  private static final double elevatorSoftLimitUpperMeters = Units
-      .inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch);
-  private static final double elevatorSoftLimitLowerMeters = Units
-      .inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch);
-  private ElevatorSim elevatorSim = new ElevatorSim(
-      DCMotor.getNEO(1),
-      gearRatio,
-      simCarriageWeightKg,
-      sprocketDiameterMeter,
-      elevatorSoftLimitLowerMeters,
-      elevatorSoftLimitUpperMeters,
-      true);
+  private static final double elevatorSoftLimitUpperMeters =
+      Units.inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch);
+  private static final double elevatorSoftLimitLowerMeters =
+      Units.inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch);
+  private ElevatorSim elevatorSim =
+      new ElevatorSim(
+          DCMotor.getNEO(1),
+          gearRatio,
+          simCarriageWeightKg,
+          sprocketDiameterMeter,
+          elevatorSoftLimitLowerMeters,
+          elevatorSoftLimitUpperMeters,
+          true);
 
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
@@ -58,9 +59,7 @@ public class ElevatorIOSim implements ElevatorIO {
     positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
     pid.setSetpoint(positionMotorSetPointRot);
     // double pidout = pid.calculate(positionMotorShaftRot);
-    appliedVolts = MathUtil.clamp(
-        pid.calculate(positionMotorShaftRot) + ffVolts, -12.0,
-        12.0);
+    appliedVolts = MathUtil.clamp(pid.calculate(positionMotorShaftRot) + ffVolts, -12.0, 12.0);
 
     elevatorSim.setInputVoltage(appliedVolts);
   }
