@@ -13,9 +13,9 @@ public class LimelightIONetwork implements LimelightIO {
   }
 
   public void updateInputs(LimelightIOInputs inputs) {
-    if (DriverStation.getAlliance() == Alliance.Red) {
+    if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red) {
       inputs.botPoseWPI = table.getEntry("botpose_wpired").getDoubleArray(new double[7]);
-    } else if (DriverStation.getAlliance() == Alliance.Blue) {
+    } else if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) {
       inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
     }
     inputs.latency = inputs.botPoseWPI[6];
