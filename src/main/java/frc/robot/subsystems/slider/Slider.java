@@ -40,18 +40,18 @@ public class Slider extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.getInstance().processInputs("slider", inputs);
+    Logger.processInputs("slider", inputs);
 
     // Log slider speed in RPM
     // Logger.getInstance().recordOutput("SliderSpeedRPM",
     // getVelocityRPMFromRadsPerSec());
-    Logger.getInstance().recordOutput("SliderSetpointInch", positionSetPointInch);
+    Logger.recordOutput("SliderSetpointInch", positionSetPointInch);
 
     var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
     m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
 
     io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
-    Logger.getInstance().recordOutput("SliderPosErrorInch", getError());
+    Logger.recordOutput("SliderPosErrorInch", getError());
   }
 
   public void setPositionSetPoint(double positionSetInch) {

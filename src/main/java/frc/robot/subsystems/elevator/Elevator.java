@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.getInstance().processInputs("elevator", inputs);
+    Logger.processInputs("elevator", inputs);
 
     // Log elevator speed in RPM
     // Logger.getInstance().recordOutput("ElevatorSpeedRPM",
@@ -58,8 +58,8 @@ public class Elevator extends SubsystemBase {
     m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
 
     io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
-    Logger.getInstance().recordOutput("ElevatorPosErrorInch", getError());
-    Logger.getInstance().recordOutput("elevatorFF", ffModel.calculate(m_setpoint.velocity));
+    Logger.recordOutput("ElevatorPosErrorInch", getError());
+    Logger.recordOutput("elevatorFF", ffModel.calculate(m_setpoint.velocity));
   }
 
   public void setPositionSetPoint(double positionInch) {
