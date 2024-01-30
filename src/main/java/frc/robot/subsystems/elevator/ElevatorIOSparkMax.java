@@ -3,17 +3,17 @@ package frc.robot.subsystems.elevator;
 import com.revrobotics.CANSparkBase.ControlType;
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
 public class ElevatorIOSparkMax implements ElevatorIO {
   private final CANSparkMax elevatorMotor;
   private final RelativeEncoder elevatorEncoder;
-  private final SparkMaxPIDController elevatorPidController;
+  private final SparkPIDController elevatorPidController;
   private static final double gearRatio = Constants.ElevatorSubsystem.gearRatio;
   private static final double sprocketDiameterInch =
       Constants.ElevatorSubsystem.sprocketDiameterInch;

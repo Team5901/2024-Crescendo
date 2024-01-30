@@ -4,17 +4,17 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
 public class SliderIOSparkMax implements SliderIO {
   private final CANSparkMax sliderMotor;
   private final RelativeEncoder sliderEncoder;
-  private final SparkMaxPIDController sliderPidController;
+  private final SparkPIDController sliderPidController;
   private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
   private static final double sprocketDiameterInch = Constants.SliderSubsystem.sprocketDiameterInch;
   // private static final double sliderSoftLimitUpper =
