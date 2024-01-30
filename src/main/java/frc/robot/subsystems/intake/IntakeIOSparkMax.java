@@ -2,10 +2,11 @@ package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-
 import com.revrobotics.RelativeEncoder;
-
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 // import edu.wpi.first.math.util.Units;
@@ -17,7 +18,7 @@ public class IntakeIOSparkMax implements IntakeIO {
   // private final CANSparkMax follower;
   private final RelativeEncoder intakeEncoder;
 
-  private final SparkMaxPIDController intakePidController;
+  private final SparkPIDController intakePidController;
   private final Spark lightStrips = new Spark(3);
   private double motorVelocitySetPointRPM = 0.0;
 
