@@ -26,7 +26,8 @@ public class ElevatorIOSim implements ElevatorIO {
           sprocketDiameterMeter,
           elevatorSoftLimitLowerMeters,
           elevatorSoftLimitUpperMeters,
-          true);
+          true,
+          0);
 
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 

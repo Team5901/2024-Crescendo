@@ -20,11 +20,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.lib.util.COTSFalconSwerveConstants;
-import frc.lib.util.SwerveModuleConstants2;
-
 import frc.lib.util.Alert;
 import frc.lib.util.Alert.AlertType;
+import frc.lib.util.COTSFalconSwerveConstants;
+import frc.lib.util.SwerveModuleConstants2;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -256,75 +255,77 @@ public final class Constants {
 
     public static final double intakeInConeVoltage = -7.0;
     public static final double intakeOutConeVoltage = 5.0;
-
   }
-  private static final Alert invalidRobotAlert = new Alert(
-            "Invalid robot selected, using competition robot as default.",
-            AlertType.ERROR);
+
+  private static final Alert invalidRobotAlert =
+      new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR);
+
   public static RobotType getRobot() {
     if (RobotBase.isReal()) {
-        if (robot == RobotType.SIM) { // Invalid robot selected
-            invalidRobotAlert.set(true);
-            return RobotType.REAL;
-        } else {
-            return robot;
-        }
-    } else {
+      if (robot == RobotType.SIM) { // Invalid robot selected
+        invalidRobotAlert.set(true);
+        return RobotType.REAL;
+      } else {
         return robot;
+      }
+    } else {
+      return robot;
     }
-}
-  public static Mode getMode() {
-        switch (getRobot()) {
-            case REAL:
-                return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
-
-            case SIM:
-                return Mode.SIM;
-            default:
-                return Mode.REAL;
-        }
-    }
-    // Slider Motor
-    public static final class SliderSubsystem {
-      public static final int deviceID = 14;
-      public static final int sensorResolution = 2048;
-      public static final boolean isInverted = false;
-      // FeedForward Control
-      public static final double ks = 0.0;
-      public static final double kv = 0.00;
-      public static final double kg = 0.00;
-
-      public static final double gearRatio = 4.0 * 30.0 / 12.0;
-      public static final double sprocketDiameterInch = 1.29;
-      public static final double kP = 0.06;
-      public static final double kI = 0.00;
-      public static final double kD = 0.0;
-      public static final double kIz = 0.0;
-      public static final double kFF = 0.0;
-      public static final double kMaxOutput = 1.0;
-      public static final double kMinOutput = -1.0;
-      public static final int kTimeoutMs = 30;
-
-      public static final int maxCurrentAmps = 30;
-
-      public static final double maxAngularVelocityRPM = 1200.0;
-      public static final double maxAngularAccRPMPerSec = 1500.0;
-      public static final double minOutputVelocityRPM = 20.0; // requests below this no voltage output
-      public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
-      public static final double autoPositionErrorInch = 2.0;
-
-      public static final double maxLinearVelocityInchPerSec = 60;
-      public static final double maxLinearAccelerationInchPerSec = 70;
-      // Inches
-      public static final double sliderSoftLimitLowerInch = 0.0;
-      public static final double sliderIn = 0.0;
-      public static final double sliderOut = 14.6;
-      public static final double sliderSoftLimitUpperInch = 15.0;
-
-      public static final double simCarriageWeightKg = 4.0; // ~20 lbs
-
   }
+
+  public static Mode getMode() {
+    switch (getRobot()) {
+      case REAL:
+        return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+
+      case SIM:
+        return Mode.SIM;
+      default:
+        return Mode.REAL;
+    }
+  }
+  // Slider Motor
+  public static final class SliderSubsystem {
+    public static final int deviceID = 14;
+    public static final int sensorResolution = 2048;
+    public static final boolean isInverted = false;
+    // FeedForward Control
+    public static final double ks = 0.0;
+    public static final double kv = 0.00;
+    public static final double kg = 0.00;
+
+    public static final double gearRatio = 4.0 * 30.0 / 12.0;
+    public static final double sprocketDiameterInch = 1.29;
+    public static final double kP = 0.06;
+    public static final double kI = 0.00;
+    public static final double kD = 0.0;
+    public static final double kIz = 0.0;
+    public static final double kFF = 0.0;
+    public static final double kMaxOutput = 1.0;
+    public static final double kMinOutput = -1.0;
+    public static final int kTimeoutMs = 30;
+
+    public static final int maxCurrentAmps = 30;
+
+    public static final double maxAngularVelocityRPM = 1200.0;
+    public static final double maxAngularAccRPMPerSec = 1500.0;
+    public static final double minOutputVelocityRPM = 20.0; // requests below this no voltage output
+    public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
+    public static final double autoPositionErrorInch = 2.0;
+
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 70;
+    // Inches
+    public static final double sliderSoftLimitLowerInch = 0.0;
+    public static final double sliderIn = 0.0;
+    public static final double sliderOut = 14.6;
+    public static final double sliderSoftLimitUpperInch = 15.0;
+
+    public static final double simCarriageWeightKg = 4.0; // ~20 lbs
+  }
+
   public static enum RobotType {
-    REAL, SIM
-}
+    REAL,
+    SIM
+  }
 }

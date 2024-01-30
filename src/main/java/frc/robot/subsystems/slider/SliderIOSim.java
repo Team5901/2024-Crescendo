@@ -25,7 +25,8 @@ public class SliderIOSim implements SliderIO {
           sprocketDiameterMeter,
           sliderSoftLimitLowerMeters,
           sliderSoftLimitUpperMeters,
-          false);
+          false,
+          0);
 
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 

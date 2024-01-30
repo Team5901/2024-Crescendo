@@ -1,8 +1,8 @@
 package frc.robot.subsystems.elevator;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkBase.ControlType;
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
 import com.revrobotics.SparkMaxPIDController;

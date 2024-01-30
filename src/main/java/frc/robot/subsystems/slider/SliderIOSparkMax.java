@@ -1,9 +1,9 @@
 package frc.robot.subsystems.slider;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder; // or sparkmaxrelativeencoder?
 import com.revrobotics.SparkMaxPIDController;
