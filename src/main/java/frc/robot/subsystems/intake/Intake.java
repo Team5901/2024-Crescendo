@@ -29,7 +29,8 @@ public class Intake extends SubsystemBase {
             Constants.IntakeSubsystem.kP,
             Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
-        io.setLEDsYellow();
+        // UPDATE: Update for 2024, determine is setting LEDs is needed here
+        // io.setLEDsYellow();
         break;
       case REPLAY:
         ffModel =

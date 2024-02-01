@@ -37,6 +37,7 @@ public final class Constants {
   public static final Mode currentMode = Mode.REAL;
   public static final double simLoopPeriodSecs = 0.02;
   private static final RobotType robot = RobotType.SIM;
+  public static final boolean chassisOnly = false;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -233,6 +234,7 @@ public final class Constants {
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
+    // UPDATE: Update value for 2024 robot
     public static final double gearRatio = 4.0 * 2.0;
 
     public static final int maxCurrentAmps = 25;
