@@ -10,7 +10,6 @@ public class Intake extends SubsystemBase {
   private final IntakeIO io;
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
   private final SimpleMotorFeedforward ffModel;
-  private boolean ConeMode;
   private double wheelVelocitySetPointRPM;
   public double wheelVelocityRPM = 0.0;
   public double motorVelocityRPM = 0.0;
@@ -31,7 +30,6 @@ public class Intake extends SubsystemBase {
             Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
         io.setLEDsYellow();
-        ConeMode = true;
         break;
       case REPLAY:
         ffModel =
@@ -62,10 +60,10 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.getInstance().processInputs("Intake", inputs);
+    Logger.processInputs("Intake", inputs);
 
     // Log intake speed in RPM
-    Logger.getInstance().recordOutput("IntakeSpeedRPM", getVelocityRPM());
+    Logger.recordOutput("IntakeSpeedRPM", getVelocityRPM());
   }
 
   /** Run closed loop at the specified velocity. */
@@ -77,36 +75,25 @@ public class Intake extends SubsystemBase {
         0.0); // ffModel.calculate(wheelVelocitySetRPM*gearRatio)
 
     // Log intake setpoint
-    Logger.getInstance().recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
+    Logger.recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
   }
 
   public void intakeIn() {
-    if (ConeMode) {
-      // runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
-      io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);
-    } else {
-      // runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
-      io.setVoltage(Constants.IntakeSubsystem.intakeInCubeVoltage, 0.0);
-    }
+    // UPDATE: Update for 2024, change name for constant intakeInConeVoltage
+    // runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+    io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);
   }
 
   public void intakeOut() {
-    if (ConeMode) {
-      io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);
-    } else {
-      io.setVoltage(Constants.IntakeSubsystem.intakeOutCubeVoltage, 0.0);
-    }
+    // UPDATE: Update for 2024, change name for constant intakeOutConeVoltage
+    io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);
   }
 
   /** Stops the intake. */
   public void holdCurrent() {
-    if (ConeMode) {
-      io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);
-      io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
-    } else {
-      io.setVoltage(Constants.IntakeSubsystem.holdCubeVoltage, 0.0);
-      io.setCurrentLimit(Constants.IntakeSubsystem.holdCubeCurrentAmps);
-    }
+    // UPDATE: Update for 2024, change name for constant holdConeVoltage and holdConeCurrentAmps
+    io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);
+    io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
   }
 
   /** Stops the intake. */
@@ -117,24 +104,5 @@ public class Intake extends SubsystemBase {
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {
     return inputs.motorVelocityRPM / gearRatio;
-  }
-
-  public void flipIntakeMode() {
-    ConeMode = !ConeMode;
-    if (ConeMode) {
-      io.setLEDsYellow();
-    } else {
-      io.setLEDsPurple();
-    }
-  }
-
-  public void setIntakeModeCone() {
-    ConeMode = true;
-    io.setLEDsYellow();
-  }
-
-  public void setIntakeModeCube() {
-    ConeMode = false;
-    io.setLEDsPurple();
   }
 }
