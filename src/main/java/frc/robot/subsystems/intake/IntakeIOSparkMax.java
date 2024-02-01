@@ -62,7 +62,8 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakeMotor.stopMotor();
   }
 
-  @Override
+  // UPDATE: Update for 2024, determine is setting LEDs is needed here
+  /*@Override
   public void setLEDsPurple() {
     lightStrips.set(0.91);
   }
@@ -70,7 +71,7 @@ public class IntakeIOSparkMax implements IntakeIO {
   @Override
   public void setLEDsYellow() {
     lightStrips.set(0.67);
-  }
+  }*/
 
   @Override
   public void setCurrentLimit(int amps) {

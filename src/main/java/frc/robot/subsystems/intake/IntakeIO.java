@@ -5,7 +5,6 @@ import org.littletonrobotics.junction.AutoLog;
 public interface IntakeIO {
   @AutoLog
   public static class IntakeIOInputs {
-    // public double positionRad = 0.0;
     public double wheelVelocityRPM = 0.0;
     public double motorVelocityRPM = 0.0;
     public double motorVoltageSetPoint = 0.0;
@@ -26,9 +25,9 @@ public interface IntakeIO {
 
   public default void setCurrentLimit(int amps) {}
 
-  public default void setLEDsPurple() {}
-
-  public default void setLEDsYellow() {}
+  // UPDATE: Update for 2024, determine if setting LEDs is needed here
+  // public default void setLEDsPurple() {}
+  // public default void setLEDsYellow() {}
 
   public default void configurePID(double kP, double kI, double kD) {}
 }
