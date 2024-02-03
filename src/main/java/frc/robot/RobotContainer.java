@@ -63,6 +63,8 @@ public class RobotContainer {
   private final Joystick driver_2 = new Joystick(1);
   private final JoystickButton intakeIn =
       new JoystickButton(driver_2, XboxController.Button.kRightBumper.value);
+  //UPDATE: Add buttons for Shoot and figure out how to combine intakeOut with it as well
+  //NOTE: Two separate buttons for shootAmp and shootSpeaker
   private final JoystickButton intakeOut =
       new JoystickButton(driver_2, XboxController.Button.kLeftBumper.value);
 
@@ -91,6 +93,7 @@ public class RobotContainer {
         // new ModuleIOTalonFX(2),
         // new ModuleIOTalonFX(3));
         // flywheel = new Flywheel(new FlywheelIOTalonFX());
+        //UPDATE: Add shoot here
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
         } else {
@@ -108,6 +111,7 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         flywheel = new Flywheel(new FlywheelIOSim());
+        //UPDATE: Add shoot here
         intake = new Intake(new IntakeIOSim());
         break;
 
@@ -121,6 +125,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         flywheel = new Flywheel(new FlywheelIO() {});
+        //UPDATE: Add shoot here
         intake = new Intake(new IntakeIO() {});
         break;
     }
@@ -177,6 +182,7 @@ public class RobotContainer {
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
 
     // Intake
+    //UPDATE: Add code for shoot and figure out how to implement it with intake
     intakeIn.whileTrue(
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
