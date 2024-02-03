@@ -61,7 +61,6 @@ public class RobotContainer {
 
   // Intake Buttons
   private final Joystick driver_2 = new Joystick(1);
-  // UPDATE: Update for 2024, decide if we want same button for intake in and out
   private final JoystickButton intakeIn =
       new JoystickButton(driver_2, XboxController.Button.kRightBumper.value);
   private final JoystickButton intakeOut =

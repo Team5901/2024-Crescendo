@@ -1,11 +1,12 @@
-package frc.robot.subsystems.intake;
+package frc.robot.subsystems.shoot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import frc.robot.subsystems.shoot.ShootIO.ShootIOInputs;
 
-public class IntakeIOSim implements IntakeIO {
+public class ShootIOSim implements ShootIO {
   private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.004);
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
   private boolean closedLoop = false;
@@ -16,7 +17,7 @@ public class IntakeIOSim implements IntakeIO {
   private double motorVoltageSetPoint = 0.0;
 
   @Override
-  public void updateInputs(IntakeIOInputs inputs) {
+  public void updateInputs(ShootIOInputs inputs) {
     if (closedLoop) {
       appliedVolts =
           MathUtil.clamp(
@@ -26,7 +27,6 @@ public class IntakeIOSim implements IntakeIO {
 
     flywheelSim.update(0.02);
 
-    // inputs.positionRad = 0.0;
     inputs.motorVelocityRPM = flywheelSim.getAngularVelocityRPM();
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = flywheelSim.getCurrentDrawAmps();

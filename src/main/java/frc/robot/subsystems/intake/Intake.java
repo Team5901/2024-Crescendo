@@ -1,7 +1,6 @@
 package frc.robot.subsystems.intake;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-// import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
@@ -81,7 +80,6 @@ public class Intake extends SubsystemBase {
 
   public void intakeIn() {
     // UPDATE: Update for 2024, change name for constant intakeInConeVoltage
-    // runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
     io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);
   }
 

@@ -219,6 +219,7 @@ public final class Constants {
   }
   // Intake motor
   public static final class IntakeSubsystem {
+    // UPDATE: Update deviceID
     public static final int deviceID = 12;
     public static final boolean isInverted = false;
 
@@ -257,6 +258,43 @@ public final class Constants {
 
     public static final double intakeInConeVoltage = -7.0;
     public static final double intakeOutConeVoltage = 5.0;
+  }
+
+  // Shoot motor
+  public static final class ShootSubsystem {
+    // UPDATE: Update deviceID
+    public static final int deviceID = 12;
+    public static final boolean isInverted = false;
+
+    // FeedForward Control
+    public static final double ks = 0.0;
+    public static final double kv = 0.000;
+    // Closed Loop Control
+    public static final double kP = 0.1;
+    public static final double kI = 0.00;
+    public static final double kD = 0.0;
+    public static final double kIz = 0;
+    public static final double kFF = 0;
+    public static final double kMaxOutput = 1;
+    public static final double kMinOutput = -1;
+
+    // UPDATE: Update value for 2024 robot
+    public static final double gearRatio = 4.0 * 2.0;
+
+    public static final int maxCurrentAmps = 25;
+    public static final int holdCurrentAmps = 10;
+    // Velocity control mode
+    // UPDATE: Update these values
+    public static final double shootAmpVelRPM = 50.0;
+
+    public static final double shootSpeakerVelRPM = -100.0;
+    // Voltage control mode
+    // UPDATE: Update these values
+    public static final double holdVoltage = 4.0;
+
+    public static final double shootAmpVoltage = 6.0;
+
+    public static final double shootSpeakerVoltage = -7.0;
   }
 
   private static final Alert invalidRobotAlert =

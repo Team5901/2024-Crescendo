@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Constants;
 
 public class IntakeIOSparkMax implements IntakeIO {
-  // private static final double gearRatio = Constants.IntakeSubsystem.gearRatio;
   private final CANSparkMax intakeMotor;
-  // private final CANSparkMax follower;
   private final RelativeEncoder intakeEncoder;
 
   private final SparkPIDController intakePidController;
@@ -30,14 +28,10 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakeMotor = new CANSparkMax(Constants.IntakeSubsystem.deviceID, MotorType.kBrushless);
     intakeEncoder = intakeMotor.getEncoder();
     intakePidController = intakeMotor.getPIDController();
-
-    // follower.burnFlash();
   }
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
-    // inputs.positionRad = Units.rotationsToRadians(intakeEncoder.getPosition() /
-    // gearRatio);
     inputs.motorVelocityRPM = intakeEncoder.getVelocity();
     inputs.appliedVolts = intakeMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     inputs.currentAmps = intakeMotor.getOutputCurrent();
