@@ -41,6 +41,10 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.intake.IntakeIOSparkMax;
+import frc.robot.subsystems.shoot.Shoot;
+import frc.robot.subsystems.shoot.ShootIO;
+import frc.robot.subsystems.shoot.ShootIOSim;
+import frc.robot.subsystems.shoot.ShootIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
@@ -55,7 +59,7 @@ public class RobotContainer {
   private final Drive drive;
   private final Flywheel flywheel;
   private final Intake intake;
-
+  private final Shoot shoot;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -93,11 +97,13 @@ public class RobotContainer {
         // new ModuleIOTalonFX(2),
         // new ModuleIOTalonFX(3));
         // flywheel = new Flywheel(new FlywheelIOTalonFX());
-        // UPDATE: Add shoot here
+
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
+          shoot = new Shoot(new ShootIO() {});
         } else {
           intake = new Intake(new IntakeIOSparkMax());
+          shoot = new Shoot(new ShootIOSparkMax());
         }
         break;
 
@@ -111,8 +117,9 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         flywheel = new Flywheel(new FlywheelIOSim());
-        // UPDATE: Add shoot here
+
         intake = new Intake(new IntakeIOSim());
+        shoot = new Shoot(new ShootIOSim() {});
         break;
 
       default:
@@ -125,8 +132,9 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         flywheel = new Flywheel(new FlywheelIO() {});
-        // UPDATE: Add shoot here
+
         intake = new Intake(new IntakeIO() {});
+        shoot = new Shoot(new ShootIO() {});
         break;
     }
 
