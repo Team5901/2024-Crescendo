@@ -68,16 +68,17 @@ public class Shoot extends SubsystemBase {
   }
 
   public void shootAmp() {
-    // UPDATE: Add code for shootAmp
+    runVelocity(Constants.ShootSubsystem.shootAmpVelRPM);
   }
 
   public void shootSpeaker() {
-    // UPDATE: Add code for shootSpeaker
+    runVelocity(Constants.ShootSubsystem.shootSpeakerVelRPM);
   }
 
   /** Holds the note. */
   public void holdCurrent() {
-    // UPDATE: Add code here
+    io.setVoltage(Constants.ShootSubsystem.holdVoltage, 0);
+    io.setCurrentLimit(Constants.ShootSubsystem.holdCurrentAmps);
   }
 
   /** Stops the shoot. */

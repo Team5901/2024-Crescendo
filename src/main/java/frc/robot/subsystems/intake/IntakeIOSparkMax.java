@@ -56,7 +56,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakeMotor.stopMotor();
   }
 
-  // UPDATE: Update for 2024, determine is setting LEDs is needed here
+  // NOTE: reference for leds
   /*@Override
   public void setLEDsPurple() {
     lightStrips.set(0.91);

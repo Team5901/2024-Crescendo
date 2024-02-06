@@ -24,9 +24,5 @@ public interface ShootIO {
 
   public default void setCurrentLimit(int amps) {}
 
-  // UPDATE: Update for 2024, determine if setting LEDs is needed here
-  // public default void setLEDsPurple() {}
-  // public default void setLEDsYellow() {}
-
   public default void configurePID(double kP, double kI, double kD) {}
 }

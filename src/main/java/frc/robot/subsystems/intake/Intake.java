@@ -28,8 +28,7 @@ public class Intake extends SubsystemBase {
             Constants.IntakeSubsystem.kP,
             Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
-        // UPDATE: Update for 2024, determine is setting LEDs is needed here
-        // io.setLEDsYellow();
+
         break;
       case REPLAY:
         ffModel =
@@ -79,20 +78,19 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeIn() {
-    // UPDATE: Update for 2024, change name for constant intakeInConeVoltage
-    io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);
+    runVelocity(Constants.IntakeSubsystem.intakeInNoteVelRPM);
+    // io.setVoltage(Constants.IntakeSubsystem.intakeInNoteVoltage, 0.0);
   }
 
-  public void intakeOut() {
-    // UPDATE: Update for 2024, change name for constant intakeOutConeVoltage
-    io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);
+  public void intakeShoot() {
+    runVelocity(Constants.IntakeSubsystem.intakeShootNoteVelRPM);
+    // io.setVoltage(Constants.IntakeSubsystem.intakeShootNoteVoltage, 0.0);
   }
 
   /** Stops the intake. */
   public void holdCurrent() {
-    // UPDATE: Update for 2024, change name for constant holdConeVoltage and holdConeCurrentAmps
-    io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);
-    io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
+    io.setVoltage(Constants.IntakeSubsystem.holdNoteVoltage, 0.0);
+    io.setCurrentLimit(Constants.IntakeSubsystem.holdNoteCurrentAmps);
   }
 
   /** Stops the intake. */

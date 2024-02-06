@@ -235,29 +235,22 @@ public final class Constants {
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
-    // UPDATE: Update value for 2024 robot
-    public static final double gearRatio = 4.0 * 2.0;
+    // NOTE: Double check this value
+    public static final double gearRatio = 1.6;
 
     public static final int maxCurrentAmps = 25;
-    public static final int holdCubeCurrentAmps = 10;
-    public static final int holdConeCurrentAmps = 10;
+    public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInCubeVelRPM = 50.0;
+    public static final double intakeInNoteVelRPM = 50.0;
 
-    public static final double intakeOutCubeVelRPM = -50.0;
+    public static final double intakeShootNoteVelRPM = 10.0;
 
-    public static final double intakeInConeVelRPM = -100.0;
-
-    public static final double intakeOutConeVelRPM = 100.0;
     // Voltage control mode
-    public static final double holdCubeVoltage = 4.0;
-    public static final double holdConeVoltage = -3.2;
+    public static final double holdNoteVoltage = 4.0;
 
-    public static final double intakeInCubeVoltage = 6.0;
-    public static final double intakeOutCubeVoltage = -5.0;
+    public static final double intakeInNoteVoltage = 6.0;
 
-    public static final double intakeInConeVoltage = -7.0;
-    public static final double intakeOutConeVoltage = 5.0;
+    public static final double intakeShootNoteVoltage = 7.0;
   }
 
   // Shoot motor
@@ -284,17 +277,17 @@ public final class Constants {
     public static final int maxCurrentAmps = 25;
     public static final int holdCurrentAmps = 10;
     // Velocity control mode
-    // UPDATE: Update these values
-    public static final double shootAmpVelRPM = 50.0;
 
-    public static final double shootSpeakerVelRPM = -100.0;
+    public static final double shootAmpVelRPM = 20.0;
+
+    public static final double shootSpeakerVelRPM = 50.0;
     // Voltage control mode
-    // UPDATE: Update these values
+
     public static final double holdVoltage = 4.0;
 
     public static final double shootAmpVoltage = 6.0;
 
-    public static final double shootSpeakerVoltage = -7.0;
+    public static final double shootSpeakerVoltage = 7.0;
   }
 
   private static final Alert invalidRobotAlert =
