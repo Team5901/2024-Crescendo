@@ -68,10 +68,12 @@ public class Shoot extends SubsystemBase {
   }
 
   public void shootAmp() {
+    // UPDATE: Add code here to call intake Shoot
     runVelocity(Constants.ShootSubsystem.shootAmpVelRPM);
   }
 
   public void shootSpeaker() {
+    // UPDATE: Add code here to call intake Shoot
     runVelocity(Constants.ShootSubsystem.shootSpeakerVelRPM);
   }
 
@@ -83,6 +85,7 @@ public class Shoot extends SubsystemBase {
 
   /** Stops the shoot. */
   public void stop() {
+    // UPDATE: Add code here to call intake stop
     io.stop();
   }
   /** Returns the current velocity in RPM. */

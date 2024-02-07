@@ -67,9 +67,10 @@ public class RobotContainer {
   private final Joystick driver_2 = new Joystick(1);
   private final JoystickButton intakeIn =
       new JoystickButton(driver_2, XboxController.Button.kRightBumper.value);
-  // UPDATE: Add buttons for Shoot and figure out how to combine intakeOut with it as well
-  // NOTE: Two separate buttons for shootAmp and shootSpeaker
-  private final JoystickButton intakeShoot =
+  // UPDATE: Update buttons here
+  private final JoystickButton shootAmp =
+      new JoystickButton(driver_2, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton shootSpeaker =
       new JoystickButton(driver_2, XboxController.Button.kLeftBumper.value);
 
   // Dashboard inputs
@@ -193,7 +194,8 @@ public class RobotContainer {
     // UPDATE: Add code for shoot and figure out how to implement it with intake
     intakeIn.whileTrue(
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
-    intakeShoot.whileTrue(new StartEndCommand(() -> intake.intakeShoot(), intake::stop, intake));
+    shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
+    shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
   }
 
   /**
