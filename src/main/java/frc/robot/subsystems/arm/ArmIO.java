@@ -1,0 +1,33 @@
+package frc.robot.subsystems.arm;
+
+import org.littletonrobotics.junction.AutoLog;
+
+public interface ArmIO {
+  @AutoLog
+  public static class ArmIOInputs {
+    // at output shaft
+    // UPDATE: Fix variable names for 2024 robot
+    public double positionElevatorSetPointInch = 0.0;
+    public double positionElevatorInch = 0.0;
+    public double velocityElevatorInchPerSec = 0.0;
+    public double positionMotorSetPointRot = 0.0;
+    public double positionMotorShaftRot = 0.0;
+    public double velocityMotorRPM = 0.0;
+    public double appliedVolts = 0.0;
+    public double currentAmps = 0.0;
+  }
+
+  /** Updates the set of loggable inputs. */
+  public default void updateInputs(ArmIOInputs inputs) {}
+
+  public default void setAngle(double positionAngle, double ffVolts) {}
+
+  public default void updateState() {}
+
+  /** Stop in open loop. */
+  public default void stop() {}
+
+  public default void holdCurrent(int amps) {}
+
+  public default void configurePID(double kP, double kI, double kD) {}
+}
