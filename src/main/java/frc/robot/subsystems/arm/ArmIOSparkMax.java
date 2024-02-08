@@ -14,12 +14,10 @@ public class ArmIOSparkMax implements ArmIO {
   private final RelativeEncoder armEncoder;
   private final SparkPIDController armPidController;
   private static final double gearRatio = Constants.ArmSubsystem.gearRatio;
-  private static final double sprocketDiameterInch = Constants.ArmSubsystem.sprocketDiameterInch;
-  private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
-  public double positionElevatorSetPointInch = 0.0;
-  public double positionElevatorInch = 0.0;
-  public double velocityElevatorInchPerSec = 0.0;
+  public double angleArmSetPointDegrees = 0.0;
+  public double angleArmDegrees = 0.0;
+  public double velocityAngleArmPerSec = 0.0;
   public double positionMotorSetPointRot = 0.0;
   public double positionMotorShaftRot = 0.0;
   public double velocityMotorRPM = 0.0;
@@ -36,9 +34,9 @@ public class ArmIOSparkMax implements ArmIO {
   public void updateInputs(ArmIOInputs inputs) {
 
     updateState();
-    inputs.positionElevatorSetPointInch = positionElevatorSetPointInch;
-    inputs.positionElevatorInch = positionElevatorInch;
-    inputs.velocityElevatorInchPerSec = velocityElevatorInchPerSec;
+    inputs.angleArmSetPointDegrees = angleArmSetPointDegrees;
+    inputs.angleArmDegrees = angleArmDegrees;
+    inputs.velocityAngleArmPerSec = velocityAngleArmPerSec;
     inputs.positionMotorSetPointRot = positionMotorSetPointRot;
     inputs.positionMotorShaftRot = positionMotorShaftRot;
     inputs.velocityMotorRPM = velocityMotorRPM;
@@ -54,8 +52,8 @@ public class ArmIOSparkMax implements ArmIO {
     if (ffVolts < 0.1) {
       ffVolts = 0.0;
     }
-    positionElevatorSetPointInch = positionSetAngle;
-    positionMotorSetPointRot = positionSetAngle / (sprocketCircumferenceInch) * gearRatio;
+    angleArmSetPointDegrees = positionSetAngle;
+    positionMotorSetPointRot = (positionSetAngle / 360) * gearRatio;
 
     armPidController.setReference(
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
@@ -65,8 +63,8 @@ public class ArmIOSparkMax implements ArmIO {
   public void updateState() {
     positionMotorShaftRot = armEncoder.getPosition();
     velocityMotorRPM = armEncoder.getVelocity();
-    positionElevatorInch = positionMotorShaftRot / gearRatio * sprocketCircumferenceInch;
-    velocityElevatorInchPerSec = velocityMotorRPM / gearRatio * sprocketCircumferenceInch;
+    angleArmDegrees = (positionMotorShaftRot / gearRatio) * 360;
+    velocityAngleArmPerSec = (velocityMotorRPM / gearRatio) * 360;
     appliedVolts = armMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = armMotor.getOutputCurrent();
   }

@@ -227,10 +227,6 @@ public final class Constants {
     public static final double kv = 0.04; // 0.2
     public static final double kg = 0.5; // 0.75
 
-    // public static final double ks = 0.00;
-    // public static final double kv = 0.25;
-    // public static final double kg = 0.85;
-
     public static final double kP = 0.05;
     public static final double kI = 0.00;
     public static final double kD = 0.0;
@@ -239,7 +235,7 @@ public final class Constants {
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
-    public static final double gearRatio = 25.0;
+    public static final double gearRatio = 25.0; // Needs to be updated
     public static final double sprocketDiameterInch = 1.92;
 
     // motor shaft details
@@ -251,20 +247,17 @@ public final class Constants {
     public static final double autoPositionErrorInch = 2.0;
 
     // Elevator details
-    // UPDATE: Update for 2024 bot. Inches or angle?
-    public static final double maxLinearVelocityInchPerSec = 28.0;
-    public static final double maxLinearAccelerationInchPerSec = 28.0;
+    public static final double maxVelocityDegreesPerSec = 20.0;
+    public static final double maxAccelerationDegreesPerSec = 20.0;
 
     // Inches
-    public static final double armSoftLimitLowerInch = 0;
-    public static final double elevatorPosBottom = 0.0;
-    public static final double elevatorPosMid = 17.2;
-    public static final double elevatorPosAltLoading = 22.0;
-    public static final double elevatorPosLoading = 23.0;
-    public static final double elevatorPosTop = 24.2;
-    public static final double armSoftLimitUpperInch = 25.25;
+    public static final double armSoftLimitLowerAngle = 0;
+    public static final double armPosGround = 0.0;
+    public static final double armPosSpeaker = 25.0;
+    public static final double armPosAmp = 90.0;
+    public static final double armPosTrap = 75.0;
+    public static final double armSoftLimitUpperAngle = 100.0;
 
-    public static final double simCarriageWeightKg = 9.0; // ~20 lbs
     public static final double allowableTeleopErrorInch = 1.0;
   }
 

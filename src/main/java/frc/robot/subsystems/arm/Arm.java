@@ -10,14 +10,13 @@ public class Arm extends SubsystemBase {
   private final ArmIO io;
   private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();
   // UPDATE: Update for arm instead of elevator. Inches or angle?
-  private static final double maxLinearVelocityInchPerSec =
-      Constants.ElevatorSubsystem.maxLinearVelocityInchPerSec;
-  private static final double maxLinearAccelerationInchPerSec =
-      Constants.ElevatorSubsystem.maxLinearAccelerationInchPerSec;
+  private static final double maxVelocityDegreesPerSec =
+      Constants.ArmSubsystem.maxVelocityDegreesPerSec;
+  private static final double maxAccelerationDegreesPerSec =
+      Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
 
   private final TrapezoidProfile.Constraints m_constraints =
-      new TrapezoidProfile.Constraints(
-          maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
+      new TrapezoidProfile.Constraints(maxVelocityDegreesPerSec, maxAccelerationDegreesPerSec);
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
 
@@ -51,18 +50,18 @@ public class Arm extends SubsystemBase {
   }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
-  // trapezoid profile works
-  public void setPositionSetPoint(double positionInch) {
-    m_goal = new TrapezoidProfile.State(positionInch, 0);
+  // trapezoid profile worksion
+  public void setAngleSetPoint(double angleDegrees) {
+    m_goal = new TrapezoidProfile.State(angleDegrees, 0);
   }
 
   // UPDATE: Angle or inch?
-  public double getPosition() {
-    return inputs.positionElevatorInch;
+  public double getAngle() {
+    return inputs.angleArmDegrees;
   }
 
   public double getError() {
-    return Math.abs(inputs.positionElevatorSetPointInch - inputs.positionElevatorInch);
+    return Math.abs(inputs.angleArmSetPointDegrees - inputs.angleArmDegrees);
   }
 
   /** Stops the elevator. */
@@ -71,6 +70,6 @@ public class Arm extends SubsystemBase {
   }
 
   public boolean atSetpoint(double goal_tolerance) {
-    return ((Math.abs(m_goal.position - inputs.positionElevatorInch)) < goal_tolerance);
+    return ((Math.abs(m_goal.position - inputs.angleArmDegrees)) < goal_tolerance);
   }
 }
