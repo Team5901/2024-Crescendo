@@ -55,7 +55,7 @@ public class ArmIOSparkMax implements ArmIO {
     angleArmSetPointDegrees = positionSetAngle;
     positionMotorSetPointRot = (positionSetAngle / 360) * gearRatio;
 
-    //TODO: Change to speed
+    // TODO: Change to speed
     armPidController.setReference(
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }

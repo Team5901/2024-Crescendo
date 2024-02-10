@@ -26,6 +26,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
+
 /**
  * Module IO implementation for Talon FX drive motor controller, Talon FX turn motor controller, and
  * CANcoder
@@ -64,28 +65,28 @@ public class ModuleIOTalonFX implements ModuleIO {
   // all of these will be on the Canivore, Constants.CANBUS
   public ModuleIOTalonFX(int index) {
     switch (index) {
-      //Front left Module=Module 0
+        // Front left Module=Module 0
       case 0:
         driveTalon = new TalonFX(Constants.Swerve.Mod0.driveMotorID, Constants.driveCANBUS);
         turnTalon = new TalonFX(Constants.Swerve.Mod0.angleMotorID, Constants.driveCANBUS);
         cancoder = new CANcoder(Constants.Swerve.Mod0.canCoderID, Constants.driveCANBUS);
         absoluteEncoderOffset = Constants.Swerve.Mod0.angleOffset; // MUST BE CALIBRATED
         break;
-        //Front Right=Module 1
+        // Front Right=Module 1
       case 1:
         driveTalon = new TalonFX(Constants.Swerve.Mod1.driveMotorID, Constants.driveCANBUS);
         turnTalon = new TalonFX(Constants.Swerve.Mod1.angleMotorID, Constants.driveCANBUS);
         cancoder = new CANcoder(Constants.Swerve.Mod1.canCoderID, Constants.driveCANBUS);
         absoluteEncoderOffset = Constants.Swerve.Mod1.angleOffset; // MUST BE CALIBRATED
         break;
-      //Back Left Module=Module 2
+        // Back Left Module=Module 2
       case 2:
         driveTalon = new TalonFX(Constants.Swerve.Mod2.driveMotorID, Constants.driveCANBUS);
         turnTalon = new TalonFX(Constants.Swerve.Mod2.angleMotorID, Constants.driveCANBUS);
         cancoder = new CANcoder(Constants.Swerve.Mod2.canCoderID, Constants.driveCANBUS);
         absoluteEncoderOffset = Constants.Swerve.Mod2.angleOffset; // MUST BE CALIBRATED
         break;
-      //Back Right=Module3
+        // Back Right=Module3
       case 3:
         driveTalon = new TalonFX(Constants.Swerve.Mod3.driveMotorID, Constants.driveCANBUS);
         turnTalon = new TalonFX(Constants.Swerve.Mod3.angleMotorID, Constants.driveCANBUS);
