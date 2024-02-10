@@ -38,6 +38,7 @@ public final class Constants {
   public static final double simLoopPeriodSecs = 0.02;
   private static final RobotType robot = RobotType.SIM;
   public static final boolean chassisOnly = false;
+  public static final String driveCANBUS = "Drivetrain";
 
   public static enum Mode {
     /** Running on a real robot. */
