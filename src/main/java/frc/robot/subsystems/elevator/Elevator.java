@@ -54,8 +54,10 @@ public class Elevator extends SubsystemBase {
     // if(Math.abs(m_goal.position-inputs.positionElevatorInch)<0.25 ){
     //   m_goal.position = inputs.positionElevatorInch;
     // }
-    var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
+    // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/trapezoidal-profiles.html
+
+    var profile = new TrapezoidProfile(m_constraints);
+    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
 
     io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("ElevatorPosErrorInch", getError());
