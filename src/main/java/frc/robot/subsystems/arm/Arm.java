@@ -41,8 +41,8 @@ public class Arm extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
 
-    var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
+    var profile = new TrapezoidProfile(m_constraints);
+    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
 
     io.setAngle(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("ArmPosErrorInch", getError());

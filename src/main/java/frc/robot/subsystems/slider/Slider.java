@@ -47,8 +47,8 @@ public class Slider extends SubsystemBase {
     // getVelocityRPMFromRadsPerSec());
     Logger.recordOutput("SliderSetpointInch", positionSetPointInch);
 
-    var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
+    var profile = new TrapezoidProfile(m_constraints);
+    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
 
     io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("SliderPosErrorInch", getError());
