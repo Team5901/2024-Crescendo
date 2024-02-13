@@ -86,19 +86,13 @@ public class RobotContainer {
         drive =
             new Drive(
                 new GyroIOPigeon2(),
-                new ModuleIOTalonFX(0),
+                new ModuleIOTalonFX(0), //falcon 500's use TalonFX instead of ModuleIOSparkMax
                 new ModuleIOTalonFX(1),
                 new ModuleIOTalonFX(2),
                 new ModuleIOTalonFX(3));
         flywheel = new Flywheel(new FlywheelIOSparkMax());
 
-        // drive = new Drive(
-        // new GyroIOPigeon2(),
-        // new ModuleIOTalonFX(0),
-        // new ModuleIOTalonFX(1),
-        // new ModuleIOTalonFX(2),
-        // new ModuleIOTalonFX(3));
-        // flywheel = new Flywheel(new FlywheelIOTalonFX());
+
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
