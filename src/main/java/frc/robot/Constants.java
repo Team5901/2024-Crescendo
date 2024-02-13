@@ -267,6 +267,7 @@ public final class Constants {
     // UPDATE: Update deviceID
     public static final int deviceID = 12;
     public static final boolean isInverted = false;
+    public static final int LEDsparknumber = 3;
 
     // FeedForward Control
     public static final double ks = 0.0;
@@ -301,7 +302,8 @@ public final class Constants {
   // Shoot motor
   public static final class ShootSubsystem {
     // UPDATE: Update deviceID
-    public static final int deviceID = 12;
+    public static final int deviceID = 13;
+    public static final int LEDsparknumber = 4;
     public static final boolean isInverted = false;
 
     // FeedForward Control

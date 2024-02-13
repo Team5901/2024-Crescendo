@@ -17,7 +17,7 @@ public class IntakeIOSparkMax implements IntakeIO {
   private final RelativeEncoder intakeEncoder;
 
   private final SparkPIDController intakePidController;
-  private final Spark lightStrips = new Spark(3);
+  private final Spark lightStrips = new Spark(Constants.IntakeSubsystem.LEDsparknumber);
   private double motorVelocitySetPointRPM = 0.0;
 
   public double motorVelocityRPM = 0.0;
