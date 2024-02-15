@@ -29,6 +29,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.LocalADStarAK;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -92,6 +93,10 @@ public class Drive extends SubsystemBase {
     for (var module : modules) {
       module.periodic();
     }
+    SmartDashboard.putNumber("Mod 0 Angle Value: ", modules[0].getAngle().getDegrees());
+    SmartDashboard.putNumber("Mod 1 Angle Value: ", modules[1].getAngle().getDegrees());
+    SmartDashboard.putNumber("Mod 2 Angle Value: ", modules[2].getAngle().getDegrees());
+    SmartDashboard.putNumber("Mod 3 Angle Value: ", modules[3].getAngle().getDegrees());
 
     // Stop moving when disabled
     if (DriverStation.isDisabled()) {

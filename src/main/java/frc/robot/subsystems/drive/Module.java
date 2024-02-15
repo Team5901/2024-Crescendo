@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
@@ -142,8 +143,11 @@ public class Module {
   /** Returns the current turn angle of the module. */
   public Rotation2d getAngle() {
     if (turnRelativeOffset == null) {
+      SmartDashboard.putNumber("Angle Value: ", new Rotation2d().getDegrees());
       return new Rotation2d();
     } else {
+      SmartDashboard.putNumber(
+          "Angle Value: ", inputs.turnPosition.plus(turnRelativeOffset).getDegrees());
       return inputs.turnPosition.plus(turnRelativeOffset);
     }
   }
