@@ -15,15 +15,12 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
@@ -55,13 +52,16 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final int translationAxis = Joystick.AxisType.kY.value;
+  private final int strafeAxis = Joystick.AxisType.kX.value;
+  private final int rotationAxis = Joystick.AxisType.kZ.value;
   // Subsystems
   private final Drive drive;
   private final Flywheel flywheel;
   private final Intake intake;
   private final Shoot shoot;
   // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final Joystick controller = new Joystick(0);
 
   // Intake Buttons
   private final Joystick driver_2 = new Joystick(1);
@@ -164,10 +164,10 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX()));
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+            () -> -controller.getRawAxis(translationAxis),
+            () -> -controller.getRawAxis(strafeAxis),
+            () -> -controller.getRawAxis(rotationAxis)));
+    /*controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller
         .b()
         .onTrue(
@@ -181,7 +181,7 @@ public class RobotContainer {
         .a()
         .whileTrue(
             Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
+                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
 
     // Intake
     // UPDATE: Add code for shoot and figure out how to implement it with intake
