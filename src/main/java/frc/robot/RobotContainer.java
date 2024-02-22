@@ -73,7 +73,6 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final JoystickButton shootSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
-
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   private final LoggedDashboardNumber flywheelSpeedInput =
