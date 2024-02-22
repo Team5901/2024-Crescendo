@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.drive.Drive;
@@ -61,17 +62,17 @@ public class RobotContainer {
   private final Intake intake;
   private final Shoot shoot;
   // Controller
-  private final Joystick controller = new Joystick(0);
+  private final Joystick joystick = new Joystick(0);
 
   // Intake Buttons
-  private final Joystick driver_2 = new Joystick(1);
+  private final XboxController controller_2 = new XboxController(1);
   private final JoystickButton intakeIn =
-      new JoystickButton(driver_2, XboxController.Button.kRightBumper.value);
-  // UPDATE: Update buttons here
+      new JoystickButton(controller_2, XboxController.Button.kRightBumper.value);
+  Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.5);
   private final JoystickButton shootAmp =
-      new JoystickButton(driver_2, XboxController.Button.kLeftBumper.value);
+      new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final JoystickButton shootSpeaker =
-      new JoystickButton(driver_2, XboxController.Button.kLeftBumper.value);
+      new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -94,10 +95,10 @@ public class RobotContainer {
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
-          shoot = new Shoot(new ShootIO() {});
+          shoot = new Shoot(new ShootIO() {}, intake);
         } else {
           intake = new Intake(new IntakeIOSparkMax());
-          shoot = new Shoot(new ShootIOSparkMax());
+          shoot = new Shoot(new ShootIOSparkMax(), intake);
         }
         break;
 
@@ -113,7 +114,7 @@ public class RobotContainer {
         flywheel = new Flywheel(new FlywheelIOSim());
 
         intake = new Intake(new IntakeIOSim());
-        shoot = new Shoot(new ShootIOSim() {});
+        shoot = new Shoot(new ShootIOSim() {}, intake);
         break;
 
       default:
@@ -128,7 +129,7 @@ public class RobotContainer {
         flywheel = new Flywheel(new FlywheelIO() {});
 
         intake = new Intake(new IntakeIO() {});
-        shoot = new Shoot(new ShootIO() {});
+        shoot = new Shoot(new ShootIO() {}, intake);
         break;
     }
 
@@ -138,6 +139,9 @@ public class RobotContainer {
         Commands.startEnd(
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel)
             .withTimeout(5.0));
+    NamedCommands.registerCommand(
+        "shootspeaker",
+        Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up feedforward characterization
@@ -164,9 +168,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getRawAxis(translationAxis),
-            () -> -controller.getRawAxis(strafeAxis),
-            () -> -controller.getRawAxis(rotationAxis)));
+            () -> -joystick.getRawAxis(translationAxis),
+            () -> -joystick.getRawAxis(strafeAxis),
+            () -> -joystick.getRawAxis(rotationAxis)));
     /*controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller
         .b()
