@@ -365,6 +365,7 @@ public final class Constants {
     }
   }
   // Slider Motor
+  //UPDATE: Update slider for 2024
   public static final class SliderSubsystem {
     public static final int deviceID = 14;
     public static final int sensorResolution = 2048;
