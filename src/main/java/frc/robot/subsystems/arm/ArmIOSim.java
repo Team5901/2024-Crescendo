@@ -5,7 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 // import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 // UPDATE: Figure out what to replace this with
-// import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.Constants;
 // import frc.robot.subsystems.arm.ArmIO.ArmIOInputs;
 
