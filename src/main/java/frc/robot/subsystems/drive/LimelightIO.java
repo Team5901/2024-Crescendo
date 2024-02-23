@@ -7,6 +7,7 @@ public interface LimelightIO {
   public static class LimelightIOInputs {
     public double latency;
     public double[] botPoseWPI;
+    public double tv;
   }
 
   public default void updateInputs(LimelightIOInputs inputs) {}

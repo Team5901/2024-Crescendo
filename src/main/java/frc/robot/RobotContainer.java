@@ -28,9 +28,11 @@ import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
+import frc.robot.subsystems.drive.LimelightIONetwork;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
 import frc.robot.subsystems.flywheel.Flywheel;
 import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
@@ -61,6 +63,8 @@ public class RobotContainer {
   private final Flywheel flywheel;
   private final Intake intake;
   private final Shoot shoot;
+  private final LimelightIONetwork limelight;
+  private final LimelightIOInputs inputs;
   // Controller
   private final Joystick joystick = new Joystick(0);
 
@@ -73,6 +77,8 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final JoystickButton shootSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+
+  //Add joystick button to check april tag
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -92,6 +98,8 @@ public class RobotContainer {
                 new ModuleIOTalonFX(2),
                 new ModuleIOTalonFX(3));
         flywheel = new Flywheel(new FlywheelIOSparkMax());
+        limelight = new LimelightIONetwork();
+        inputs = new LimelightIOInputs();
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
@@ -112,6 +120,8 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         flywheel = new Flywheel(new FlywheelIOSim());
+        limelight = new LimelightIONetwork();
+        inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIOSim());
         shoot = new Shoot(new ShootIOSim() {}, intake);
@@ -127,6 +137,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         flywheel = new Flywheel(new FlywheelIO() {});
+        limelight = new LimelightIONetwork();
+        inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIO() {});
         shoot = new Shoot(new ShootIO() {}, intake);
@@ -188,11 +200,11 @@ public class RobotContainer {
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
 
     // Intake
-    // UPDATE: Add code for shoot and figure out how to implement it with intake
     intakeIn.whileTrue(
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
+    //Add code here to print out if tag in view when april tag button pressed
   }
 
   /**
