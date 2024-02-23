@@ -26,7 +26,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +36,6 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
-  //TODO: Update Chassis width
   private static final double MAX_LINEAR_SPEED = Constants.Swerve.maxSpeed;
   private static final double TRACK_WIDTH_X = Constants.Swerve.trackWidth;
   private static final double TRACK_WIDTH_Y = Constants.Swerve.wheelBase;

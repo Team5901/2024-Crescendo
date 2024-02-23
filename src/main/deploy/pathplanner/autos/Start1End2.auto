@@ -2,25 +2,31 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.0,
-      "y": 7.0
+      "x": 1.8895711725072741,
+      "y": 6.4779519132497985
     },
-    "rotation": 180.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Start1Sh1"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Run Flywheel"
+            "name": "shootspeaker"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Example Path"
+            "pathName": "Sh1End2"
           }
         }
       ]
