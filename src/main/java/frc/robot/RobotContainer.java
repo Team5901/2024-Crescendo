@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -28,11 +29,11 @@ import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
+import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
 import frc.robot.subsystems.drive.LimelightIONetwork;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
 import frc.robot.subsystems.flywheel.Flywheel;
 import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
@@ -78,7 +79,8 @@ public class RobotContainer {
   private final JoystickButton shootSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
 
-  //Add joystick button to check april tag
+  // Add joystick button to check april tag
+  private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -204,7 +206,8 @@ public class RobotContainer {
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
-    //Add code here to print out if tag in view when april tag button pressed
+    // Add code here to print out if tag in view when april tag button pressed
+    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagInView(inputs)));
   }
 
   /**

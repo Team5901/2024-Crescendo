@@ -19,13 +19,13 @@ public class LimelightIONetwork implements LimelightIO {
     } else if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue) {
       inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
     }
-    inputs.latency = inputs.botPoseWPI[6];
     inputs.tv = table.getEntry("tv").getDouble(0);
     // Botpos transform in field-space (driver station WPILIB origin). Translation (X,Y,Z)
     // Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
   }
 
-  public boolean tagInView(LimelightIOInputs inputs){
+  public boolean tagInView(LimelightIOInputs inputs) {
+    updateInputs(inputs);
     SmartDashboard.putBoolean("April Tag in View: ", inputs.tv > 0.0);
     return inputs.tv > 0.0;
   }

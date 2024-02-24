@@ -40,10 +40,8 @@ public class SliderIOSparkMax implements SliderIO {
     // follower.burnFlash();
   }
 
-  //UPDATE: Add function to add follower
-  public void addFollower() {
-    
-  }
+  // UPDATE: Add function to add follower
+  public void addFollower() {}
 
   @Override
   public void updateInputs(SliderIOInputs inputs) {
