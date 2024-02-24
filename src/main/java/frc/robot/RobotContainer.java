@@ -207,7 +207,7 @@ public class RobotContainer {
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
-    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagInView(inputs)));
+    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
   }
 
   /**

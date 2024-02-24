@@ -20,6 +20,7 @@ public class LimelightIONetwork implements LimelightIO {
       inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
     }
     inputs.tv = table.getEntry("tv").getDouble(0);
+    inputs.tx = table.getEntry("tx").getDouble(0);
     // Botpos transform in field-space (driver station WPILIB origin). Translation (X,Y,Z)
     // Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
   }
@@ -28,5 +29,20 @@ public class LimelightIONetwork implements LimelightIO {
     updateInputs(inputs);
     SmartDashboard.putBoolean("April Tag in View: ", inputs.tv > 0.0);
     return inputs.tv > 0.0;
+  }
+
+  public void moveToCenterOfTag(LimelightIOInputs inputs) {
+    // updateInputs(inputs);
+    if (inputs.tx > 0) {
+      SmartDashboard.putString("Centering April Tag: ", "Move right");
+    } else {
+      SmartDashboard.putString("Centering April Tag: ", "Move left");
+    }
+  }
+
+  public void tagCenterButton(LimelightIOInputs inputs) {
+    if (tagInView(inputs)) {
+      moveToCenterOfTag(inputs);
+    }
   }
 }
