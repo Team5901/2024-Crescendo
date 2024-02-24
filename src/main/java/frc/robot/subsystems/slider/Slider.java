@@ -59,6 +59,10 @@ public class Slider extends SubsystemBase {
     positionSetPointInch = positionSetInch;
   }
 
+  public double getPosition() {
+    return inputs.positionSliderInch;
+  }
+
   public double getError() {
     return Math.abs(inputs.positionSliderSetPointInch - inputs.positionSliderInch);
   }

@@ -66,13 +66,22 @@ public class RobotContainer {
   private final Shoot shoot;
   private final LimelightIONetwork limelight;
   private final LimelightIOInputs inputs;
-  // Controller
+  // Controller and joystick
   private final Joystick joystick = new Joystick(0);
-
-  // Intake Buttons
   private final XboxController controller_2 = new XboxController(1);
+
+  // Intake movement buttons
+  private final JoystickButton aimAmp =
+      new JoystickButton(controller_2, XboxController.Button.kY.value);
   private final JoystickButton intakeIn =
       new JoystickButton(controller_2, XboxController.Button.kRightBumper.value);
+  private final JoystickButton aimSpeaker =
+      new JoystickButton(controller_2, XboxController.Button.kA.value);
+  private final JoystickButton intakeOut =
+      new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+
+  // shooting buttons
+
   Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.5);
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);

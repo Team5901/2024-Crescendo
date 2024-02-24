@@ -19,7 +19,7 @@ public class ArmExtend extends Command {
    * @param setpoint The setpoint to set the elevator to
    * @param arm The elevator to use
    */
-  public void ElevatorGoToPosition(double setpointInch, double goalTolerance, Slider arm) {
+  public void ArmSliderGoToPosition(double setpointInch, double goalTolerance, Slider arm) {
     m_Slider = arm;
     m_setpoint = setpointInch;
     goal_tolerance = goalTolerance;

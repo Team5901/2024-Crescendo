@@ -14,7 +14,7 @@ public class ArmRotate extends Command {
    * @param setpoint The setpoint to set the elevator to
    * @param arm The elevator to use
    */
-  public void ElevatorGoToPosition(double setpointInch, double goalTolerance, Arm arm) {
+  public void ArmRotateGoToPosition(double setpointInch, double goalTolerance, Arm arm) {
     m_Arm = arm;
     m_setpoint = setpointInch;
     goal_tolerance = goalTolerance;
