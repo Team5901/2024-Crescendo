@@ -3,6 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.slider.Slider;
 
+/*
+  https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html
+  https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html#lambda-expressions-java
+  https://docs.wpilib.org/en/stable/docs/software/basic-programming/functions-as-data.html#lambda-expressions-in-java
+*/
 public class ArmExtend extends Command {
 
   private Slider m_Slider;
