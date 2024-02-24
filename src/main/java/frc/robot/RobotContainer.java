@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ArmMovement;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.drive.Drive;
@@ -66,6 +67,8 @@ public class RobotContainer {
   private final Shoot shoot;
   private final LimelightIONetwork limelight;
   private final LimelightIOInputs inputs;
+  // Commands
+  private ArmMovement armMovementCommand;
   // Controller and joystick
   private final Joystick joystick = new Joystick(0);
   private final XboxController controller_2 = new XboxController(1);
@@ -80,9 +83,9 @@ public class RobotContainer {
   private final JoystickButton intakeOut =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
 
-  // shooting buttons
-
-  Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.5);
+  // shooting/roller buttons
+  Trigger IntakeRollersOn = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
+  Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final JoystickButton shootSpeaker =
@@ -211,8 +214,28 @@ public class RobotContainer {
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
 
     // Intake
-    intakeIn.whileTrue(
+    IntakeRollersOn.whileTrue(
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
+    intakeOut.onTrue(
+        new InstantCommand(
+            () -> {
+              armMovementCommand.goToIntakeOut();
+            }));
+    aimSpeaker.onTrue(
+        new InstantCommand(
+            () -> {
+              armMovementCommand.goToAimSpeaker();
+            }));
+    intakeIn.onTrue(
+        new InstantCommand(
+            () -> {
+              armMovementCommand.goToIntakeIn();
+            }));
+    aimAmp.onTrue(
+        new InstantCommand(
+            () -> {
+              armMovementCommand.goToAimAmp();
+            }));
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed

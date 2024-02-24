@@ -219,6 +219,19 @@ public final class Constants {
     public static final double allowableTeleopErrorInch = 1.0;
   }
 
+  public static final class MovementPositions {
+    // Angle positions for thearm at specific game angles
+    public static final double IntakeOutDeg = 0;
+    public static final double AimSpeakerDeg = 10;
+    public static final double IntakeInDeg = 15;
+    public static final double AimAmpDeg = 90;
+    // slider extension positions at specific game positions
+    public static final double IntakeOutInch = 24;
+    public static final double AimSpeakerInch = 18;
+    public static final double IntakeInInch = 0;
+    public static final double AimAmpInch = 0;
+  }
+
   public static final class ArmSubsystem {
     public static final int deviceID = 13;
     public static final boolean isInverted = true;
