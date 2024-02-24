@@ -9,6 +9,8 @@ public interface LimelightIO {
     public double[] botPoseWPI;
     public double tv;
     public double tx;
+    public double ty;
+    public double tid;
   }
 
   public default void updateInputs(LimelightIOInputs inputs) {}

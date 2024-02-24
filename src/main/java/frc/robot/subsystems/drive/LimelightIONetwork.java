@@ -21,6 +21,8 @@ public class LimelightIONetwork implements LimelightIO {
     }
     inputs.tv = table.getEntry("tv").getDouble(0);
     inputs.tx = table.getEntry("tx").getDouble(0);
+    inputs.ty = table.getEntry("ty").getDouble(0);
+    inputs.tid = table.getEntry("tid").getDouble(0);
     // Botpos transform in field-space (driver station WPILIB origin). Translation (X,Y,Z)
     // Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
   }
@@ -40,9 +42,16 @@ public class LimelightIONetwork implements LimelightIO {
     }
   }
 
+  public void angleToSpeakerTag(LimelightIOInputs inputs) {
+    if (inputs.tid == 4 || inputs.tid == 8) {
+      SmartDashboard.putNumber("Speaker Tag angle: ", inputs.ty);
+    }
+  }
+
   public void tagCenterButton(LimelightIOInputs inputs) {
     if (tagInView(inputs)) {
       moveToCenterOfTag(inputs);
+      angleToSpeakerTag(inputs);
     }
   }
 }
