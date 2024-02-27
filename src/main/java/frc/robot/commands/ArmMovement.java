@@ -16,34 +16,40 @@ public class ArmMovement extends SequentialCommandGroup {
   public void goToAimAmp() {
     // check if below/at intake out, move to speaker,
     if (startAngle < MovementPositions.IntakeOutDeg) {
-      new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg));
+      new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg)).andThen(
+        new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.IntakeInDeg)).andThen(
+        new InstantCommand(() -> slidersubsystem.setPositionSetPoint(MovementPositions.IntakeInDeg)))
+      );
     }
 
     // check if below/at aim speaker, angle
     if (startAngle < MovementPositions.AimSpeakerDeg) {
-      addCommands(
-          new InstantCommand(
-              () ->
-                  armsubsystem.setAngleSetPoint(
-                      MovementPositions.IntakeInDeg)), // move arm up, THEN in
-          new InstantCommand(
-              () -> slidersubsystem.setPositionSetPoint(MovementPositions.IntakeInDeg)));
+      new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.IntakeInDeg)).andThen(
+        new InstantCommand(() -> slidersubsystem.setPositionSetPoint(MovementPositions.IntakeInDeg))); // move arm up, THEN in
     }
 
     // check if below/at intake in
-    if (startAngle < MovementPositions.IntakeInDeg) {}
-
+    if (startAngle < MovementPositions.IntakeInDeg) {
+      new InstantCommand( () -> armsubsystem.setAngleSetPoint(MovementPositions.AimAmpDeg));
+    }
     // if at aim amp, do nothing/ reset goalpoint
-
+    if (startAngle< MovementPositions.AimAmpDeg) {
+      new InstantCommand(()->armsubsystem.setAngleSetPoint(MovementPositions.AimAmpDeg));
+    }
   }
 
   public void goToIntakeOut() {
     // check if above/at aim amp
-
+    if (startAngle > MovementPositions.AimAmpDeg) {
+      new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg));
+    }
     // check if below/at intake in
-
+    if (startAngle > MovementPositions.IntakeInDeg ) {
+      new InstantCommand(()-> slidersubsystem.setPositionSetPoint(MovementPositions.IntakeOutInch)).andThen(
+        new InstantCommand( ()-> armsubsystem.setAngleSetPoint(MovementPositions.IntakeOutDeg)));
+    }
     // check if below/ at aim speaker
-
+    
     // if at intake out, dont move
   }
 
@@ -51,15 +57,5 @@ public class ArmMovement extends SequentialCommandGroup {
 
   public void goToIntakeIn() {}
 
-  // @Override
-  // public void initialize() {
-  //   startExtension = slidersubsystem.getPosition();
-  //   startAngle = armsubsystem.getAngle();
-  // }
-
-  // @Override
-  // public boolean isFinished() {
-
-  //   return true;
-  // }
+ 
 }
