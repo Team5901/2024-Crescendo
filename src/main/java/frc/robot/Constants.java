@@ -264,12 +264,13 @@ public final class Constants {
     public static final double maxVelocityDegreesPerSec = 20.0;
     public static final double maxAccelerationDegreesPerSec = 20.0;
 
-    // Inches
+    // Degrees
     public static final double armSoftLimitLowerAngle = 0;
     public static final double armPosGround = 0.0;
-    public static final double armPosSpeaker = 25.0;
+    public static final double armPosSpeaker = 20.0;
     public static final double armPosAmp = 90.0;
     public static final double armPosTrap = 75.0;
+    public static final double armPosIn = 25.0;
     public static final double armSoftLimitUpperAngle = 100.0;
 
     public static final double allowableTeleopErrorInch = 1.0;

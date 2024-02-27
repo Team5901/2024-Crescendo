@@ -73,24 +73,21 @@ public class Arm extends SubsystemBase {
     return ((Math.abs(m_goal.position - inputs.angleArmDegrees)) < goal_tolerance);
   }
 
-  // TODO: Create function to move arm to amp angle
   public void setAngleAmp() {
     setAngleSetPoint(Constants.ArmSubsystem.armPosAmp);
   }
 
-  // TODO: Create function to move arm to speaker angle
   public void setAngleSpeaker() {
     setAngleSetPoint(Constants.ArmSubsystem.armPosSpeaker);
   }
 
-  // TODO: Create function to move arm to pickup from the ground
   public void setAngleGround() {
     setAngleSetPoint(Constants.ArmSubsystem.armPosGround);
   }
 
-  // TODO: Create function to move arm to rest within robot boundaries. Wait until design and rest
-  // of arm subsystem is complete
-  public void retractArm() {}
+  public void setAngleIntakeIn() {
+    setAngleSetPoint(Constants.MovementPositions.IntakeInDeg);
+  }
 
   public void setAngleTrap() {
     setAngleSetPoint(Constants.ArmSubsystem.armPosTrap);

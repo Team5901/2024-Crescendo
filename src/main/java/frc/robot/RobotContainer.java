@@ -76,12 +76,12 @@ public class RobotContainer {
   // Intake movement buttons
   private final JoystickButton aimAmp =
       new JoystickButton(controller_2, XboxController.Button.kY.value);
-  private final JoystickButton intakeIn =
+  private final JoystickButton intakeOut =
       new JoystickButton(controller_2, XboxController.Button.kRightBumper.value);
   private final JoystickButton aimSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kA.value);
-  private final JoystickButton intakeOut =
-      new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton intakeIn =
+      new JoystickButton(controller_2, XboxController.Button.kX.value);
 
   // shooting/roller buttons
   Trigger IntakeRollersOn = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
