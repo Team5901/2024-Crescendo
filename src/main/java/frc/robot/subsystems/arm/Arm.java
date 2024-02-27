@@ -73,23 +73,23 @@ public class Arm extends SubsystemBase {
     return ((Math.abs(m_goal.position - inputs.angleArmDegrees)) < goal_tolerance);
   }
 
-  public void setAngleAmp() {
-    setAngleSetPoint(Constants.ArmSubsystem.armPosAmp);
-  }
+  // public void setAngleAmp() {
+  //   setAngleSetPoint(Constants.ArmSubsystem.armPosAmp);
+  // }
 
-  public void setAngleSpeaker() {
-    setAngleSetPoint(Constants.ArmSubsystem.armPosSpeaker);
-  }
+  // public void setAngleSpeaker() {
+  //   setAngleSetPoint(Constants.ArmSubsystem.armPosSpeaker);
+  // }
 
-  public void setAngleGround() {
-    setAngleSetPoint(Constants.ArmSubsystem.armPosGround);
-  }
+  // public void setAngleGround() {
+  //   setAngleSetPoint(Constants.ArmSubsystem.armPosOut);
+  // }
 
-  public void setAngleIntakeIn() {
-    setAngleSetPoint(Constants.MovementPositions.IntakeInDeg);
-  }
+  // public void setAngleIntakeIn() {
+  //   setAngleSetPoint(Constants.MovementPositions.IntakeInDeg);
+  // }
 
-  public void setAngleTrap() {
-    setAngleSetPoint(Constants.ArmSubsystem.armPosTrap);
-  }
+  // public void setAngleTrap() {
+  //   setAngleSetPoint(Constants.ArmSubsystem.armPosTrap);
+  // }
 }

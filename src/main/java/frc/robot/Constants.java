@@ -266,13 +266,13 @@ public final class Constants {
 
     // Degrees
     public static final double armSoftLimitLowerAngle = 0;
-    public static final double armPosGround = 0.0;
+    public static final double armPosOut = 0.0;
     public static final double armPosSpeaker = 20.0;
     public static final double armPosAmp = 90.0;
     public static final double armPosTrap = 75.0;
     public static final double armPosIn = 25.0;
     public static final double armSoftLimitUpperAngle = 100.0;
-
+    public static final double goalTolerance = 2;
     public static final double allowableTeleopErrorInch = 1.0;
   }
 
@@ -316,7 +316,7 @@ public final class Constants {
   // Shoot motor
   public static final class ShootSubsystem {
     // UPDATE: Update deviceID
-    public static final int deviceID = 13;
+    public static final int deviceID = 14;
     public static final int LEDsparknumber = 4;
     public static final boolean isInverted = false;
 
@@ -351,6 +351,49 @@ public final class Constants {
     public static final double shootSpeakerVoltage = 7.0;
   }
 
+  public static final class SliderSubsystem {
+    public static final int deviceID = 14;
+    public static final int deviceID2 = 15;
+    public static final int sensorResolution = 2048;
+    public static final boolean isInverted = false;
+
+    // FeedForward Control
+    public static final double ks = 0.0;
+    public static final double kv = 0.00;
+    public static final double kg = 0.00;
+
+    public static final double goalTolerance = 0.1;
+    public static final double gearRatio = 15.0;
+    public static final double sprocketDiameterInch = 1.29;
+    public static final double kP = 0.06;
+    public static final double kI = 0.00;
+    public static final double kD = 0.0;
+    public static final double kIz = 0.0;
+    public static final double kFF = 0.0;
+    public static final double kMaxOutput = 1.0;
+    public static final double kMinOutput = -1.0;
+    public static final int kTimeoutMs = 30;
+
+    public static final int maxCurrentAmps = 30;
+
+    public static final double maxAngularVelocityRPM = 1200.0;
+    public static final double maxAngularAccRPMPerSec = 1500.0;
+    public static final double minOutputVelocityRPM = 20.0; // requests below this no voltage output
+    public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
+    public static final double autoPositionErrorInch = 2.0;
+
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 70;
+    // Inches
+    public static final double sliderSoftLimitLowerInch = 0.0;
+    public static final double sliderIntakeIn = 0.0;
+    public static final double sliderIntakeOut = 14.6;
+
+    public static final double sliderSoftLimitUpperInch = 15.0;
+
+    public static final double simCarriageWeightKg = 4.0; // ~20 lbs
+  }
+
   private static final Alert invalidRobotAlert =
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR);
 
@@ -380,44 +423,6 @@ public final class Constants {
   }
   // Slider Motor
   // UPDATE: Update slider for 2024
-  public static final class SliderSubsystem {
-    public static final int deviceID = 14;
-    public static final int sensorResolution = 2048;
-    public static final boolean isInverted = false;
-    // FeedForward Control
-    public static final double ks = 0.0;
-    public static final double kv = 0.00;
-    public static final double kg = 0.00;
-
-    public static final double gearRatio = 4.0 * 30.0 / 12.0;
-    public static final double sprocketDiameterInch = 1.29;
-    public static final double kP = 0.06;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
-    public static final double kIz = 0.0;
-    public static final double kFF = 0.0;
-    public static final double kMaxOutput = 1.0;
-    public static final double kMinOutput = -1.0;
-    public static final int kTimeoutMs = 30;
-
-    public static final int maxCurrentAmps = 30;
-
-    public static final double maxAngularVelocityRPM = 1200.0;
-    public static final double maxAngularAccRPMPerSec = 1500.0;
-    public static final double minOutputVelocityRPM = 20.0; // requests below this no voltage output
-    public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
-    public static final double autoPositionErrorInch = 2.0;
-
-    public static final double maxLinearVelocityInchPerSec = 60;
-    public static final double maxLinearAccelerationInchPerSec = 70;
-    // Inches
-    public static final double sliderSoftLimitLowerInch = 0.0;
-    public static final double sliderIn = 0.0;
-    public static final double sliderOut = 14.6;
-    public static final double sliderSoftLimitUpperInch = 15.0;
-
-    public static final double simCarriageWeightKg = 4.0; // ~20 lbs
-  }
 
   public static enum RobotType {
     REAL,

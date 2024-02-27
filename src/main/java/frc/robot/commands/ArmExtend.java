@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.slider.Slider;
 
 /*
@@ -14,18 +15,32 @@ public class ArmExtend extends Command {
   private double m_setpoint;
   private double goal_tolerance;
   /**
-   * Create a new ElevatorGoToPosition command.
+   * Create a new ArmSliderGoToPosition command.
    *
-   * @param setpoint The setpoint to set the elevator to
-   * @param arm The elevator to use
+   * @param setpointInch The setpoint to set the slider to
+   * @param goalTolerance closeness to end command at
+   * @param slider The slider to use
    */
-  public void ArmSliderGoToPosition(double setpointInch, double goalTolerance, Slider arm) {
-    m_Slider = arm;
+  public void ArmSliderGoToPosition(double setpointInch, double goalTolerance, Slider slider) {
+    m_Slider = slider;
     m_setpoint = setpointInch;
     goal_tolerance = goalTolerance;
     addRequirements(m_Slider);
   }
 
+  public void goToIntakeOut(Slider slider) {
+    m_Slider = slider;
+    m_setpoint = Constants.SliderSubsystem.sliderIntakeOut;
+    goal_tolerance = Constants.SliderSubsystem.goalTolerance;
+    addRequirements(m_Slider);
+  }
+
+  public void goToIntakeIn(Slider slider) {
+    m_Slider = slider;
+    m_setpoint = Constants.SliderSubsystem.sliderIntakeIn;
+    goal_tolerance = Constants.SliderSubsystem.goalTolerance;
+    addRequirements(m_Slider);
+  }
   // Called just before this Command runs the first time
   @Override
   public void initialize() {

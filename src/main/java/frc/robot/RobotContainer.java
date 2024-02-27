@@ -27,6 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmMovement;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.ArmIO;
+import frc.robot.subsystems.arm.ArmIOSim;
+import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -47,6 +51,10 @@ import frc.robot.subsystems.shoot.Shoot;
 import frc.robot.subsystems.shoot.ShootIO;
 import frc.robot.subsystems.shoot.ShootIOSim;
 import frc.robot.subsystems.shoot.ShootIOSparkMax;
+import frc.robot.subsystems.slider.Slider;
+import frc.robot.subsystems.slider.SliderIO;
+import frc.robot.subsystems.slider.SliderIOSim;
+import frc.robot.subsystems.slider.SliderIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
@@ -67,6 +75,8 @@ public class RobotContainer {
   private final Shoot shoot;
   private final LimelightIONetwork limelight;
   private final LimelightIOInputs inputs;
+  private final Arm arm;
+  private final Slider slider;
   // Commands
   private ArmMovement armMovementCommand;
   // Controller and joystick
@@ -118,9 +128,14 @@ public class RobotContainer {
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
           shoot = new Shoot(new ShootIO() {}, intake);
+          slider = new Slider(new SliderIO() {});
+          arm = new Arm(new ArmIO() {});
+
         } else {
           intake = new Intake(new IntakeIOSparkMax());
           shoot = new Shoot(new ShootIOSparkMax(), intake);
+          slider = new Slider(new SliderIOSparkMax() {});
+          arm = new Arm(new ArmIOSparkMax() {});
         }
         break;
 
@@ -139,6 +154,8 @@ public class RobotContainer {
 
         intake = new Intake(new IntakeIOSim());
         shoot = new Shoot(new ShootIOSim() {}, intake);
+        slider = new Slider(new SliderIOSim() {});
+        arm = new Arm(new ArmIOSim() {});
         break;
 
       default:
@@ -156,6 +173,8 @@ public class RobotContainer {
 
         intake = new Intake(new IntakeIO() {});
         shoot = new Shoot(new ShootIO() {}, intake);
+        slider = new Slider(new SliderIO() {});
+        arm = new Arm(new ArmIO() {});
         break;
     }
 
@@ -219,23 +238,23 @@ public class RobotContainer {
     intakeOut.onTrue(
         new InstantCommand(
             () -> {
-              armMovementCommand.goToIntakeOut();
+              armMovementCommand.goToIntakeOut(slider, arm);
             }));
-    aimSpeaker.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToAimSpeaker();
-            }));
+    // aimSpeaker.onTrue(
+    //     new InstantCommand(
+    //         () -> {
+    //           armMovementCommand.goToAimSpeaker();
+    //         }));
     intakeIn.onTrue(
         new InstantCommand(
             () -> {
-              armMovementCommand.goToIntakeIn();
+              armMovementCommand.goToIntakeIn(slider, arm);
             }));
-    aimAmp.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToAimAmp();
-            }));
+    // aimAmp.onTrue(
+    //     new InstantCommand(
+    //         () -> {
+    //           armMovementCommand.goToAimAmp();
+    //         }));
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
