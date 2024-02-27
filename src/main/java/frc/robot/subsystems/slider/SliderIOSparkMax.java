@@ -15,7 +15,6 @@ public class SliderIOSparkMax implements SliderIO {
   private final CANSparkMax sliderMotor;
   private final CANSparkMax sliderMotor2;
   private final RelativeEncoder sliderEncoder;
-  private final RelativeEncoder sliderEncoder2;
   private final SparkPIDController sliderPidController;
   private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
   private static final double sprocketDiameterInch = Constants.SliderSubsystem.sprocketDiameterInch;
@@ -38,11 +37,11 @@ public class SliderIOSparkMax implements SliderIO {
     sliderMotor = new CANSparkMax(Constants.SliderSubsystem.deviceID, MotorType.kBrushless);
     sliderEncoder = sliderMotor.getEncoder();
     sliderMotor2 = new CANSparkMax(Constants.SliderSubsystem.deviceID2, MotorType.kBrushless);
-    sliderMotor2.follow(sliderMotor);
-    sliderEncoder2 = sliderMotor2.getEncoder();
+    sliderMotor2.follow(sliderMotor,!Constants.SliderSubsystem.isInverted);
+    
     sliderPidController = sliderMotor.getPIDController();
     sliderMotor.setInverted(Constants.SliderSubsystem.isInverted);
-    sliderMotor2.setInverted(!Constants.SliderSubsystem.isInverted);
+    
 
     sliderMotor.burnFlash();
     sliderMotor2.burnFlash();
