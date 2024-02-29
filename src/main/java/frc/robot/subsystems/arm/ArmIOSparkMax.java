@@ -11,6 +11,7 @@ import frc.robot.Constants;
 
 public class ArmIOSparkMax implements ArmIO {
   private final CANSparkMax armMotor;
+  private final CANSparkMax armMotor2;
   private final RelativeEncoder armEncoder;
   private final SparkPIDController armPidController;
   private static final double gearRatio = Constants.ArmSubsystem.gearRatio;
@@ -25,9 +26,16 @@ public class ArmIOSparkMax implements ArmIO {
   public double currentAmps = 0.0;
 
   public ArmIOSparkMax() {
-    armMotor = new CANSparkMax(Constants.ElevatorSubsystem.deviceID, MotorType.kBrushless);
+    armMotor = new CANSparkMax(Constants.ArmSubsystem.deviceID, MotorType.kBrushless);
+    armMotor2 = new CANSparkMax(Constants.ArmSubsystem.deviceID2, MotorType.kBrushless);
+    armMotor2.follow(armMotor, !Constants.ArmSubsystem.isInverted);
+
     armEncoder = armMotor.getEncoder();
     armPidController = armMotor.getPIDController();
+    armMotor.setInverted(Constants.ArmSubsystem.isInverted);
+
+    armMotor.burnFlash();
+    armMotor2.burnFlash();
   }
 
   @Override

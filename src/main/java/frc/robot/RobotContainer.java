@@ -94,8 +94,9 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Button.kX.value);
 
   // shooting/roller buttons
-  private final JoystickButton IntakeRollersOn = new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
-  //Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
+  private final JoystickButton IntakeRollersOn =
+      new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+  // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);

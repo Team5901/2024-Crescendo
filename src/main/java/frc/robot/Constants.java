@@ -234,6 +234,7 @@ public final class Constants {
 
   public static final class ArmSubsystem {
     public static final int deviceID = 13;
+    public static final int deviceID2 = 14;
     public static final boolean isInverted = true;
 
     // FeedForward Control

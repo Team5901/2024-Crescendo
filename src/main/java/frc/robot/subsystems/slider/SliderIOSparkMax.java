@@ -37,18 +37,14 @@ public class SliderIOSparkMax implements SliderIO {
     sliderMotor = new CANSparkMax(Constants.SliderSubsystem.deviceID, MotorType.kBrushless);
     sliderEncoder = sliderMotor.getEncoder();
     sliderMotor2 = new CANSparkMax(Constants.SliderSubsystem.deviceID2, MotorType.kBrushless);
-    sliderMotor2.follow(sliderMotor,!Constants.SliderSubsystem.isInverted);
-    
+    sliderMotor2.follow(sliderMotor, !Constants.SliderSubsystem.isInverted);
+
     sliderPidController = sliderMotor.getPIDController();
     sliderMotor.setInverted(Constants.SliderSubsystem.isInverted);
-    
 
     sliderMotor.burnFlash();
     sliderMotor2.burnFlash();
   }
-
-  // UPDATE: Add function to add follower
-  public void addFollower() {}
 
   @Override
   public void updateInputs(SliderIOInputs inputs) {
