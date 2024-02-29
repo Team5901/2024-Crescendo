@@ -35,10 +35,12 @@ public class LimelightIONetwork implements LimelightIO {
 
   public void moveToCenterOfTag(LimelightIOInputs inputs) {
     // updateInputs(inputs);
-    if (inputs.tx > 0) {
+    if (inputs.tx > 1) {
       SmartDashboard.putString("Centering April Tag: ", "Move right");
-    } else {
+    } else if (inputs.tx < -1) {
       SmartDashboard.putString("Centering April Tag: ", "Move left");
+    } else {
+      SmartDashboard.putString("Centering April Tag: ", "Centered");
     }
   }
 
