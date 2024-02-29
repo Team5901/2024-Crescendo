@@ -16,9 +16,10 @@ public class ArmMovement extends SequentialCommandGroup {
 
   public void goToIntakeOut(Slider slider, Arm arm) { // Assumes we start at intake in ONLY
     // check if above/at aim amp
-    new InstantCommand(() -> ExtendCommand.goToIntakeOut(slider))
-        .withTimeout(1)
-        .andThen(new InstantCommand(() -> RotateCommand.goToIntakeOut(arm)));
+    addCommands(
+      new InstantCommand(()-> ExtendCommand.goToIntakeOut(slider)).withTimeout(1),//Extends the intake arm with a timeout of 1 second
+      new InstantCommand(()-> RotateCommand.goToIntakeOut (arm)) //Rotate's the arm intake 
+        );
     // if (startAngle > MovementPositions.AimAmpDeg) {
     //   new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg));
     // }
@@ -34,9 +35,10 @@ public class ArmMovement extends SequentialCommandGroup {
   }
 
   public void goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
-    new InstantCommand(() -> RotateCommand.goToIntakeIn(arm)) // rotate up to our intake in angle
-        .withTimeout(1)
-        .andThen(new InstantCommand(() -> ExtendCommand.goToIntakeIn(slider))); // then retract
+        addCommands(
+        new InstantCommand(() -> RotateCommand.goToIntakeIn(arm)). withTimeout(1), //Intake rotates arm in. 
+        new InstantCommand(() -> ExtendCommand.goToIntakeIn(slider)) // intake Extend's arm in 
+        ); 
   }
 
   // public void goToAimSpeaker() {}
