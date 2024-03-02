@@ -14,6 +14,7 @@ import frc.robot.subsystems.shoot.ShootIO.ShootIOInputs;
 
 public class ShootIOSparkMax implements ShootIO {
   private final CANSparkMax shootMotor;
+  private final CANSparkMax shootMotor2;
   private final RelativeEncoder shootEncoder;
 
   private final SparkPIDController shootPidController;
@@ -26,8 +27,14 @@ public class ShootIOSparkMax implements ShootIO {
 
   public ShootIOSparkMax() {
     shootMotor = new CANSparkMax(Constants.ShootSubsystem.deviceID, MotorType.kBrushless);
+    shootMotor2 = new CANSparkMax(Constants.ShootSubsystem.deviceID2, MotorType.kBrushless);
+    shootMotor2.follow(shootMotor, !Constants.ShootSubsystem.isInverted);
     shootEncoder = shootMotor.getEncoder();
     shootPidController = shootMotor.getPIDController();
+    shootMotor.setInverted(Constants.ShootSubsystem.isInverted);
+
+    shootMotor.burnFlash();
+    shootMotor2.burnFlash();
   }
 
   @Override

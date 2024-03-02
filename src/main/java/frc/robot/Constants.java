@@ -195,7 +195,7 @@ public final class Constants {
     public static final double sprocketDiameterInch = 1.92;
 
     // motor shaft details
-    public static final int maxCurrentAmps = 30;
+    public static final int maxCurrentAmps = 40;
     public static final double maxAngularVelocityRPM = 100.0;
     public static final double maxAngularAccRPMPerSec = 80.0;
     public static final double minOutputVelocityRPM = 10.0; // requests below this no voltage output
@@ -219,18 +219,18 @@ public final class Constants {
     public static final double allowableTeleopErrorInch = 1.0;
   }
 
-  public static final class MovementPositions {
-    // Angle positions for thearm at specific game angles
-    public static final double IntakeOutDeg = 0;
-    public static final double AimSpeakerDeg = 10;
-    public static final double IntakeInDeg = 15;
-    public static final double AimAmpDeg = 90;
-    // slider extension positions at specific game positions
-    public static final double IntakeOutInch = 24;
-    public static final double AimSpeakerInch = 18;
-    public static final double IntakeInInch = 0;
-    public static final double AimAmpInch = 0;
-  }
+  // public static final class MovementPositions {
+  //   // Angle positions for thearm at specific game angles
+  //   public static final double IntakeOutDeg = 0;
+  //   public static final double AimSpeakerDeg = 10;
+  //   public static final double IntakeInDeg = 15;
+  //   public static final double AimAmpDeg = 90;
+  //   // slider extension positions at specific game positions
+  //   public static final double IntakeOutInch = 24;
+  //   public static final double AimSpeakerInch = 18;
+  //   public static final double IntakeInInch = 0;
+  //   public static final double AimAmpInch = 0;
+  // }
 
   public static final class ArmSubsystem {
     public static final int deviceID = 13;
@@ -250,8 +250,8 @@ public final class Constants {
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
-    public static final double gearRatio = 25.0; // Needs to be updated
-    public static final double sprocketDiameterInch = 1.92;
+    public static final double gearRatio = 50 * (58 / 12); // Arm chain loop
+    // public static final double sprocketDiameterInch = 1.92;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
@@ -261,9 +261,9 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 3.0 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    // Elevator details
-    public static final double maxVelocityDegreesPerSec = 20.0;
-    public static final double maxAccelerationDegreesPerSec = 20.0;
+    // Arm details
+    public static final double maxVelocityDegreesPerSec = 15.0;
+    public static final double maxAccelerationDegreesPerSec = 15.0;
 
     // Degrees
     public static final double armSoftLimitLowerAngle = 0;
@@ -299,7 +299,7 @@ public final class Constants {
     // NOTE: Double check this value
     public static final double gearRatio = 1.6;
 
-    public static final int maxCurrentAmps = 25;
+    public static final int maxCurrentAmps = 30;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
     public static final double intakeInNoteVelRPM = 50.0;
@@ -318,6 +318,7 @@ public final class Constants {
   public static final class ShootSubsystem {
     // UPDATE: Update deviceID
     public static final int deviceID = 14;
+    public static final int deviceID2 = 15;
     public static final int LEDsparknumber = 4;
     public static final boolean isInverted = false;
 
@@ -336,7 +337,7 @@ public final class Constants {
     // UPDATE: Update value for 2024 robot
     public static final double gearRatio = 4.0 * 2.0;
 
-    public static final int maxCurrentAmps = 25;
+    public static final int maxCurrentAmps = 30;
     public static final int holdCurrentAmps = 10;
     // Velocity control mode
 
@@ -375,7 +376,7 @@ public final class Constants {
     public static final double kMinOutput = -1.0;
     public static final int kTimeoutMs = 30;
 
-    public static final int maxCurrentAmps = 30;
+    public static final int maxCurrentAmps = 40;
 
     public static final double maxAngularVelocityRPM = 1200.0;
     public static final double maxAngularAccRPMPerSec = 1500.0;
@@ -383,8 +384,8 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 60;
-    public static final double maxLinearAccelerationInchPerSec = 70;
+    public static final double maxLinearVelocityInchPerSec = 10;
+    public static final double maxLinearAccelerationInchPerSec = 20;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn = 0.0;
