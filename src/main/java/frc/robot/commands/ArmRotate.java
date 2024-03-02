@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
@@ -32,6 +33,21 @@ public class ArmRotate extends Command {
   public void goToIntakeIn(Arm arm) {
     m_Arm = arm;
     m_setpoint = Constants.ArmSubsystem.armPosIn;
+    goal_tolerance = Constants.ArmSubsystem.goalTolerance;
+    addRequirements(m_Arm);
+  }
+
+  public void goToSmartDashboard(Arm arm) {
+    m_Arm = arm;
+    double DashboardVal =
+        SmartDashboard.getNumber("Arm ANGLE Set Point", Constants.ArmSubsystem.armPosSpeaker);
+    if (DashboardVal < Constants.ArmSubsystem.armSoftLimitLowerAngle) {
+      m_setpoint = Constants.ArmSubsystem.armSoftLimitLowerAngle;
+    } else if (DashboardVal > Constants.ArmSubsystem.armSoftLimitUpperAngle) {
+      m_setpoint = Constants.ArmSubsystem.armSoftLimitUpperAngle;
+    } else {
+      m_setpoint = DashboardVal;
+    }
     goal_tolerance = Constants.ArmSubsystem.goalTolerance;
     addRequirements(m_Arm);
   }

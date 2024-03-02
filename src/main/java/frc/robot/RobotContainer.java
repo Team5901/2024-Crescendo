@@ -92,6 +92,8 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Button.kY.value);
   private final JoystickButton intakeIn =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
+  private final JoystickButton aimCustom =
+      new JoystickButton(controller_2, XboxController.Button.kStart.value);
 
   // shooting/roller buttons
   private final JoystickButton IntakeRollersOn =
@@ -259,6 +261,7 @@ public class RobotContainer {
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
+    aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
   }
 
   /**

@@ -75,4 +75,8 @@ public class ArmMovement extends SequentialCommandGroup {
   //     new InstantCommand(() -> arm.setAngleSetPoint(MovementPositions.AimAmpDeg));
   //   }
   // }
+
+  public void goToANGLESmartDashboard(Arm arm) {
+    new InstantCommand(() -> RotateCommand.goToSmartDashboard(arm)); // Intake rotates arm in.
+  }
 }
