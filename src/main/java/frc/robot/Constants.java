@@ -317,8 +317,8 @@ public final class Constants {
   // Shoot motor
   public static final class ShootSubsystem {
     // UPDATE: Update deviceID
-    public static final int deviceID = 14;
-    public static final int deviceID2 = 15;
+    public static final int deviceID = 16;
+    public static final int deviceID2 = 17;
     public static final int LEDsparknumber = 4;
     public static final boolean isInverted = false;
 
