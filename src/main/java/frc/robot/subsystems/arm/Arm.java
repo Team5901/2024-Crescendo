@@ -35,7 +35,9 @@ public class Arm extends SubsystemBase {
             Constants.ElevatorSubsystem.kv);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
-    SmartDashboard.putNumber("Arm Angle INPUT", inputs.angleArmDegrees); //creates our arm angle input field, updates once
+    SmartDashboard.putNumber(
+        "Arm Angle INPUT",
+        inputs.angleArmDegrees); // creates our arm angle input field, updates once
   }
 
   @Override
@@ -49,7 +51,9 @@ public class Arm extends SubsystemBase {
     io.setAngle(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("ArmPosErrorInch", getError());
     Logger.recordOutput("armFF", ffModel.calculate(m_setpoint.velocity));
-    SmartDashboard.putNumber("Arm Angle",inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
+    SmartDashboard.putNumber(
+        "Arm Angle",
+        inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
   }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
