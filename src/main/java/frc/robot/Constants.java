@@ -233,8 +233,8 @@ public final class Constants {
   // }
 
   public static final class ArmSubsystem {
-    public static final int deviceID = 13;
-    public static final int deviceID2 = 14;
+    public static final int deviceID = 14;
+    public static final int deviceID2 = 15;
     public static final boolean isInverted = true;
 
     // FeedForward Control
@@ -280,7 +280,7 @@ public final class Constants {
   // Intake motor
   public static final class IntakeSubsystem {
     // UPDATE: Update deviceID
-    public static final int deviceID = 12;
+    public static final int deviceID = 18;
     public static final boolean isInverted = false;
     public static final int LEDsparknumber = 3;
 
@@ -354,8 +354,8 @@ public final class Constants {
   }
 
   public static final class SliderSubsystem {
-    public static final int deviceID = 14;
-    public static final int deviceID2 = 15;
+    public static final int deviceID = 12;
+    public static final int deviceID2 = 13;
     public static final int sensorResolution = 2048;
     public static final boolean isInverted = false;
 

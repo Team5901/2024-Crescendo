@@ -189,6 +189,9 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shootspeaker",
         Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
+    NamedCommands.registerCommand(
+        "Pick_Up_Note",
+        Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up feedforward characterization
