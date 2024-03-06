@@ -52,8 +52,6 @@ import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -104,8 +102,6 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
-  SmartDashboard.putNumber("Arm ANGLE Set Point", 0);
-  //private final LoggedDashboardNumber flywheelSpeedInput = new LoggedDashboardNumber("Flywheel Speed", 1500.0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

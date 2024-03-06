@@ -2,6 +2,7 @@ package frc.robot.subsystems.slider;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
@@ -35,6 +36,7 @@ public class Slider extends SubsystemBase {
             Constants.SliderSubsystem.kv);
     io.configurePID(
         Constants.SliderSubsystem.kP, Constants.SliderSubsystem.kI, Constants.SliderSubsystem.kD);
+    SmartDashboard.putNumber("Slider INPUT",inputs.positionSliderInch); // creates an input number area so we can adjust the slider's position at will
   }
 
   @Override
@@ -52,6 +54,7 @@ public class Slider extends SubsystemBase {
 
     io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("SliderPosErrorInch", getError());
+    SmartDashboard.putNumber("Slider Position",inputs.positionSliderInch); // constantly updates slider position for the operators benefit
   }
 
   public void setPositionSetPoint(double positionSetInch) {

@@ -2,6 +2,7 @@ package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
@@ -34,6 +35,7 @@ public class Arm extends SubsystemBase {
             Constants.ElevatorSubsystem.kv);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
+    SmartDashboard.putNumber("Arm Angle INPUT", inputs.angleArmDegrees); //creates our arm angle input field, updates once
   }
 
   @Override
@@ -47,6 +49,7 @@ public class Arm extends SubsystemBase {
     io.setAngle(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("ArmPosErrorInch", getError());
     Logger.recordOutput("armFF", ffModel.calculate(m_setpoint.velocity));
+    SmartDashboard.putNumber("Arm Angle",inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
   }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
