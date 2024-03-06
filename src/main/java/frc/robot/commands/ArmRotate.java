@@ -40,7 +40,7 @@ public class ArmRotate extends Command {
   public void goToSmartDashboard(Arm arm) {
     m_Arm = arm;
     double DashboardVal =
-        SmartDashboard.getNumber("Arm ANGLE Set Point", Constants.ArmSubsystem.armPosSpeaker);
+        SmartDashboard.getNumber("Arm Angle INPUT", Constants.ArmSubsystem.armPosSpeaker);
     if (DashboardVal < Constants.ArmSubsystem.armSoftLimitLowerAngle) {
       m_setpoint = Constants.ArmSubsystem.armSoftLimitLowerAngle;
     } else if (DashboardVal > Constants.ArmSubsystem.armSoftLimitUpperAngle) {

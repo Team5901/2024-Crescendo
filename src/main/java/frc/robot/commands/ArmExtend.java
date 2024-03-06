@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.slider.Slider;
 
 /*
@@ -52,5 +54,21 @@ public class ArmExtend extends Command {
   public boolean isFinished() {
 
     return m_Slider.atSetpoint(goal_tolerance);
+  }
+
+
+  public void goToSmartDashboard(Slider slider) {
+    m_Slider = slider;
+    double DashboardVal =
+        SmartDashboard.getNumber("Slider INPUT", Constants.SliderSubsystem.sliderIntakeOut);
+    if (DashboardVal < Constants.SliderSubsystem.sliderIntakeIn) {
+      m_setpoint = Constants.SliderSubsystem.sliderIntakeIn;
+    } else if (DashboardVal > Constants.SliderSubsystem.sliderIntakeOut) {
+      m_setpoint = Constants.SliderSubsystem.sliderIntakeOut;
+    } else {
+      m_setpoint = DashboardVal;
+    }
+    goal_tolerance = Constants.SliderSubsystem.goalTolerance;
+    addRequirements(m_Slider);
   }
 }
