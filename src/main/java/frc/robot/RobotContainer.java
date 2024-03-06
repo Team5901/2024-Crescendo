@@ -97,6 +97,9 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
+  // joystick button to goto specific slider spot
+  private final JoystickButton customSliderPositionButton = new JoystickButton(joystick, 6);
+
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
 
@@ -245,6 +248,7 @@ public class RobotContainer {
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
+    customSliderPositionButton.onTrue(new InstantCommand(()-> armMovementCommand.goToSLIDERSmartDashboard(slider)));
   }
 
   /**

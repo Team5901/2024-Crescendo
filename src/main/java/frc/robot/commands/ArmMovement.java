@@ -79,4 +79,8 @@ public class ArmMovement extends SequentialCommandGroup {
   public void goToANGLESmartDashboard(Arm arm) {
     new InstantCommand(() -> RotateCommand.goToSmartDashboard(arm)); // Intake rotates arm in.
   }
+
+  public void goToSLIDERSmartDashboard(Slider slider) {
+    new InstantCommand(() -> ExtendCommand.goToSmartDashboard(slider)); // slide intake in and out
+  }
 }
