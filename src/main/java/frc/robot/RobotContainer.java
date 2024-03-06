@@ -39,10 +39,6 @@ import frc.robot.subsystems.drive.LimelightIONetwork;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.flywheel.Flywheel;
-import frc.robot.subsystems.flywheel.FlywheelIO;
-import frc.robot.subsystems.flywheel.FlywheelIOSim;
-import frc.robot.subsystems.flywheel.FlywheelIOSparkMax;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOSim;
@@ -71,7 +67,6 @@ public class RobotContainer {
   private final int rotationAxis = Joystick.AxisType.kZ.value;
   // Subsystems
   private final Drive drive;
-  private final Flywheel flywheel;
   private final Intake intake;
   private final Shoot shoot;
   private final LimelightIONetwork limelight;
@@ -124,7 +119,6 @@ public class RobotContainer {
                 new ModuleIOTalonFX(1),
                 new ModuleIOTalonFX(2),
                 new ModuleIOTalonFX(3));
-        flywheel = new Flywheel(new FlywheelIOSparkMax());
         limelight = new LimelightIONetwork();
         inputs = new LimelightIOInputs();
 
@@ -151,7 +145,6 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
-        flywheel = new Flywheel(new FlywheelIOSim());
         limelight = new LimelightIONetwork();
         inputs = new LimelightIOInputs();
 
@@ -170,7 +163,6 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        flywheel = new Flywheel(new FlywheelIO() {});
         limelight = new LimelightIONetwork();
         inputs = new LimelightIOInputs();
 
@@ -182,11 +174,6 @@ public class RobotContainer {
     }
 
     // Set up auto routines
-    NamedCommands.registerCommand(
-        "Run Flywheel",
-        Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel)
-            .withTimeout(5.0));
     NamedCommands.registerCommand(
         "shootspeaker",
         Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
@@ -200,10 +187,6 @@ public class RobotContainer {
         "Drive FF Characterization",
         new FeedForwardCharacterization(
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
-    autoChooser.addOption(
-        "Flywheel FF Characterization",
-        new FeedForwardCharacterization(
-            flywheel, flywheel::runVolts, flywheel::getCharacterizationVelocity));
 
     // Configure the button bindings
     configureButtonBindings();
