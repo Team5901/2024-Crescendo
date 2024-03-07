@@ -98,7 +98,7 @@ public class RobotContainer {
   Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
   // joystick button to goto specific slider spot
-  private final JoystickButton customSliderPositionButton = new JoystickButton(joystick, 6);
+  private final JoystickButton customSliderPositionButton = new JoystickButton(controller_2,XboxController.Button.kBack.value);
 
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
