@@ -57,4 +57,12 @@ public class LimelightIONetwork extends SubsystemBase implements LimelightIO {
       angleToSpeakerTag(inputs);
     }
   }
+
+  public double alignAprilTag(LimelightIOInputs inputs) {
+    if (!tagInView(inputs)) {
+      return 0;
+    } else {
+      return inputs.tx;
+    }
+  }
 }

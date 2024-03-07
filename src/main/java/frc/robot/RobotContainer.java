@@ -103,7 +103,7 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
 
   // Add joystick button to check april tag
-  private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
+  private final JoystickButton alignAprilTag = new JoystickButton(joystick, 8);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -250,7 +250,7 @@ public class RobotContainer {
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
-    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
+    alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
     aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
