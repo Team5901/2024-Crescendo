@@ -248,7 +248,8 @@ public class RobotContainer {
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
-    customSliderPositionButton.onTrue(new InstantCommand(()-> armMovementCommand.goToSLIDERSmartDashboard(slider)));
+    customSliderPositionButton.onTrue(
+        new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
   }
 
   /**

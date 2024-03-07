@@ -59,10 +59,10 @@ public class ArmExtend extends Command {
     m_Slider = slider;
     double DashboardVal =
         SmartDashboard.getNumber("Slider INPUT", Constants.SliderSubsystem.sliderIntakeOut);
-    if (DashboardVal < Constants.SliderSubsystem.sliderIntakeIn) {
-      m_setpoint = Constants.SliderSubsystem.sliderIntakeIn;
-    } else if (DashboardVal > Constants.SliderSubsystem.sliderIntakeOut) {
-      m_setpoint = Constants.SliderSubsystem.sliderIntakeOut;
+    if (DashboardVal < Constants.SliderSubsystem.sliderSoftLimitLowerInch) {
+      m_setpoint = Constants.SliderSubsystem.sliderSoftLimitLowerInch;
+    } else if (DashboardVal > Constants.SliderSubsystem.sliderSoftLimitUpperInch) {
+      m_setpoint = Constants.SliderSubsystem.sliderSoftLimitUpperInch;
     } else {
       m_setpoint = DashboardVal;
     }
