@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmMovement;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.LimelightCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSim;
@@ -98,7 +99,8 @@ public class RobotContainer {
   Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
   // joystick button to goto specific slider spot
-  private final JoystickButton customSliderPositionButton = new JoystickButton(controller_2,XboxController.Button.kBack.value);
+  private final JoystickButton customSliderPositionButton =
+      new JoystickButton(controller_2, XboxController.Button.kBack.value);
 
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
@@ -204,6 +206,8 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
             () -> -joystick.getRawAxis(rotationAxis)));
+
+    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
     /*controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller
         .b()

@@ -5,8 +5,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LimelightIONetwork implements LimelightIO {
+public class LimelightIONetwork extends SubsystemBase implements LimelightIO {
   NetworkTable table;
 
   public LimelightIONetwork() {
@@ -28,7 +29,7 @@ public class LimelightIONetwork implements LimelightIO {
   }
 
   public boolean tagInView(LimelightIOInputs inputs) {
-    updateInputs(inputs);
+    // updateInputs(inputs);
     SmartDashboard.putBoolean("April Tag in View: ", inputs.tv > 0.0);
     return inputs.tv > 0.0;
   }
