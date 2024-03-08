@@ -72,7 +72,7 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   // Commands
-  private ArmMovement armMovementCommand;
+  private final ArmMovement armMovementCommand;
   // Controller and joystick
   private final Joystick joystick = new Joystick(0);
   private final XboxController controller_2 = new XboxController(1);
@@ -95,10 +95,11 @@ public class RobotContainer {
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
-  Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
+  private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
   // joystick button to goto specific slider spot
-  private final JoystickButton customSliderPositionButton = new JoystickButton(controller_2,XboxController.Button.kBack.value);
+  private final JoystickButton customSliderPositionButton =
+      new JoystickButton(controller_2, XboxController.Button.kBack.value);
 
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
@@ -151,6 +152,7 @@ public class RobotContainer {
         shoot = new Shoot(new ShootIOSim() {}, intake);
         slider = new Slider(new SliderIOSim() {});
         arm = new Arm(new ArmIOSim() {});
+
         break;
 
       default:
@@ -171,7 +173,7 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {});
         break;
     }
-
+    armMovementCommand = new ArmMovement();
     // Set up auto routines
     NamedCommands.registerCommand(
         "shootspeaker",

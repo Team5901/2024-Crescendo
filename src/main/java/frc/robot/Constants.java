@@ -59,8 +59,8 @@ public final class Constants {
         COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
     /* Drivetrain Constants */
-    public static final double trackWidth = Units.inchesToMeters(19);
-    public static final double wheelBase = Units.inchesToMeters(28.875);
+    public static final double wheelBase = Units.inchesToMeters(19);
+    public static final double trackWidth = Units.inchesToMeters(28.875);
     public static final double wheelCircumference = chosenModule.wheelCircumference;
 
     /* Swerve Kinematics
@@ -266,7 +266,7 @@ public final class Constants {
     public static final double maxAccelerationDegreesPerSec = 15.0;
 
     // Degrees
-    public static final double armSoftLimitLowerAngle = 0;
+    public static final double armSoftLimitLowerAngle = -45;
     public static final double armPosOut = 0.0;
     public static final double armPosSpeaker = 20.0;
     public static final double armPosAmp = 90.0;
