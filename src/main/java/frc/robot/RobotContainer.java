@@ -72,7 +72,7 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   // Commands
-  private ArmMovement armMovementCommand;
+  private final ArmMovement armMovementCommand;
   // Controller and joystick
   private final Joystick joystick = new Joystick(0);
   private final XboxController controller_2 = new XboxController(1);
@@ -171,7 +171,7 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {});
         break;
     }
-
+    armMovementCommand = new ArmMovement();
     // Set up auto routines
     NamedCommands.registerCommand(
         "shootspeaker",
