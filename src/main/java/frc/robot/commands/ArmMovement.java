@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
@@ -19,9 +18,15 @@ public class ArmMovement extends SequentialCommandGroup {
   public void goToIntakeOut(Slider slider, Arm arm) { // Assumes we start at intake in ONLY
     // check if above/at aim amp
     addCommands(
-        new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderIntakeOut, Constants.SliderSubsystem.goalTolerance, slider)
+        new ArmSliderGoToPosition(
+                Constants.SliderSubsystem.sliderIntakeOut,
+                Constants.SliderSubsystem.goalTolerance,
+                slider)
             .withTimeout(1), // Extends the intake arm with a timeout of 1 second
-        new ArmRotateGoToPosition(Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm) // Rotate's the arm intake
+        new ArmRotateGoToPosition(
+            Constants.ArmSubsystem.armPosOut,
+            Constants.ArmSubsystem.goalTolerance,
+            arm) // Rotate's the arm intake
         );
     // if (startAngle > MovementPositions.AimAmpDeg) {
     //   new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg));
@@ -39,9 +44,13 @@ public class ArmMovement extends SequentialCommandGroup {
 
   public void goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
     addCommands(
-        new ArmRotateGoToPosition(Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
+        new ArmRotateGoToPosition(
+                Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
             .withTimeout(1), // Intake rotates arm in.
-        new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderIntakeIn, Constants.SliderSubsystem.goalTolerance, slider) // intake Extend's arm in
+        new ArmSliderGoToPosition(
+            Constants.SliderSubsystem.sliderIntakeIn,
+            Constants.SliderSubsystem.goalTolerance,
+            slider) // intake Extend's arm in
         );
   }
 
@@ -79,22 +88,32 @@ public class ArmMovement extends SequentialCommandGroup {
   // }
 
   public void goToANGLESmartDashboard(Arm arm) {
-    double DashboardVal = SmartDashboard.getNumber("Arm Angle INPUT", Constants.ArmSubsystem.armPosSpeaker);
+    double DashboardVal =
+        SmartDashboard.getNumber("Arm Angle INPUT", Constants.ArmSubsystem.armPosSpeaker);
     if (DashboardVal < Constants.ArmSubsystem.armSoftLimitLowerAngle) {
-      new ArmRotateGoToPosition(Constants.ArmSubsystem.armSoftLimitLowerAngle, Constants.ArmSubsystem.goalTolerance, arm);
+      new ArmRotateGoToPosition(
+          Constants.ArmSubsystem.armSoftLimitLowerAngle, Constants.ArmSubsystem.goalTolerance, arm);
     } else if (DashboardVal > Constants.ArmSubsystem.armSoftLimitUpperAngle) {
-      new ArmRotateGoToPosition(Constants.ArmSubsystem.armSoftLimitUpperAngle, Constants.ArmSubsystem.goalTolerance, arm);
+      new ArmRotateGoToPosition(
+          Constants.ArmSubsystem.armSoftLimitUpperAngle, Constants.ArmSubsystem.goalTolerance, arm);
     } else {
       new ArmRotateGoToPosition(DashboardVal, Constants.ArmSubsystem.goalTolerance, arm);
     }
   }
 
-    public void goToSLIDERSmartDashboard(Slider slider) {
-    double DashboardVal = SmartDashboard.getNumber("Slider INPUT", Constants.SliderSubsystem.sliderIntakeOut);
+  public void goToSLIDERSmartDashboard(Slider slider) {
+    double DashboardVal =
+        SmartDashboard.getNumber("Slider INPUT", Constants.SliderSubsystem.sliderIntakeOut);
     if (DashboardVal < Constants.SliderSubsystem.sliderSoftLimitLowerInch) {
-      new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderSoftLimitLowerInch, Constants.SliderSubsystem.goalTolerance, slider);
+      new ArmSliderGoToPosition(
+          Constants.SliderSubsystem.sliderSoftLimitLowerInch,
+          Constants.SliderSubsystem.goalTolerance,
+          slider);
     } else if (DashboardVal > Constants.SliderSubsystem.sliderSoftLimitUpperInch) {
-      new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderSoftLimitUpperInch, Constants.SliderSubsystem.goalTolerance, slider);
+      new ArmSliderGoToPosition(
+          Constants.SliderSubsystem.sliderSoftLimitUpperInch,
+          Constants.SliderSubsystem.goalTolerance,
+          slider);
     } else {
       new ArmSliderGoToPosition(DashboardVal, Constants.SliderSubsystem.goalTolerance, slider);
     }

@@ -68,6 +68,11 @@ public class ArmIOSparkMax implements ArmIO {
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
+  public void setVoltage (double volts) {
+    
+      armMotor.setVoltage(volts);
+  }
+
   @Override
   public void updateState() {
     positionMotorShaftRot = armEncoder.getPosition();

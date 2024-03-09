@@ -62,6 +62,11 @@ public class Arm extends SubsystemBase {
     m_goal = new TrapezoidProfile.State(angleDegrees, 0);
   }
 
+  public void setVoltage(double volts) {
+
+    io.setVoltage(volts);
+  }
+
   // UPDATE: Angle or inch?
   public double getAngle() {
     return inputs.angleArmDegrees;

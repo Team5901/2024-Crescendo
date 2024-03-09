@@ -30,4 +30,6 @@ public interface ArmIO {
   public default void holdCurrent(int amps) {}
 
   public default void configurePID(double kP, double kI, double kD) {}
+
+  public default void setVoltage (double volts) {}
 }

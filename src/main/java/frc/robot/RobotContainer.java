@@ -96,7 +96,8 @@ public class RobotContainer {
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
-
+  
+  private final Trigger moveArm = new Trigger(()-> Math.abs(controller_2.getLeftY())>.1);
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
@@ -252,6 +253,7 @@ public class RobotContainer {
     aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
+    moveArm.whileTrue(new StartEndCommand(()-> arm.setVoltage(controller_2.getLeftY()*-1), arm::stop, arm));
   }
 
   /**

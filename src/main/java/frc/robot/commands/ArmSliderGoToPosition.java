@@ -52,6 +52,4 @@ public class ArmSliderGoToPosition extends Command {
 
     return m_Slider.atSetpoint(goal_tolerance);
   }
-
-
 }
