@@ -18,14 +18,15 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmMovement;
 import frc.robot.commands.ArmRotateGoToPosition;
+import frc.robot.commands.ArmSliderGoToPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.arm.Arm;
@@ -73,7 +74,7 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   // Commands
-  private final ArmMovement armMovementCommand;
+  // private final ArmMovement armMovementCommand;
   // Controller and joystick
   private final Joystick joystick = new Joystick(0);
   private final XboxController controller_2 = new XboxController(1);
@@ -175,7 +176,7 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {});
         break;
     }
-    armMovementCommand = new ArmMovement();
+
     // Set up auto routines
     NamedCommands.registerCommand(
         "shootspeaker",
@@ -202,6 +203,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
@@ -228,34 +230,36 @@ public class RobotContainer {
     IntakeRollersOn.whileTrue(
         new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToIntakeOut(slider, arm);
-            }));
-    // aimSpeaker.onTrue(
-    //     new InstantCommand(
-    //         () -> {
-    //           armMovementCommand.goToAimSpeaker();
-    //         }));
+        new ArmSliderGoToPosition(
+                Constants.SliderSubsystem.sliderIntakeOut,
+                Constants.SliderSubsystem.goalTolerance,
+                slider)
+            .andThen(
+                new ArmRotateGoToPosition(
+                    Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm)));
+
     intakeIn.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToIntakeIn(slider, arm);
-            }));
-    // aimAmp.onTrue(
-    //     new InstantCommand(
-    //         () -> {
-    //           armMovementCommand.goToAimAmp();
-    //         }));
+        new ArmRotateGoToPosition(
+                Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
+            .andThen(
+                new ArmSliderGoToPosition(
+                    Constants.SliderSubsystem.sliderIntakeIn,
+                    Constants.SliderSubsystem.goalTolerance,
+                    slider)));
+
     shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
     shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
-    aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
+    // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
-        new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
+        new ArmSliderGoToPosition(
+            SmartDashboard.getNumber("Slider INPUT", 0),
+            Constants.SliderSubsystem.goalTolerance,
+            slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
-    aimSpeaker.whileTrue(new ArmRotateGoToPosition(20, 0.1, arm));
+    aimSpeaker.whileTrue(
+        new ArmRotateGoToPosition(SmartDashboard.getNumber("Arm Angle INPUT", 0), 0.1, arm));
   }
 
   /**
