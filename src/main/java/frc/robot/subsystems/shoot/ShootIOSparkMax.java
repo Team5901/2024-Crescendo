@@ -83,6 +83,6 @@ public class ShootIOSparkMax implements ShootIO {
     shootPidController.setOutputRange(
         Constants.ShootSubsystem.kMinOutput, Constants.ShootSubsystem.kMaxOutput);
     shootMotor.setIdleMode(IdleMode.kCoast);
-    shootMotor.burnFlash();
+    // shootMotor.burnFlash();
   }
 }

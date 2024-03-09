@@ -28,14 +28,14 @@ public class ArmIOSparkMax implements ArmIO {
   public ArmIOSparkMax() {
     armMotor = new CANSparkMax(Constants.ArmSubsystem.deviceID, MotorType.kBrushless);
     armMotor2 = new CANSparkMax(Constants.ArmSubsystem.deviceID2, MotorType.kBrushless);
-    armMotor2.follow(armMotor, !Constants.ArmSubsystem.isInverted);
+    armMotor2.follow(armMotor, Constants.ArmSubsystem.isInverted);
 
     armEncoder = armMotor.getEncoder();
     armPidController = armMotor.getPIDController();
     armMotor.setInverted(Constants.ArmSubsystem.isInverted);
 
-    armMotor.burnFlash();
-    armMotor2.burnFlash();
+    // armMotor.burnFlash();
+    // armMotor2.burnFlash();
   }
 
   @Override
@@ -68,9 +68,9 @@ public class ArmIOSparkMax implements ArmIO {
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
-  public void setVoltage (double volts) {
-    
-      armMotor.setVoltage(volts);
+  public void setVoltage(double volts) {
+
+    armMotor.setVoltage(volts);
   }
 
   @Override

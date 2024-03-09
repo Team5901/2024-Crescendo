@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.arm.Arm;
 
@@ -39,6 +40,7 @@ public class ArmRotateGoToPosition extends Command {
   @Override
   public void initialize() {
     m_Arm.setAngleSetPoint(m_setpoint);
+    SmartDashboard.putNumber("Arm Setpoint", m_setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()

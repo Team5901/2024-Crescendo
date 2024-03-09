@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmMovement;
+import frc.robot.commands.ArmRotateGoToPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.subsystems.arm.Arm;
@@ -96,8 +97,8 @@ public class RobotContainer {
   private final JoystickButton shootAmp =
       new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
-  
-  private final Trigger moveArm = new Trigger(()-> Math.abs(controller_2.getLeftY())>.1);
+
+  // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
@@ -253,7 +254,8 @@ public class RobotContainer {
     aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
-    moveArm.whileTrue(new StartEndCommand(()-> arm.setVoltage(controller_2.getLeftY()*-1), arm::stop, arm));
+    // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
+    aimSpeaker.whileTrue(new ArmRotateGoToPosition(20, 0.1, arm));
   }
 
   /**

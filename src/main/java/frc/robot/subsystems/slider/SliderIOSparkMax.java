@@ -42,8 +42,8 @@ public class SliderIOSparkMax implements SliderIO {
     sliderPidController = sliderMotor.getPIDController();
     sliderMotor.setInverted(Constants.SliderSubsystem.isInverted);
 
-    sliderMotor.burnFlash();
-    sliderMotor2.burnFlash();
+    // sliderMotor.burnFlash();
+    // sliderMotor2.burnFlash();
   }
 
   @Override
