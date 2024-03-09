@@ -92,7 +92,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     int smartMotionSlot = 0;
     armMotor.restoreFactoryDefaults();
-    armMotor.setInverted(Constants.ArmSubsystem.isInverted);
+    // armMotor.setInverted(Constants.ArmSubsystem.isInverted);
     armMotor.enableVoltageCompensation(12.0);
     armMotor.setSmartCurrentLimit(Constants.ArmSubsystem.maxCurrentAmps);
 

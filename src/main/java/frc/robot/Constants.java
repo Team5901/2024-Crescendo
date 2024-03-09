@@ -235,7 +235,7 @@ public final class Constants {
   public static final class ArmSubsystem {
     public static final int deviceID = 14;
     public static final int deviceID2 = 15;
-    public static final boolean isInverted = true;
+    public static final boolean isInverted = false;
 
     // FeedForward Control
     public static final double ks = 0.00;
@@ -253,17 +253,18 @@ public final class Constants {
     public static final double gearRatio = 50 * (58 / 12); // Arm chain loop
     // public static final double sprocketDiameterInch = 1.92;
 
-    // motor shaft details
-    public static final int maxCurrentAmps = 30;
-    public static final double maxAngularVelocityRPM = 100.0;
-    public static final double maxAngularAccRPMPerSec = 80.0;
-    public static final double minOutputVelocityRPM = 10.0; // requests below this no voltage output
-    public static final double allowableSmartMotionPosErrorRotations = 3.0 * gearRatio;
-    public static final double autoPositionErrorInch = 2.0;
-
     // Arm details
     public static final double maxVelocityDegreesPerSec = 15.0;
     public static final double maxAccelerationDegreesPerSec = 15.0;
+
+    // motor shaft details
+    public static final int maxCurrentAmps = 30;
+    public static final double maxAngularVelocityRPM = (maxVelocityDegreesPerSec / 6) * gearRatio;
+    public static final double maxAngularAccRPMPerSec =
+        (maxAccelerationDegreesPerSec / 6) * gearRatio;
+    public static final double minOutputVelocityRPM = 10.0; // requests below this no voltage output
+    public static final double allowableSmartMotionPosErrorRotations = 3.0 * gearRatio;
+    public static final double autoPositionErrorInch = 2.0;
 
     // Degrees
     public static final double armSoftLimitLowerAngle = -45;

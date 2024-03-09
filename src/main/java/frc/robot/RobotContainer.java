@@ -18,13 +18,14 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ArmDashboardRotate;
+import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.ArmRotateGoToPosition;
 import frc.robot.commands.ArmSliderGoToPosition;
 import frc.robot.commands.DriveCommands;
@@ -253,13 +254,11 @@ public class RobotContainer {
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
-        new ArmSliderGoToPosition(
-            SmartDashboard.getNumber("Slider INPUT", 0),
-            Constants.SliderSubsystem.goalTolerance,
-            slider));
+        new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
-    aimSpeaker.whileTrue(
-        new ArmRotateGoToPosition(SmartDashboard.getNumber("Arm Angle INPUT", 0), 0.1, arm));
+    aimCustom.onTrue(
+        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm)
+            .andThen(new InstantCommand(() -> arm.setVoltage(-1))));
   }
 
   /**

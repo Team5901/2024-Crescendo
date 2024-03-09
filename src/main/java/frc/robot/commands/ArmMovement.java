@@ -13,7 +13,7 @@ public class ArmMovement extends SequentialCommandGroup {
   double startAngle, startExtension;
   Slider slider;
   ArmSliderGoToPosition ExtendCommand;
-  ArmRotateGoToPosition RotateCommand;
+  ArmDashboardRotate RotateCommand;
 
   public void goToIntakeOut(Slider slider, Arm arm) { // Assumes we start at intake in ONLY
     // check if above/at aim amp
