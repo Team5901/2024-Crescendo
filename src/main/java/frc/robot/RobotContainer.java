@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -73,6 +74,7 @@ public class RobotContainer {
   private final LimelightIOInputs inputs;
   private final Arm arm;
   private final Slider slider;
+  private final DutyCycleEncoder encoder;
   // Commands
   // private final ArmMovement armMovementCommand;
   // Controller and joystick
@@ -176,6 +178,10 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {});
         break;
     }
+    // Initializes a duty cycle encoder on DIO pins 0
+    encoder = new DutyCycleEncoder(9);
+    // Configures the encoder to return a distance of 4 for every rotation
+    encoder.setDistancePerRotation(360.0);
 
     // Set up auto routines
     // NamedCommands.registerCommand(
@@ -230,7 +236,7 @@ public class RobotContainer {
 
     // Intake
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
-    IntakeRollersOn.onFalse(new InstantCommand(() -> intake.holdCurrent(), intake));
+    IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
 
     intakeOut.onTrue(
         new ArmSliderGoToPosition(
@@ -263,7 +269,7 @@ public class RobotContainer {
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
     aimCustom.onTrue(
-        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm)
+        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder)
             .andThen(new InstantCommand(() -> arm.setVoltage(-4))));
   }
 

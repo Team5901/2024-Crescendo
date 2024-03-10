@@ -298,7 +298,7 @@ public final class Constants {
     public static final double kMinOutput = -1;
 
     // NOTE: Double check this value
-    public static final double gearRatio = 1.6;
+    public static final double gearRatio = 1;
 
     public static final int maxCurrentAmps = 30;
     public static final int holdNoteCurrentAmps = 10;

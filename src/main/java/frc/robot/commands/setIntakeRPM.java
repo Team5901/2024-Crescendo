@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
 
 public class setIntakeRPM extends Command {
@@ -20,9 +19,9 @@ public class setIntakeRPM extends Command {
     intake.runVelocity(setpointRPM);
   }
 
-  @Override
-  public boolean isFinished() {
-    return Math.abs(intake.getVelocityRPM() - setpointRPM)
-        < Constants.IntakeSubsystem.goalToleranceVelocity;
-  }
+  // @Override
+  // public boolean isFinished() {
+  //   return Math.abs(intake.getVelocityRPM() - setpointRPM)
+  //       < Constants.IntakeSubsystem.goalToleranceVelocity;
+  // }
 }
