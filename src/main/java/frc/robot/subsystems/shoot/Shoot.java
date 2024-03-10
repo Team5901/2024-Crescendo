@@ -18,7 +18,7 @@ public class Shoot extends SubsystemBase {
   /** Creates a new Shoot. */
   public Shoot(ShootIO io, Intake intake) {
     this.io = io;
-    
+
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
     switch (Constants.getMode()) {
@@ -69,8 +69,6 @@ public class Shoot extends SubsystemBase {
     Logger.recordOutput("ShootSetpointRPM", wheelVelocitySetRPM);
   }
 
-  
-
   /** Holds the note. */
   public void holdCurrent() {
     io.setVoltage(Constants.ShootSubsystem.holdVoltage, 0);
@@ -79,7 +77,7 @@ public class Shoot extends SubsystemBase {
 
   /** Stops the shoot. */
   public void stop() {
-        io.stop();
+    io.stop();
   }
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {

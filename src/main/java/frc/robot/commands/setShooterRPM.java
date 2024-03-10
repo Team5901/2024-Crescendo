@@ -10,11 +10,11 @@ public class setShooterRPM extends Command {
   private Shoot shoot;
   private double setpointRPM;
 
-  public setShooterRPM(double setpointRPM, Shoot shoot,Intake intake) {
+  public setShooterRPM(double setpointRPM, Shoot shoot, Intake intake) {
     this.setpointRPM = setpointRPM;
     this.shoot = shoot;
-    this.intake=intake;
-    addRequirements(shoot,intake);
+    this.intake = intake;
+    addRequirements(shoot, intake);
   }
 
   @Override
@@ -25,8 +25,12 @@ public class setShooterRPM extends Command {
 
   @Override
   public boolean isFinished() {
-    boolean a=Math.abs(shoot.getVelocityRPM() - setpointRPM) < Constants.ShootSubsystem.goalToleranceVelocity;
-    boolean b=Math.abs(intake.getVelocityRPM() - Constants.IntakeSubsystem.intakeShootNoteVelRPM) < Constants.IntakeSubsystem.goalToleranceVelocity;
-    return a&&b;
+    boolean a =
+        Math.abs(shoot.getVelocityRPM() - setpointRPM)
+            < Constants.ShootSubsystem.goalToleranceVelocity;
+    boolean b =
+        Math.abs(intake.getVelocityRPM() - Constants.IntakeSubsystem.intakeShootNoteVelRPM)
+            < Constants.IntakeSubsystem.goalToleranceVelocity;
+    return a && b;
   }
 }
