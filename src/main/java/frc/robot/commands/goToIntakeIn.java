@@ -7,42 +7,12 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.slider.Slider;
 // https://github.com/Jon-Zimmerman/FRC_Electric_Eels_2023/blob/main/src/main/java/frc/robot/autos/Bottom_Cube_Extended_Cube.java
 
-public class ArmMovement extends SequentialCommandGroup {
+public class goToIntakeIn extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
-  Arm arm;
-  double startAngle, startExtension;
-  Slider slider;
-  ArmSliderGoToPosition ExtendCommand;
-  ArmDashboardRotate RotateCommand;
+  
 
-  public void goToIntakeOut(Slider slider, Arm arm) { // Assumes we start at intake in ONLY
-    // check if above/at aim amp
-    addCommands(
-        new ArmSliderGoToPosition(
-                Constants.SliderSubsystem.sliderIntakeOut,
-                Constants.SliderSubsystem.goalTolerance,
-                slider)
-            .withTimeout(1), // Extends the intake arm with a timeout of 1 second
-        new ArmRotateGoToPosition(
-            Constants.ArmSubsystem.armPosOut,
-            Constants.ArmSubsystem.goalTolerance,
-            arm) // Rotate's the arm intake
-        );
-    // if (startAngle > MovementPositions.AimAmpDeg) {
-    //   new InstantCommand(() -> armsubsystem.setAngleSetPoint(MovementPositions.AimSpeakerDeg));
-    // }
-    // // check if below/at intake in
-    // if (startAngle > MovementPositions.IntakeInDeg ) {
-    //   new InstantCommand(()->
-    // slidersubsystem.setPositionSetPoint(MovementPositions.IntakeOutInch)).andThen(
-    //     new InstantCommand( ()-> armsubsystem.setAngleSetPoint(MovementPositions.IntakeOutDeg)));
-    // }
-    // check if below/ at aim speaker
 
-    // if at intake out, dont move
-  }
-
-  public void goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
+  public goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
     addCommands(
         new ArmRotateGoToPosition(
                 Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
