@@ -9,8 +9,6 @@ import frc.robot.subsystems.slider.Slider;
 
 public class goToIntakeIn extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
-  
-
 
   public goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
     addCommands(

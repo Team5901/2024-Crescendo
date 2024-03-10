@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
@@ -213,9 +212,9 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
             () -> -joystick.getRawAxis(rotationAxis)));
-    
-        // TODO add in this command so we can stop really nicely    
-            //controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+
+    // TODO add in this command so we can stop really nicely
+    // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     /*controller
         .b()
         .onTrue(
@@ -233,7 +232,7 @@ public class RobotContainer {
 
     // Intake
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
-    IntakeRollersOn.onFalse( new InstantCommand(() -> intake.holdCurrent(), intake));
+    IntakeRollersOn.onFalse(new InstantCommand(() -> intake.holdCurrent(), intake));
 
     intakeOut.onTrue(
         new ArmSliderGoToPosition(
@@ -253,11 +252,11 @@ public class RobotContainer {
                     Constants.SliderSubsystem.goalTolerance,
                     slider)));
 
-    //Shooter
-    shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot));
+    // Shooter
+    shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot, intake));
     shootAmp.onFalse(new InstantCommand(shoot::stop, shoot));
 
-    shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot));
+    shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot, intake));
     shootSpeaker.onFalse(new InstantCommand(shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
@@ -267,7 +266,7 @@ public class RobotContainer {
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
     aimCustom.onTrue(
         new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm)
-            .andThen(new InstantCommand(() -> arm.setVoltage(-1))));
+            .andThen(new InstantCommand(() -> arm.setVoltage(-4))));
   }
 
   /**

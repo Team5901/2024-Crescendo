@@ -8,7 +8,6 @@ import frc.robot.subsystems.slider.Slider;
 
 public class goToSLIDERSmartDashboard extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
-  
 
   public goToSLIDERSmartDashboard(Slider slider) {
     double DashboardVal =

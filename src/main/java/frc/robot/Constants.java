@@ -304,7 +304,7 @@ public final class Constants {
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
     public static final double intakeInNoteVelRPM = 50.0;
-    public static final double goalToleranceVelocity = 1; //RPM
+    public static final double goalToleranceVelocity = 1; // RPM
     public static final double intakeShootNoteVelRPM = 10.0;
 
     // Voltage control mode
@@ -343,7 +343,7 @@ public final class Constants {
     // Velocity control mode
 
     public static final double shootAmpVelRPM = 20.0;
-    public static final double goalToleranceVelocity = 1; //Rotations per minute
+    public static final double goalToleranceVelocity = 1; // Rotations per minute
     public static final double shootSpeakerVelRPM = 50.0;
     // Voltage control mode
 

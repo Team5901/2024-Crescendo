@@ -9,10 +9,6 @@ import frc.robot.subsystems.arm.Arm;
 
 public class goToANGLESmartDashboard extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
-  
-
-
-
 
   public goToANGLESmartDashboard(Arm arm) {
     double DashboardVal =
@@ -27,5 +23,4 @@ public class goToANGLESmartDashboard extends SequentialCommandGroup {
       new ArmRotateGoToPosition(DashboardVal, Constants.ArmSubsystem.goalTolerance, arm);
     }
   }
-
 }

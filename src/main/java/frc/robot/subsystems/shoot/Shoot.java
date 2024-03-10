@@ -8,7 +8,6 @@ import org.littletonrobotics.junction.Logger;
 
 public class Shoot extends SubsystemBase {
   private final ShootIO io;
-  private final Intake intake;
   private final ShootIOInputsAutoLogged inputs = new ShootIOInputsAutoLogged();
   private final SimpleMotorFeedforward ffModel;
   private double wheelVelocitySetPointRPM;
@@ -19,7 +18,7 @@ public class Shoot extends SubsystemBase {
   /** Creates a new Shoot. */
   public Shoot(ShootIO io, Intake intake) {
     this.io = io;
-    this.intake = intake;
+    
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
     switch (Constants.getMode()) {
@@ -70,15 +69,7 @@ public class Shoot extends SubsystemBase {
     Logger.recordOutput("ShootSetpointRPM", wheelVelocitySetRPM);
   }
 
-  public void shootAmp() {
-    intake.intakeShoot();
-    runVelocity(Constants.ShootSubsystem.shootAmpVelRPM);
-  }
-
-  public void shootSpeaker() {
-    intake.intakeShoot();
-    runVelocity(Constants.ShootSubsystem.shootSpeakerVelRPM);
-  }
+  
 
   /** Holds the note. */
   public void holdCurrent() {
@@ -88,8 +79,7 @@ public class Shoot extends SubsystemBase {
 
   /** Stops the shoot. */
   public void stop() {
-    intake.stop();
-    io.stop();
+        io.stop();
   }
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {
