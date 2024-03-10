@@ -28,13 +28,13 @@ public class ShootIOSparkMax implements ShootIO {
   public ShootIOSparkMax() {
     shootMotor = new CANSparkMax(Constants.ShootSubsystem.deviceID, MotorType.kBrushless);
     shootMotor2 = new CANSparkMax(Constants.ShootSubsystem.deviceID2, MotorType.kBrushless);
-    shootMotor2.follow(shootMotor, !Constants.ShootSubsystem.isInverted);
+    shootMotor2.follow(shootMotor, Constants.ShootSubsystem.followerInverted);
     shootEncoder = shootMotor.getEncoder();
     shootPidController = shootMotor.getPIDController();
-    shootMotor.setInverted(Constants.ShootSubsystem.isInverted);
+    shootMotor.setInverted(!Constants.ShootSubsystem.isInverted);
 
-    shootMotor.burnFlash();
-    shootMotor2.burnFlash();
+    // shootMotor.burnFlash();
+    // shootMotor2.burnFlash();
   }
 
   @Override

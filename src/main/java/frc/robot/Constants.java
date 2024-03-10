@@ -235,14 +235,15 @@ public final class Constants {
   public static final class ArmSubsystem {
     public static final int deviceID = 14;
     public static final int deviceID2 = 15;
-    public static final boolean isInverted = false;
+    public static final boolean isInverted = true;
+    public static final boolean followerInverted = false;
 
     // FeedForward Control
     public static final double ks = 0.00;
     public static final double kv = 0.04; // 0.2
     public static final double kg = 0.5; // 0.75
 
-    public static final double kP = 0.05;
+    public static final double kP = 0.0005;
     public static final double kI = 0.00;
     public static final double kD = 0.0;
     public static final double kIz = 0;
@@ -286,21 +287,21 @@ public final class Constants {
     public static final int LEDsparknumber = 3;
 
     // FeedForward Control
-    public static final double ks = 0.0;
+    public static final double ks = 0;
     public static final double kv = 0.000;
     // Closed Loop Control
-    public static final double kP = 0.1;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
+    public static final double kP = 0.0016;
+    public static final double kI = 0.0;
+    public static final double kD = kP / 10;
     public static final double kIz = 0;
-    public static final double kFF = 0;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
+    public static final double kFF = 0.000180;
+    public static final double kMaxOutput = 100;
+    public static final double kMinOutput = -100;
 
     // NOTE: Double check this value
     public static final double gearRatio = 1;
 
-    public static final int maxCurrentAmps = 30;
+    public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
     public static final double intakeInNoteVelRPM = 50.0;
@@ -308,11 +309,11 @@ public final class Constants {
     public static final double intakeShootNoteVelRPM = 10.0;
 
     // Voltage control mode
-    public static final double holdNoteVoltage = 4.0;
+    public static final double holdNoteVoltage = 3.0;
 
     public static final double intakeInNoteVoltage = 6.0;
 
-    public static final double intakeShootNoteVoltage = 7.0;
+    public static final double intakeShootNoteVoltage = 6.0;
   }
 
   // Shoot motor
@@ -321,19 +322,20 @@ public final class Constants {
     public static final int deviceID = 16;
     public static final int deviceID2 = 17;
     public static final int LEDsparknumber = 4;
-    public static final boolean isInverted = false;
+    public static final boolean followerInverted = false;
+    public static final boolean isInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.0;
     public static final double kv = 0.000;
     // Closed Loop Control
-    public static final double kP = 0.1;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
+    public static final double kP = 0.00015;
+    public static final double kI = 0.000001;
+    public static final double kD = 0.005;
     public static final double kIz = 0;
-    public static final double kFF = 0;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
+    public static final double kFF = 0.000180;
+    public static final double kMaxOutput = 100;
+    public static final double kMinOutput = -100;
 
     // UPDATE: Update value for 2024 robot
     public static final double gearRatio = 4.0 * 2.0;
@@ -344,7 +346,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 20.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 50.0;
+    public static final double shootSpeakerVelRPM = 200.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;

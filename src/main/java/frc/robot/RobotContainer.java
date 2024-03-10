@@ -97,8 +97,7 @@ public class RobotContainer {
   private final JoystickButton IntakeRollersOn =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
-  private final JoystickButton shootAmp =
-      new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
+  private final Trigger shootAmp = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
   // private final JoystickButton moveArm = new ;
@@ -258,10 +257,12 @@ public class RobotContainer {
 
     // Shooter
     shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot, intake));
-    shootAmp.onFalse(new InstantCommand(shoot::stop, shoot));
+    shootAmp.onFalse(
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
     shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot, intake));
-    shootSpeaker.onFalse(new InstantCommand(shoot::stop, shoot));
+    shootSpeaker.onFalse(
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
