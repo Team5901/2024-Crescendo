@@ -30,6 +30,8 @@ import frc.robot.commands.ArmRotateGoToPosition;
 import frc.robot.commands.ArmSliderGoToPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.setIntakeRPM;
+import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSim;
@@ -211,8 +213,10 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
             () -> -joystick.getRawAxis(rotationAxis)));
-    /*controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller
+    
+        // TODO add in this command so we can stop really nicely    
+            //controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    /*controller
         .b()
         .onTrue(
             Commands.runOnce(
@@ -228,8 +232,9 @@ public class RobotContainer {
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
 
     // Intake
-    IntakeRollersOn.whileTrue(
-        new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
+    IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+    IntakeRollersOn.onFalse( new InstantCommand(() -> intake.holdCurrent(), intake));
+
     intakeOut.onTrue(
         new ArmSliderGoToPosition(
                 Constants.SliderSubsystem.sliderIntakeOut,
@@ -248,8 +253,12 @@ public class RobotContainer {
                     Constants.SliderSubsystem.goalTolerance,
                     slider)));
 
-    shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
-    shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
+    //Shooter
+    shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot));
+    shootAmp.onFalse(new InstantCommand(shoot::stop, shoot));
+
+    shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot));
+    shootSpeaker.onFalse(new InstantCommand(shoot::stop, shoot));
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
