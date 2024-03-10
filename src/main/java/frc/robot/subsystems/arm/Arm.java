@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,17 +23,17 @@ public class Arm extends SubsystemBase {
   private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
 
   // UPDATE: Figure out how to update this for arm
-  private final ElevatorFeedforward ffModel;
+  private final ArmFeedforward ffModel;
 
   /** Creates a new arm. */
   public Arm(ArmIO io) {
     this.io = io;
 
     ffModel =
-        new ElevatorFeedforward(
-            Constants.ElevatorSubsystem.ks,
-            Constants.ElevatorSubsystem.kg,
-            Constants.ElevatorSubsystem.kv);
+        new ArmFeedforward(
+            Constants.ArmSubsystem.ks,
+            Constants.ArmSubsystem.kg,
+            Constants.ArmSubsystem.kv);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
     SmartDashboard.putNumber(
