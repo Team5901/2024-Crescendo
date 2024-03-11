@@ -28,7 +28,7 @@ public class ArmIOSparkMax implements ArmIO {
   public ArmIOSparkMax() {
     armMotor = new CANSparkMax(Constants.ArmSubsystem.deviceID, MotorType.kBrushless);
     armMotor2 = new CANSparkMax(Constants.ArmSubsystem.deviceID2, MotorType.kBrushless);
-    armMotor2.follow(armMotor, Constants.ArmSubsystem.isInverted);
+    armMotor2.follow(armMotor, Constants.ArmSubsystem.followerInverted);
 
     armEncoder = armMotor.getEncoder();
     armPidController = armMotor.getPIDController();
@@ -109,6 +109,6 @@ public class ArmIOSparkMax implements ArmIO {
     armPidController.setSmartMotionMaxAccel(
         Constants.ArmSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
 
-    armMotor.burnFlash();
+    // armMotor.burnFlash();
   }
 }

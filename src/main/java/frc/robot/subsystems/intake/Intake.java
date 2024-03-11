@@ -70,8 +70,7 @@ public class Intake extends SubsystemBase {
     wheelVelocitySetPointRPM = wheelVelocitySetRPM;
 
     io.setVelocity(
-        wheelVelocitySetPointRPM * gearRatio,
-        0.0); // ffModel.calculate(wheelVelocitySetRPM*gearRatio)
+        wheelVelocitySetPointRPM * gearRatio, ffModel.calculate(wheelVelocitySetRPM * gearRatio));
 
     // Log intake setpoint
     Logger.recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
@@ -101,5 +100,9 @@ public class Intake extends SubsystemBase {
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {
     return inputs.motorVelocityRPM / gearRatio;
+  }
+
+  public void setVoltage(double volts) {
+    io.setVoltage(volts, 14);
   }
 }
