@@ -15,6 +15,7 @@ public class ArmIOSparkMax implements ArmIO {
   private final RelativeEncoder armEncoder;
   private final SparkPIDController armPidController;
   private static final double gearRatio = Constants.ArmSubsystem.gearRatio;
+  private double motorVelocitySetPointRPM = 0.0;
 
   public double angleArmSetPointDegrees = 0.0;
   public double angleArmDegrees = 0.0;
@@ -63,7 +64,6 @@ public class ArmIOSparkMax implements ArmIO {
     angleArmSetPointDegrees = positionSetAngle;
     positionMotorSetPointRot = (positionSetAngle / 360) * gearRatio;
 
-    // TODO: Change to speed
     armPidController.setReference(
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
@@ -71,6 +71,12 @@ public class ArmIOSparkMax implements ArmIO {
   public void setVoltage(double volts) {
 
     armMotor.setVoltage(volts);
+  }
+
+  public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
+    motorVelocitySetPointRPM = motorVelocitySetRPM;
+    armPidController.setReference(
+        motorVelocitySetPointRPM, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   @Override

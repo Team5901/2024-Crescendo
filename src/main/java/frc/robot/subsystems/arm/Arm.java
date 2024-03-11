@@ -87,6 +87,15 @@ public class Arm extends SubsystemBase {
     return ((Math.abs(m_goal.position - inputs.angleArmDegrees)) < goal_tolerance);
   }
 
+  public void setVelocity(double armVelocityRPM) {
+    io.setVelocity(
+        armVelocityRPM * Constants.ArmSubsystem.gearRatio,
+        0.0); // ffModel.calculate(wheelVelocitySetRPM*gearRatio)
+
+    // Log intake setpoint
+    Logger.recordOutput("ArmSetpointRPM", armVelocityRPM);
+  }
+
   // public void setAngleAmp() {
   //   setAngleSetPoint(Constants.ArmSubsystem.armPosAmp);
   // }
