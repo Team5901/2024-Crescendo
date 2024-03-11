@@ -16,7 +16,7 @@ public class Arm extends SubsystemBase {
   private static final double maxAccelerationDegreesPerSec =
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
   private TrapezoidProfile profile;
-  private final TrapezoidProfile.Constraints m_constraints;
+  private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
 
@@ -33,7 +33,10 @@ public class Arm extends SubsystemBase {
 
     ffModel =
         new ArmFeedforward(
-            Constants.ArmSubsystem.ks, Constants.ArmSubsystem.kg, Constants.ArmSubsystem.kv);
+            Constants.ArmSubsystem.ks,
+            Constants.ArmSubsystem.kg,
+            Constants.ArmSubsystem.kv,
+            Constants.ArmSubsystem.kA);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
     SmartDashboard.putNumber(
@@ -52,7 +55,8 @@ public class Arm extends SubsystemBase {
         m_current.position,
         ffModel.calculate(Math.toRadians(m_current.position), Math.toRadians(m_current.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
-
+    Logger.recordOutput("m_goal position", m_goal.position);
+    Logger.recordOutput("m_current position", m_current.position);
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit

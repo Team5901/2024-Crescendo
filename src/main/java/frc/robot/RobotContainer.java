@@ -236,14 +236,15 @@ public class RobotContainer {
             Commands.startEnd(
                 () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
 
-    // Intake
+    // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
 
-    // Arm Voltage commands
+    // Arm Voltage commands B button
     armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
     armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
+    // X button
     armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
     armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
@@ -280,9 +281,9 @@ public class RobotContainer {
     customSliderPositionButton.onTrue(
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
-    aimCustom.onTrue(
-        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder)
-            .andThen(new InstantCommand(() -> arm.setVoltage(-4))));
+    aimCustom.onTrue( // start button
+        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder));
+    aimCustom.onFalse((new InstantCommand(arm::stop, arm)));
   }
 
   /**

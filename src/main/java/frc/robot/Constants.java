@@ -181,11 +181,12 @@ public final class Constants {
     public static final double kv = 1; // 0.2
     public static final double kg = 0.5; // 0.75
 
-    public static final double kP = 0.0005;
+    public static final double kP = 0.05;
     public static final double kI = 0.00;
     public static final double kD = 0.0;
+    public static final double kA = 0.0;
     public static final double kIz = 0;
-    public static final double kFF = 0;
+    public static final double kFF = 0.0001;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
@@ -196,6 +197,7 @@ public final class Constants {
     public static final double maxVelocityDegreesPerSec = 15.0;
     public static final double maxAccelerationDegreesPerSec = 15.0;
     public static final double armVolts = 6.0;
+    public static final double armVelocityRPM = (1 / 8) * 60;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
