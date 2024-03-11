@@ -14,12 +14,15 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
@@ -73,6 +76,7 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   private final DutyCycleEncoder encoder;
+  private final DigitalInput IntakeNoteDetector = new DigitalInput(8);
   // Commands
   // private final ArmMovement armMovementCommand;
   // Controller and joystick
@@ -101,6 +105,8 @@ public class RobotContainer {
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootAmp = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
+  
+  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get() );
 
   // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
@@ -238,7 +244,7 @@ public class RobotContainer {
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
-
+    detectNoteTrigger.onTrue(new WaitCommand(0.5).andThen( new InstantCommand(() -> intake.stop(), intake)));
     // Arm Voltage commands B button
     // armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
     // armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
