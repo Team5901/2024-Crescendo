@@ -12,7 +12,6 @@ import frc.robot.subsystems.slider.Slider;
 public class ArmDashboardSlider extends Command {
 
   private Slider m_Slider;
-  private double m_setpoint;
   private double goal_tolerance;
   /**
    * Create a new ArmSliderGoToPosition command.
@@ -23,24 +22,10 @@ public class ArmDashboardSlider extends Command {
    */
   public ArmDashboardSlider(double goalTolerance, Slider slider) {
     m_Slider = slider;
-    // m_setpoint = setpointInch;
     goal_tolerance = goalTolerance;
     addRequirements(m_Slider);
   }
 
-  // public void goToIntakeOut(Slider slider) {
-  //   m_Slider = slider;
-  //   m_setpoint = Constants.SliderSubsystem.sliderIntakeOut;
-  //   goal_tolerance = Constants.SliderSubsystem.goalTolerance;
-  //   addRequirements(m_Slider);
-  // }
-
-  // public void goToIntakeIn(Slider slider) {
-  //   m_Slider = slider;
-  //   m_setpoint = Constants.SliderSubsystem.sliderIntakeIn;
-  //   goal_tolerance = Constants.SliderSubsystem.goalTolerance;
-  //   addRequirements(m_Slider);
-  // }
   // Called just before this Command runs the first time
   @Override
   public void initialize() {

@@ -174,7 +174,7 @@ public final class Constants {
     public static final int deviceID = 14;
     public static final int deviceID2 = 15;
     public static final boolean isInverted = true;
-    public static final boolean followerInverted = false;
+    public static final boolean followerInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.00;
