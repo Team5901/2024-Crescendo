@@ -26,7 +26,6 @@ import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.commands.armSetVolts;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -241,12 +240,12 @@ public class RobotContainer {
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
 
     // Arm Voltage commands B button
-    armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
-    armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
+    // armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
+    // armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
     // X button
-    armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
-    armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
+    // armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
+    // armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
     // intakeOut.onTrue(
     //     new ArmSliderGoToPosition(
@@ -283,7 +282,7 @@ public class RobotContainer {
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
     aimCustom.onTrue( // start button
         new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder));
-    aimCustom.onFalse((new InstantCommand(arm::stop, arm)));
+    // aimCustom.onFalse((new InstantCommand(arm::stop, arm)));
   }
 
   /**

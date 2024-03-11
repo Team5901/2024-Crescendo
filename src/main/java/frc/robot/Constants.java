@@ -194,10 +194,10 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 15.0;
-    public static final double maxAccelerationDegreesPerSec = 15.0;
+    public static final double maxVelocityDegreesPerSec = 30.0;
+    public static final double maxAccelerationDegreesPerSec = 30.0;
     public static final double armVolts = 6.0;
-    public static final double armVelocityRPM = (1 / 8) * 60;
+    public static final double armVelocityRPM = (1 / 4) * 60;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
@@ -301,7 +301,8 @@ public final class Constants {
     public static final int deviceID = 12;
     public static final int deviceID2 = 13;
     public static final int sensorResolution = 2048;
-    public static final boolean isInverted = false;
+    public static final boolean isInverted = true;
+    public static final boolean followerInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.0;
