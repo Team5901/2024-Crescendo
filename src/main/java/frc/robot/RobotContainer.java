@@ -24,10 +24,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
-import frc.robot.commands.ArmRotateGoToPosition;
-import frc.robot.commands.ArmSliderGoToPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.armSetVolts;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -84,12 +83,16 @@ public class RobotContainer {
   // Intake movement buttons
   private final JoystickButton aimAmp =
       new JoystickButton(controller_2, XboxController.Button.kA.value);
-  private final JoystickButton intakeOut =
+  private final JoystickButton armSetVolts =
       new JoystickButton(controller_2, XboxController.Button.kB.value);
+  //   private final JoystickButton intakeOut =
+  //       new JoystickButton(controller_2, XboxController.Button.kB.value);
   private final JoystickButton aimSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kY.value);
-  private final JoystickButton intakeIn =
+  private final JoystickButton armSetNegativeVolts =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
+  //   private final JoystickButton intakeIn =
+  //       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimCustom =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
 
@@ -237,23 +240,31 @@ public class RobotContainer {
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
 
-    intakeOut.onTrue(
-        new ArmSliderGoToPosition(
-                Constants.SliderSubsystem.sliderIntakeOut,
-                Constants.SliderSubsystem.goalTolerance,
-                slider)
-            .andThen(
-                new ArmRotateGoToPosition(
-                    Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm)));
+    // Arm Voltage commands
+    armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
+    armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
-    intakeIn.onTrue(
-        new ArmRotateGoToPosition(
-                Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
-            .andThen(
-                new ArmSliderGoToPosition(
-                    Constants.SliderSubsystem.sliderIntakeIn,
-                    Constants.SliderSubsystem.goalTolerance,
-                    slider)));
+    armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
+    armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
+
+    // intakeOut.onTrue(
+    //     new ArmSliderGoToPosition(
+    //             Constants.SliderSubsystem.sliderIntakeOut,
+    //             Constants.SliderSubsystem.goalTolerance,
+    //             slider)
+    //         .andThen(
+    //             new ArmRotateGoToPosition(
+    //                 Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance,
+    // arm)));
+
+    // intakeIn.onTrue(
+    //     new ArmRotateGoToPosition(
+    //             Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
+    //         .andThen(
+    //             new ArmSliderGoToPosition(
+    //                 Constants.SliderSubsystem.sliderIntakeIn,
+    //                 Constants.SliderSubsystem.goalTolerance,
+    //                 slider)));
 
     // Shooter
     shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot, intake));

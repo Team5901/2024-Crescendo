@@ -195,6 +195,7 @@ public final class Constants {
     // Arm details
     public static final double maxVelocityDegreesPerSec = 15.0;
     public static final double maxAccelerationDegreesPerSec = 15.0;
+    public static final double armVolts = 6.0;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
