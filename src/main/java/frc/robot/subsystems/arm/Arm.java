@@ -15,11 +15,10 @@ public class Arm extends SubsystemBase {
       Constants.ArmSubsystem.maxVelocityDegreesPerSec;
   private static final double maxAccelerationDegreesPerSec =
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
-
-  private final TrapezoidProfile.Constraints m_constraints =
-      new TrapezoidProfile.Constraints((maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
+  private TrapezoidProfile profile;
+  private final TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
 
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
@@ -27,6 +26,10 @@ public class Arm extends SubsystemBase {
   /** Creates a new arm. */
   public Arm(ArmIO io) {
     this.io = io;
+    m_constraints =
+        new TrapezoidProfile.Constraints(
+            (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
+    profile = new TrapezoidProfile(m_constraints);
 
     ffModel =
         new ArmFeedforward(
@@ -43,18 +46,13 @@ public class Arm extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
 
-    var profile = new TrapezoidProfile(m_constraints);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
+    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
     io.setAngle(
-        m_setpoint.position,
-        ffModel.calculate(
-            Math.toRadians(m_setpoint.position), Math.toRadians(m_setpoint.velocity)));
+        m_current.position,
+        ffModel.calculate(Math.toRadians(m_current.position), Math.toRadians(m_current.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
-    Logger.recordOutput(
-        "armFF",
-        ffModel.calculate(
-            Math.toRadians(m_setpoint.position), Math.toRadians(m_setpoint.velocity)));
+
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
