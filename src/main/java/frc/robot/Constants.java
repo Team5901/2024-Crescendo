@@ -225,14 +225,14 @@ public final class Constants {
     public static final int LEDsparknumber = 3;
 
     // FeedForward Control
-    public static final double ks = 0;
+    public static final double ks = 1;
     public static final double kv = 0.000;
     // Closed Loop Control
-    public static final double kP = 0.0016;
-    public static final double kI = 0.0;
-    public static final double kD = kP / 10;
+    public static final double kP = 0.000000625;
+    public static final double kI = 0.000000001;
+    public static final double kD = 0;
     public static final double kIz = 0;
-    public static final double kFF = 0.000180;
+    public static final double kFF = 0.0002;
     public static final double kMaxOutput = 100;
     public static final double kMinOutput = -100;
 
@@ -242,7 +242,7 @@ public final class Constants {
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 50.0;
+    public static final double intakeInNoteVelRPM = 500.0;
     public static final double goalToleranceVelocity = 1; // RPM
     public static final double intakeShootNoteVelRPM = 10.0;
 
