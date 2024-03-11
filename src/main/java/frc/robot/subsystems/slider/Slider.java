@@ -48,11 +48,6 @@ public class Slider extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("slider", inputs);
-
-    // Log slider speed in RPM
-    // Logger.getInstance().recordOutput("SliderSpeedRPM",
-    // getVelocityRPMFromRadsPerSec());
-
     m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
     io.setPosition(m_current.position, ffModel.calculate(m_current.velocity));

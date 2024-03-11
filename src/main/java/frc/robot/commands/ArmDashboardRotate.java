@@ -20,24 +20,10 @@ public class ArmDashboardRotate extends Command {
   public ArmDashboardRotate(double goalTolerance, Arm arm, DutyCycleEncoder encoder) {
     m_Arm = arm;
     m_encoder = encoder;
-    // m_setpoint = 0;
     goal_tolerance = goalTolerance;
     addRequirements(m_Arm);
   }
 
-  // public void goToIntakeOut(Arm arm) {
-  //   m_Arm = arm;
-  //   m_setpoint = Constants.ArmSubsystem.armPosOut;
-  //   goal_tolerance = Constants.ArmSubsystem.goalTolerance;
-  //   addRequirements(m_Arm);
-  // }
-
-  // public void goToIntakeIn(Arm arm) {
-  //   m_Arm = arm;
-  //   m_setpoint = Constants.ArmSubsystem.armPosIn;
-  //   goal_tolerance = Constants.ArmSubsystem.goalTolerance;
-  //   addRequirements(m_Arm);
-  // }
 
   // Called just before this Command runs the first time
   @Override
