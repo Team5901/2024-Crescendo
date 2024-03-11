@@ -107,7 +107,7 @@ public class ArmIOSparkMax implements ArmIO {
     armPidController.setD(kD);
     armPidController.setOutputRange(
         Constants.ArmSubsystem.kMinOutput, Constants.ArmSubsystem.kMaxOutput);
-
+    //armPidController.setFF(Constants.ArmSubsystem.kFF);
     armPidController.setSmartMotionMaxVelocity(
         Constants.ArmSubsystem.maxAngularVelocityRPM, smartMotionSlot);
     armPidController.setSmartMotionMinOutputVelocity(
