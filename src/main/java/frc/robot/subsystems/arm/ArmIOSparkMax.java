@@ -109,6 +109,6 @@ public class ArmIOSparkMax implements ArmIO {
     armPidController.setSmartMotionMaxAccel(
         Constants.ArmSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
 
-    armMotor.burnFlash();
+    // armMotor.burnFlash();
   }
 }

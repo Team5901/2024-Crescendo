@@ -1,7 +1,6 @@
 package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,7 +17,7 @@ public class Arm extends SubsystemBase {
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
 
   private final TrapezoidProfile.Constraints m_constraints =
-      new TrapezoidProfile.Constraints(maxVelocityDegreesPerSec, maxAccelerationDegreesPerSec);
+      new TrapezoidProfile.Constraints((maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
 
@@ -31,9 +30,7 @@ public class Arm extends SubsystemBase {
 
     ffModel =
         new ArmFeedforward(
-            Constants.ArmSubsystem.ks,
-            Constants.ArmSubsystem.kg,
-            Constants.ArmSubsystem.kv);
+            Constants.ArmSubsystem.ks, Constants.ArmSubsystem.kg, Constants.ArmSubsystem.kv);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
     SmartDashboard.putNumber(
@@ -49,9 +46,15 @@ public class Arm extends SubsystemBase {
     var profile = new TrapezoidProfile(m_constraints);
     m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
 
-    io.setAngle(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
+    io.setAngle(
+        m_setpoint.position,
+        ffModel.calculate(
+            Math.toRadians(m_setpoint.position), Math.toRadians(m_setpoint.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
-    Logger.recordOutput("armFF", ffModel.calculate(m_setpoint.velocity));
+    Logger.recordOutput(
+        "armFF",
+        ffModel.calculate(
+            Math.toRadians(m_setpoint.position), Math.toRadians(m_setpoint.velocity)));
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit

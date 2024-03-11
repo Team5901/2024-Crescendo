@@ -170,10 +170,6 @@ public final class Constants {
     }
   }
 
-
-
- 
-
   public static final class ArmSubsystem {
     public static final int deviceID = 14;
     public static final int deviceID2 = 15;
@@ -182,7 +178,7 @@ public final class Constants {
 
     // FeedForward Control
     public static final double ks = 0.00;
-    public static final double kv = 0.04; // 0.2
+    public static final double kv = 1; // 0.2
     public static final double kg = 0.5; // 0.75
 
     public static final double kP = 0.0005;
