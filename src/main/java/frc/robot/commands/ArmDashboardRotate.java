@@ -24,11 +24,11 @@ public class ArmDashboardRotate extends Command {
     addRequirements(m_Arm);
   }
 
-
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
-    m_Arm.setAngleSetPoint(SmartDashboard.getNumber("Arm Angle INPUT", 0));
+    m_setpoint = SmartDashboard.getNumber("Arm Angle INPUT", 0);
+    m_Arm.setAngleSetPoint(m_setpoint);
     SmartDashboard.putNumber("Encoder distance", m_encoder.getDistance());
     SmartDashboard.putNumber("Arm Setpoint", m_setpoint);
   }

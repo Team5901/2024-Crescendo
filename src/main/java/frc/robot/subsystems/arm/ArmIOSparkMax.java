@@ -78,7 +78,7 @@ public class ArmIOSparkMax implements ArmIO {
     positionMotorShaftRot = armEncoder.getPosition();
     velocityMotorRPM = armEncoder.getVelocity();
     angleArmDegrees = (positionMotorShaftRot / gearRatio) * 360;
-    velocityAngleArmPerSec = (velocityMotorRPM / gearRatio) * 360;
+    velocityAngleArmPerSec = (velocityMotorRPM / gearRatio) * 360 / 60;
     appliedVolts = armMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = armMotor.getOutputCurrent();
   }
