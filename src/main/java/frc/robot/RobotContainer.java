@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -105,8 +104,8 @@ public class RobotContainer {
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootAmp = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
-  
-  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get() );
+
+  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get());
 
   // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
@@ -244,7 +243,8 @@ public class RobotContainer {
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
-    detectNoteTrigger.onTrue(new WaitCommand(0.5).andThen( new InstantCommand(() -> intake.stop(), intake)));
+    detectNoteTrigger.onTrue(
+        new WaitCommand(0.5).andThen(new InstantCommand(() -> intake.stop(), intake)));
     // Arm Voltage commands B button
     // armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
     // armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
@@ -273,11 +273,15 @@ public class RobotContainer {
     //                 slider)));
 
     // Shooter
-    shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot, intake));
+    shootAmp.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootAmp.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
-    shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot, intake));
+    shootSpeaker.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootSpeaker.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
     // Add code here to print out if tag in view when april tag button pressed

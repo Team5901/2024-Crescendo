@@ -10,16 +10,30 @@ public class goToIntakeOut extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
 
   public goToIntakeOut(Slider slider, Arm arm) {
-    addCommands(
-        new ArmSliderGoToPosition(
-                Constants.SliderSubsystem.sliderIntakeOut,
-                Constants.SliderSubsystem.goalTolerance,
-                slider)
-            .withTimeout(1), // Extends the intake arm with a timeout of 1 second
-        new ArmRotateGoToPosition(
-            Constants.ArmSubsystem.armPosOut,
-            Constants.ArmSubsystem.goalTolerance,
-            arm) // Rotate's the arm intake
-        );
+    double startAngle = arm.getAngle();
+    if (startAngle <= 45) {
+
+      addCommands(
+          new ArmSliderGoToPosition(
+                  Constants.SliderSubsystem.sliderIntakeOut,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1), // Extends the intake arm with a timeout of 1 second
+          new ArmRotateGoToPosition(
+              Constants.ArmSubsystem.armPosOut,
+              Constants.ArmSubsystem.goalTolerance,
+              arm) // Rotate's the arm intake
+          );
+    } else {
+      addCommands(
+          new ArmRotateGoToPosition(45, Constants.ArmSubsystem.goalTolerance, arm),
+          new ArmSliderGoToPosition(
+                  Constants.SliderSubsystem.sliderIntakeOut,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1), // Extends the intake arm with a timeout of 1 second
+          new ArmRotateGoToPosition(
+              Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm));
+    }
   }
 }

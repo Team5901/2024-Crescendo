@@ -287,7 +287,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 20.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 200.0;
+    public static final double shootSpeakerVelRPM = 600.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;
@@ -335,6 +335,8 @@ public final class Constants {
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn = 0.0;
     public static final double sliderIntakeOut = 14.6;
+    public static final double sliderAmp = 3.0;
+    public static final double sliderSpeaker = 0.0;
 
     public static final double sliderSoftLimitUpperInch = 15.0;
 
