@@ -2,6 +2,8 @@ package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,7 +26,8 @@ public class Arm extends SubsystemBase {
   private final ArmFeedforward ffModel;
 
   /** Creates a new arm. */
-  public Arm(ArmIO io) {
+  public Arm(ArmIO io,DutyCycleEncoder encoder) {
+    encoder.reset(); // TODO change this out for a better system soon
     this.io = io;
     m_constraints =
         new TrapezoidProfile.Constraints(
@@ -60,7 +63,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
-  }
+    
+      }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
   // trapezoid profile worksion
