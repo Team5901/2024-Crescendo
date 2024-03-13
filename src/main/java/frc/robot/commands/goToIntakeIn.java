@@ -8,9 +8,10 @@ import frc.robot.subsystems.slider.Slider;
 public class goToIntakeIn extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
   private double startAngle;
-  public goToIntakeIn(Slider slider, Arm arm) { // ASSUMES we start at intake Out
-    startAngle = arm.getAngle();
-    if (startAngle <5){
+  public goToIntakeIn(Slider slider, Arm arm) { 
+    double startAngle = arm.getAngle();
+
+    if (startAngle <= 5) {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
@@ -22,16 +23,12 @@ public class goToIntakeIn extends SequentialCommandGroup {
           );
     } else {
       addCommands(
-        new ArmSliderGoToPosition(
-            Constants.SliderSubsystem.sliderIntakeIn,
-            Constants.SliderSubsystem.goalTolerance,
-            slider).alongWith(
-        new ArmRotateGoToPosition(
-            Constants.ArmSubsystem.armPosIn, 
-            Constants.ArmSubsystem.goalTolerance, 
-            arm))); // intake Extend's arm in
+          new ArmSliderGoToPosition(
+              Constants.SliderSubsystem.sliderIntakeIn,
+              Constants.SliderSubsystem.goalTolerance,
+              slider),
+          new ArmRotateGoToPosition(
+              Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm));
     }
   }
-
-  
 }

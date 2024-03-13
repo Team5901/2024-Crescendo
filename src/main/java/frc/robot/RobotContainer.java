@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -22,13 +21,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -86,16 +85,16 @@ public class RobotContainer {
   // Intake movement buttons
   private final JoystickButton aimAmp =
       new JoystickButton(controller_2, XboxController.Button.kA.value);
-  private final JoystickButton armSetVolts =
+  // private final JoystickButton armSetVolts =
+  //    new JoystickButton(controller_2, XboxController.Button.kB.value);
+  private final JoystickButton intakeOut =
       new JoystickButton(controller_2, XboxController.Button.kB.value);
-  //   private final JoystickButton intakeOut =
-  //       new JoystickButton(controller_2, XboxController.Button.kB.value);
   private final JoystickButton aimSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kY.value);
-  private final JoystickButton armSetNegativeVolts =
+  // private final JoystickButton armSetNegativeVolts =
+  //    new JoystickButton(controller_2, XboxController.Button.kX.value);
+  private final JoystickButton intakeIn =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
-  //   private final JoystickButton intakeIn =
-  //       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimCustom =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
 
@@ -105,8 +104,8 @@ public class RobotContainer {
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootAmp = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
-  
-  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get() );
+
+  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get());
 
   // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
@@ -244,7 +243,8 @@ public class RobotContainer {
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
-    detectNoteTrigger.onTrue(new WaitCommand(0.5).andThen( new InstantCommand(() -> intake.stop(), intake)));
+    detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
+
     // Arm Voltage commands B button
     // armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
     // armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
@@ -253,15 +253,7 @@ public class RobotContainer {
     // armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
     // armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
 
-    // intakeOut.onTrue(
-    //     new ArmSliderGoToPosition(
-    //             Constants.SliderSubsystem.sliderIntakeOut,
-    //             Constants.SliderSubsystem.goalTolerance,
-    //             slider)
-    //         .andThen(
-    //             new ArmRotateGoToPosition(
-    //                 Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance,
-    // arm)));
+    intakeOut.onTrue(new goToIntakeOut(slider, arm));
 
     // intakeIn.onTrue(
     //     new ArmRotateGoToPosition(
@@ -273,11 +265,15 @@ public class RobotContainer {
     //                 slider)));
 
     // Shooter
-    shootAmp.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot, intake));
+    shootAmp.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootAmp.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
-    shootSpeaker.onTrue(new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot, intake));
+    shootSpeaker.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootSpeaker.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
     // Add code here to print out if tag in view when april tag button pressed

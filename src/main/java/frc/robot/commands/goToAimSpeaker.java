@@ -15,25 +15,32 @@ public class goToAimSpeaker extends SequentialCommandGroup {
   ArmDashboardRotate RotateCommand;
 
   public goToAimSpeaker(Arm arm, Slider slider) {
-    startAngle = arm.getAngle();
-    if (startAngle <5){
+    double startAngle = arm.getAngle();
+    if (startAngle <= 5) {
       addCommands(
           new ArmRotateGoToPosition(
-                  Constants.ArmSubsystem.armPosIn, 
-                  Constants.ArmSubsystem.goalTolerance, arm)
+                  Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
               .withTimeout(1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
               Constants.SliderSubsystem.sliderIntakeIn,
               Constants.SliderSubsystem.goalTolerance,
-              slider) // intake Extend's arm in
-          );
+              slider), // intake Extend's arm in
+          new ArmRotateGoToPosition(
+                  Constants.ArmSubsystem.armPosSpeaker, Constants.ArmSubsystem.goalTolerance, arm)
+              .withTimeout(1), // Intake rotates arm in.
+          new ArmSliderGoToPosition(
+              Constants.SliderSubsystem.sliderSpeaker,
+              Constants.SliderSubsystem.goalTolerance,
+              slider));
+    } else {
+      addCommands(
+          new ArmRotateGoToPosition(
+                  Constants.ArmSubsystem.armPosSpeaker, Constants.ArmSubsystem.goalTolerance, arm)
+              .withTimeout(1), // Intake rotates arm in.
+          new ArmSliderGoToPosition(
+              Constants.SliderSubsystem.sliderSpeaker,
+              Constants.SliderSubsystem.goalTolerance,
+              slider));
     }
-    new ArmRotateGoToPosition(
-      Constants.ArmSubsystem.armPosSpeaker, 
-      Constants.ArmSubsystem.goalTolerance, arm).alongWith(
-        new ArmSliderGoToPosition(
-          Constants.SliderSubsystem.sliderIntakeIn,
-          Constants.SliderSubsystem.goalTolerance,slider
-          ));
   }
 }

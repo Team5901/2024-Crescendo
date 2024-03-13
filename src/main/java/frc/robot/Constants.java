@@ -209,8 +209,8 @@ public final class Constants {
     public static final double autoPositionErrorInch = 2.0;
 
     // Degrees
-    public static final double armSoftLimitLowerAngle = -45;
-    public static final double armPosOut = 0.0;
+    public static final double armSoftLimitLowerAngle = -15;
+    public static final double armPosOut = -9;
     public static final double armPosSpeaker = 20.0;
     public static final double armPosAmp = 90.0;
     public static final double armPosTrap = 75.0;
@@ -245,9 +245,9 @@ public final class Constants {
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 500.0;
+    public static final double intakeInNoteVelRPM = 600.0;
     public static final double goalToleranceVelocity = 1; // RPM
-    public static final double intakeShootNoteVelRPM = 10.0;
+    public static final double intakeShootNoteVelRPM = 300.0;
 
     // Voltage control mode
     public static final double holdNoteVoltage = 3.0;
@@ -287,7 +287,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 20.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 200.0;
+    public static final double shootSpeakerVelRPM = 300.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;
@@ -334,7 +334,9 @@ public final class Constants {
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn = 0.0;
-    public static final double sliderIntakeOut = 14.6;
+    public static final double sliderIntakeOut = 13;
+    public static final double sliderAmp = 3.0;
+    public static final double sliderSpeaker = 0.0;
 
     public static final double sliderSoftLimitUpperInch = 15.0;
 
