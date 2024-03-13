@@ -8,7 +8,7 @@ import frc.robot.subsystems.slider.Slider;
 
 public class goToIntakeOut extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
-
+  private double startAngle;
   public goToIntakeOut(Slider slider, Arm arm) {
     double startAngle = arm.getAngle();
     if (startAngle <= 45) {

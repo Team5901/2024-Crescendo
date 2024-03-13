@@ -42,6 +42,5 @@ public class goToAimSpeaker extends SequentialCommandGroup {
               Constants.SliderSubsystem.goalTolerance,
               slider));
     }
-    // if (current_angle <)
   }
 }

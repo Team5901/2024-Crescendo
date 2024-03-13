@@ -9,7 +9,7 @@ import frc.robot.subsystems.slider.Slider;
 public class goToAimAmp extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
   Arm arm;
-  double startAngle, startExtension;
+  double startAngle;
   Slider slider;
   ArmSliderGoToPosition ExtendCommand;
   ArmDashboardRotate RotateCommand;
