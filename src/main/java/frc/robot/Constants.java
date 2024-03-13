@@ -211,11 +211,11 @@ public final class Constants {
     // Degrees
     public static final double armSoftLimitLowerAngle = -15;
     public static final double armPosOut = -9;
-    public static final double armPosSpeaker = 20.0;
-    public static final double armPosAmp = 90.0;
+    public static final double armPosSpeaker = 8.0;
+    public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
-    public static final double armPosIn = 25.0;
-    public static final double armSoftLimitUpperAngle = 100.0;
+    public static final double armPosIn = 0.0;
+    public static final double armSoftLimitUpperAngle = 120.0;
     public static final double goalTolerance = 2;
     public static final double allowableTeleopErrorInch = 1.0;
   }
@@ -333,9 +333,9 @@ public final class Constants {
     public static final double maxLinearAccelerationInchPerSec = 20;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
-    public static final double sliderIntakeIn = 0.0;
+    public static final double sliderIntakeIn = 0.0; //Possibly change to -1 or -2 depending on slack in slider system
     public static final double sliderIntakeOut = 13;
-    public static final double sliderAmp = 3.0;
+    public static final double sliderAmp = 0.0;
     public static final double sliderSpeaker = 0.0;
 
     public static final double sliderSoftLimitUpperInch = 15.0;
