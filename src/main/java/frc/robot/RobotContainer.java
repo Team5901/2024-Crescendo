@@ -116,7 +116,8 @@ public class RobotContainer {
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
-
+  private final JoystickButton zeroGyro = new JoystickButton(joystick, 10);
+  // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
 
@@ -226,8 +227,10 @@ public class RobotContainer {
             drive,
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
-            () -> -joystick.getRawAxis(rotationAxis) * 0.5));
+            () -> joystick.getRawAxis(rotationAxis) * 0.5));
 
+    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro()));
+    // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     /*controller

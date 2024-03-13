@@ -210,9 +210,9 @@ public final class Constants {
 
     // Degrees
     public static final double armSoftLimitLowerAngle = -15;
-    public static final double armPosOut = -9;
+    public static final double armPosOut = -10;
     public static final double armPosSpeaker = 15;
-    ;
+
     public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
     public static final double armPosIn = 5;
@@ -241,14 +241,14 @@ public final class Constants {
     public static final double kMinOutput = -100;
 
     // NOTE: Double check this value
-    public static final double gearRatio = 1;
+    public static final double gearRatio = 7;
 
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 600.0;
-    public static final double goalToleranceVelocity = 1; // RPM
-    public static final double intakeShootNoteVelRPM = 300.0;
+    public static final double intakeInNoteVelRPM = 200.0;
+    public static final double goalToleranceVelocity = 10; // RPM
+    public static final double intakeShootNoteVelRPM = 200.0;
 
     // Voltage control mode
     public static final double holdNoteVoltage = 3.0;
@@ -330,8 +330,8 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 10;
-    public static final double maxLinearAccelerationInchPerSec = 20;
+    public static final double maxLinearVelocityInchPerSec = 30;
+    public static final double maxLinearAccelerationInchPerSec = 30;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn =
