@@ -83,17 +83,17 @@ public class RobotContainer {
   private final XboxController controller_2 = new XboxController(1);
 
   // Intake movement buttons
-  private final JoystickButton aimAmp =
+  private final JoystickButton aimAmpA =
       new JoystickButton(controller_2, XboxController.Button.kA.value);
   // private final JoystickButton armSetVolts =
   //    new JoystickButton(controller_2, XboxController.Button.kB.value);
-  private final JoystickButton intakeOut =
+  private final JoystickButton intakeOutB =
       new JoystickButton(controller_2, XboxController.Button.kB.value);
-  private final JoystickButton aimSpeaker =
+  private final JoystickButton aimSpeakerY =
       new JoystickButton(controller_2, XboxController.Button.kY.value);
   // private final JoystickButton armSetNegativeVolts =
   //    new JoystickButton(controller_2, XboxController.Button.kX.value);
-  private final JoystickButton intakeIn =
+  private final JoystickButton intakeInX =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimCustom =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
@@ -102,8 +102,8 @@ public class RobotContainer {
   private final JoystickButton IntakeRollersOn =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
-  private final Trigger shootAmp = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
-  private final Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
+  private final Trigger shootSpeaker = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
+  private final Trigger shootAmp = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
   private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get());
 
@@ -233,49 +233,36 @@ public class RobotContainer {
                         drive.setPose(
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
-                .ignoringDisable(true));
-    controller
-        .a()
-        .whileTrue(
-            Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
+                .ignoringDisable(true));*/
 
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
     detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
 
-    // Arm Voltage commands B button
-    // armSetVolts.onTrue(new armSetVolts(Constants.ArmSubsystem.armVolts, arm));
-    // armSetVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
-
-    // X button
-    // armSetNegativeVolts.onTrue(new armSetVolts((Constants.ArmSubsystem.armVolts * -1), arm));
-    // armSetNegativeVolts.onFalse(new InstantCommand(() -> arm.stop(), arm));
-
-    intakeOut.onTrue(new goToIntakeOut(slider, arm));
-
-    // intakeIn.onTrue(
-    //     new ArmRotateGoToPosition(
-    //             Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
-    //         .andThen(
-    //             new ArmSliderGoToPosition(
-    //                 Constants.SliderSubsystem.sliderIntakeIn,
-    //                 Constants.SliderSubsystem.goalTolerance,
-    //                 slider)));
+    //Positions
+    //B Button. Go to Intake Out position
+    intakeOutB.onTrue(new goToIntakeOut(slider, arm));
+    //X Button. Go to Intake In position
+    intakeInX.onTrue(new goToIntakeIn(slider, arm));
+    //A Button. Go to Aim Amp position
+    aimAmpA.onTrue(new goToAimAmp(arm, slider));
+    //Y Button. Go to Aim Speaker position
+    aimSpeakerY.onTrue(new goToAimSpeaker(arm, slider));
 
     // Shooter
-    shootAmp.onTrue(
-        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
-            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
-    shootAmp.onFalse(
-        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
-
     shootSpeaker.onTrue(
-        new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
             .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootSpeaker.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
+
+    shootAmp.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
+    shootAmp.onFalse(
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake
+                                                                           
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
