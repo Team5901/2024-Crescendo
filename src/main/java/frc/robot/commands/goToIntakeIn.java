@@ -1,4 +1,5 @@
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
@@ -8,25 +9,28 @@ import frc.robot.subsystems.slider.Slider;
 public class goToIntakeIn extends SequentialCommandGroup {
   // create method that gracefully extends intake head at low angles to avoid crashing
   private double startAngle;
-  public goToIntakeIn(Slider slider, Arm arm) { 
-    double startAngle = arm.getAngle();
 
-    if (startAngle <= 5) {
+  public goToIntakeIn(Slider slider, Arm arm) {
+    startAngle = arm.getAngle();
+
+    if (startAngle <= 10) {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
               .withTimeout(1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderIntakeIn,
-              Constants.SliderSubsystem.goalTolerance,
-              slider) // intake Extend's arm in
+                  Constants.SliderSubsystem.sliderIntakeIn,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1) // intake Extend's arm in
           );
     } else {
       addCommands(
           new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderIntakeIn,
-              Constants.SliderSubsystem.goalTolerance,
-              slider),
+                  Constants.SliderSubsystem.sliderIntakeIn,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1),
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm));
     }

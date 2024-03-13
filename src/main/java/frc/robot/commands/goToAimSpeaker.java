@@ -22,25 +22,28 @@ public class goToAimSpeaker extends SequentialCommandGroup {
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
               .withTimeout(1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderIntakeIn,
-              Constants.SliderSubsystem.goalTolerance,
-              slider), // intake Extend's arm in
+                  Constants.SliderSubsystem.sliderIntakeIn,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1), // intake Extend's arm in
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosSpeaker, Constants.ArmSubsystem.goalTolerance, arm)
               .withTimeout(1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderSpeaker,
-              Constants.SliderSubsystem.goalTolerance,
-              slider));
+                  Constants.SliderSubsystem.sliderSpeaker,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1));
     } else {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosSpeaker, Constants.ArmSubsystem.goalTolerance, arm)
               .withTimeout(1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderSpeaker,
-              Constants.SliderSubsystem.goalTolerance,
-              slider));
+                  Constants.SliderSubsystem.sliderSpeaker,
+                  Constants.SliderSubsystem.goalTolerance,
+                  slider)
+              .withTimeout(1));
     }
   }
 }

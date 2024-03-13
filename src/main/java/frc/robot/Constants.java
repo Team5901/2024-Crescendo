@@ -194,8 +194,8 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 30.0;
-    public static final double maxAccelerationDegreesPerSec = 30.0;
+    public static final double maxVelocityDegreesPerSec = 90.0;
+    public static final double maxAccelerationDegreesPerSec = 90.0;
     public static final double armVolts = 6.0;
     public static final double armVelocityRPM = (1 / 4) * 60;
 
@@ -211,10 +211,11 @@ public final class Constants {
     // Degrees
     public static final double armSoftLimitLowerAngle = -15;
     public static final double armPosOut = -9;
-    public static final double armPosSpeaker = 8.0;
+    public static final double armPosSpeaker = 15;
+    ;
     public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
-    public static final double armPosIn = 0.0;
+    public static final double armPosIn = 5;
     public static final double armSoftLimitUpperAngle = 120.0;
     public static final double goalTolerance = 2;
     public static final double allowableTeleopErrorInch = 1.0;
@@ -285,7 +286,7 @@ public final class Constants {
     public static final int holdCurrentAmps = 10;
     // Velocity control mode
 
-    public static final double shootAmpVelRPM = 20.0;
+    public static final double shootAmpVelRPM = 100.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
     public static final double shootSpeakerVelRPM = 300.0;
     // Voltage control mode
@@ -333,7 +334,8 @@ public final class Constants {
     public static final double maxLinearAccelerationInchPerSec = 20;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
-    public static final double sliderIntakeIn = 0.0; //Possibly change to -1 or -2 depending on slack in slider system
+    public static final double sliderIntakeIn =
+        0.0; // Possibly change to -1 or -2 depending on slack in slider system
     public static final double sliderIntakeOut = 13;
     public static final double sliderAmp = 0.0;
     public static final double sliderSpeaker = 0.0;

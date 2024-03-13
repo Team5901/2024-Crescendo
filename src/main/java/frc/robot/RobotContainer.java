@@ -27,10 +27,10 @@ import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.commands.goToIntakeOut;
-import frc.robot.commands.goToIntakeIn;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimSpeaker;
+import frc.robot.commands.goToIntakeIn;
+import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -104,6 +104,8 @@ public class RobotContainer {
   // shooting/roller buttons
   private final JoystickButton IntakeRollersOn =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton IntakeRollersOut_RBump =
+      new JoystickButton(controller_2, XboxController.Button.kRightBumper.value);
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootSpeaker = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
   private final Trigger shootAmp = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
@@ -224,33 +226,36 @@ public class RobotContainer {
             drive,
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
-            () -> -joystick.getRawAxis(rotationAxis)));
+            () -> -joystick.getRawAxis(rotationAxis) * 0.5));
 
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     /*controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));*/
+    .b()
+    .onTrue(
+        Commands.runOnce(
+                () ->
+                    drive.setPose(
+                        new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+                drive)
+            .ignoringDisable(true));*/
 
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
     detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
+    IntakeRollersOut_RBump.onTrue(
+        new setIntakeRPM(-0.25 * Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+    IntakeRollersOut_RBump.onFalse(new InstantCommand(() -> intake.stop(), intake));
 
-    //Positions
-    //B Button. Go to Intake Out position
+    // Positions
+    // B Button. Go to Intake Out position
     intakeOutB.onTrue(new goToIntakeOut(slider, arm));
-    //X Button. Go to Intake In position
+    // X Button. Go to Intake In position
     intakeInX.onTrue(new goToIntakeIn(slider, arm));
-    //A Button. Go to Aim Amp position
+    // A Button. Go to Aim Amp position
     aimAmpA.onTrue(new goToAimAmp(arm, slider));
-    //Y Button. Go to Aim Speaker position
+    // Y Button. Go to Aim Speaker position
     aimSpeakerY.onTrue(new goToAimSpeaker(arm, slider));
 
     // Shooter
@@ -265,7 +270,7 @@ public class RobotContainer {
             .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootAmp.onFalse(
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
-                                                                           
+
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));

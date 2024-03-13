@@ -16,31 +16,32 @@ public class goToAimAmp extends SequentialCommandGroup {
 
   public goToAimAmp(Arm arm, Slider slider) {
     double startAngle = arm.getAngle();
-    if (startAngle <= 5) {
+    if (startAngle <= 10) {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
-              .withTimeout(1), // Intake rotates arm in.
-          new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderIntakeIn,
-              Constants.SliderSubsystem.goalTolerance,
-              slider), // intake Extend's arm in
+              .withTimeout(.5), // Intake rotates arm in.
+          // intake Extend's arm in
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosAmp, Constants.ArmSubsystem.goalTolerance, arm)
-              .withTimeout(1), // Intake rotates arm in.
-          new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderAmp,
-              Constants.SliderSubsystem.goalTolerance,
-              slider));
+              .withTimeout(1)
+              .alongWith(
+                  new ArmSliderGoToPosition(
+                          Constants.SliderSubsystem.sliderAmp,
+                          Constants.SliderSubsystem.goalTolerance,
+                          slider)
+                      .withTimeout(1)) // Intake rotates arm in.
+          );
     } else {
-      addCommands(
-          new ArmRotateGoToPosition(
-                  Constants.ArmSubsystem.armPosAmp, Constants.ArmSubsystem.goalTolerance, arm)
-              .withTimeout(1), // Intake rotates arm in.
-          new ArmSliderGoToPosition(
-              Constants.SliderSubsystem.sliderAmp,
-              Constants.SliderSubsystem.goalTolerance,
-              slider));
-    }
+
+      new ArmRotateGoToPosition(
+              Constants.ArmSubsystem.armPosAmp, Constants.ArmSubsystem.goalTolerance, arm)
+          .withTimeout(1)
+          .alongWith( // Intake rotates arm in.
+              new ArmSliderGoToPosition(
+                      Constants.SliderSubsystem.sliderAmp,
+                      Constants.SliderSubsystem.goalTolerance,
+                      slider)
+                  .withTimeout(1));    }
   }
 }
