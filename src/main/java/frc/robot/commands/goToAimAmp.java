@@ -42,6 +42,7 @@ public class goToAimAmp extends SequentialCommandGroup {
                       Constants.SliderSubsystem.sliderAmp,
                       Constants.SliderSubsystem.goalTolerance,
                       slider)
-                  .withTimeout(1));    }
+                  .withTimeout(1));
+    }
   }
 }
