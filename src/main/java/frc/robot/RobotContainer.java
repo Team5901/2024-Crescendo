@@ -261,7 +261,7 @@ public class RobotContainer {
         new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
             .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
     shootAmp.onFalse(
-        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
                                                                            
     // Add code here to print out if tag in view when april tag button pressed
     checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
