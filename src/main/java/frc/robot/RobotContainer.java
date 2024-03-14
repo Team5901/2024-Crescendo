@@ -130,7 +130,7 @@ public class RobotContainer {
     encoder = new DutyCycleEncoder(9);
     // Configures the encoder to return a distance of 4 for every rotation
     encoder.setDistancePerRotation(360.0);
-
+    encoder.setPositionOffset(Constants.encoder.encoderOffset);
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations

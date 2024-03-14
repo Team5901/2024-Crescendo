@@ -51,7 +51,7 @@ public final class Constants {
     REPLAY
   }
   public static final class encoder {
-    public static final double encoderOffset= 39.680929;
+    public static final double encoderOffset= -39.680929;
     
   }
   public static final class Swerve {
