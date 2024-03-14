@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase {
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_now = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
   private DutyCycleEncoder encoder;
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
@@ -51,9 +51,9 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-    m_now.position=encoder.getDistance(); // get our current position from our encoder and the previous state's velocity
-    m_now.velocity=m_next.velocity;
-    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_now, m_goal); // calculate our next point in the trapezoid using our good encoder;
+    m_last.position=encoder.getDistance(); // get our current position from our encoder and the previous state's velocity
+    m_last.velocity=m_next.velocity;
+    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal); // calculate our next point in the trapezoid using our good encoder;
 
     io.setAngle(
         m_next.position,
