@@ -19,7 +19,6 @@ public class Arm extends SubsystemBase {
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
 
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
@@ -49,9 +48,8 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-    m_last.position = inputs.angleArmDegrees;
-    m_last.velocity = inputs.velocityAngleArmPerSec;
-    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal);
+
+    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
     io.setAngle(
         m_current.position,

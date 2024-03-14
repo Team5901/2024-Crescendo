@@ -17,8 +17,7 @@ public class Slider extends SubsystemBase {
 
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
   private TrapezoidProfile profile;
   private final ElevatorFeedforward ffModel;
 
@@ -49,11 +48,9 @@ public class Slider extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("slider", inputs);
-    m_last.position = inputs.positionSliderInch;
-    m_last.velocity = inputs.velocitySliderInchPerSec;
-    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal);
+    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
-    io.setPosition(m_next.position, ffModel.calculate(m_next.velocity));
+    io.setPosition(m_current.position, ffModel.calculate(m_current.velocity));
 
     Logger.recordOutput("SliderPosErrorInch", getError());
     SmartDashboard.putNumber(
