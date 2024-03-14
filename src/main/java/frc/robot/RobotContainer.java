@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
@@ -196,9 +198,15 @@ public class RobotContainer {
     encoder.setDistancePerRotation(360.0);
 
     // Set up auto routines
-    // NamedCommands.registerCommand(
-    //     "shootspeaker",
-    //     Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
+    NamedCommands.registerCommand(
+        "shootspeaker",
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+            .andThen(
+                new WaitCommand(3)
+                    .andThen(
+                        new InstantCommand(shoot::stop, shoot)
+                            .alongWith(new InstantCommand(intake::stop, intake)))));
+
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
     //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));

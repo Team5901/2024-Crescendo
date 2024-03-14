@@ -49,8 +49,8 @@ public class Slider extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("slider", inputs);
-    m_last.position=inputs.positionSliderInch;
-    m_last.velocity=inputs.velocitySliderInchPerSec;
+    m_last.position = inputs.positionSliderInch;
+    m_last.velocity = inputs.velocitySliderInchPerSec;
     m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal);
 
     io.setPosition(m_next.position, ffModel.calculate(m_next.velocity));
