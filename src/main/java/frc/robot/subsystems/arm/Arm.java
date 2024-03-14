@@ -2,6 +2,7 @@ package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,14 +19,16 @@ public class Arm extends SubsystemBase {
   private TrapezoidProfile profile;
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
-
+  private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_now = new TrapezoidProfile.State();
+  private DutyCycleEncoder encoder;
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
 
   /** Creates a new arm. */
-  public Arm(ArmIO io) {
+  public Arm(ArmIO io, DutyCycleEncoder encoder) {
     this.io = io;
+    this.encoder=encoder;
     m_constraints =
         new TrapezoidProfile.Constraints(
             (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
@@ -48,15 +51,16 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-
-    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
+    m_now.position=encoder.getDistance(); // get our current position from our encoder and the previous state's velocity
+    m_now.velocity=m_next.velocity;
+    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_now, m_goal); // calculate our next point in the trapezoid using our good encoder;
 
     io.setAngle(
-        m_current.position,
-        ffModel.calculate(Math.toRadians(m_current.position), Math.toRadians(m_current.velocity)));
+        m_next.position,
+        ffModel.calculate(Math.toRadians(m_next.position), Math.toRadians(m_next.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
     Logger.recordOutput("m_goal position", m_goal.position);
-    Logger.recordOutput("m_current position", m_current.position);
+    Logger.recordOutput("m_current position", m_next.position);
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
@@ -75,7 +79,7 @@ public class Arm extends SubsystemBase {
 
   // UPDATE: Angle or inch?
   public double getAngle() {
-    return inputs.angleArmDegrees;
+    return encoder.getDistance();
   }
 
   public double getError() {
