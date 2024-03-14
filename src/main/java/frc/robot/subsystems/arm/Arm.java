@@ -64,7 +64,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
-  }
+    SmartDashboard.putNumber("encoder distance",encoder.getDistance());
+      }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
   // trapezoid profile worksion
