@@ -15,6 +15,9 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -59,6 +62,8 @@ import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOSparkMax;
+import frc.robot.util.AllianceFlipUtil;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -238,7 +243,9 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(strafeAxis),
             () -> joystick.getRawAxis(rotationAxis) * 0.5));
 
-    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro(), drive));
+    //this resets our drive pose by over writing it with a blank pose, with roation of said pose depending on alliance color
+    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro(), drive).alongWith(
+        new InstantCommand( ()-> drive.setPose(new Pose2d(drive.getPose().getTranslation(),AllianceFlipUtil.apply(new Rotation2d()))))));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
