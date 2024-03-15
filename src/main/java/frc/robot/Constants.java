@@ -119,9 +119,9 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4;
+    public static final double maxSpeed = 5;
     /** Radians per Second */
-    public static final double maxAngularVelocity = (2 * Math.PI); // 1;
+    public static final double maxAngularVelocity = (1.25 * 2 * Math.PI); // 1;
     // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
     public static final double maxOpenLoopThrottle = 0.2;
     /* Neutral Modes */
