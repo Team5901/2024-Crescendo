@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
+import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.goToAimAmp;
@@ -198,16 +199,17 @@ public class RobotContainer {
     encoder.setDistancePerRotation(360.0);
 
     // Set up auto routines
-    NamedCommands.registerCommand(
-        "shootspeaker",
-        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
-            .andThen(
-                new WaitCommand(3)
-                    .andThen(
-                        new InstantCommand(shoot::stop, shoot)
-                            .alongWith(new InstantCommand(intake::stop, intake)))));
-
     // NamedCommands.registerCommand(
+    //     "shootspeaker",
+    //     new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+    //         .andThen(
+    //             new WaitCommand(3)
+    //                 .andThen(
+    //                     new InstantCommand(shoot::stop, shoot)
+    //                         .alongWith(new InstantCommand(intake::stop, intake)))));
+    NamedCommands.registerCommand("zeroGyro", new InstantCommand(()-> drive.zeroGyro(),drive));
+    NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
+                            // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
     //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
