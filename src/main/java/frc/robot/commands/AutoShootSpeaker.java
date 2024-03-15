@@ -19,6 +19,7 @@ public class AutoShootSpeaker extends SequentialCommandGroup {
             .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake))
             .withTimeout(2),
         new WaitCommand(1),
-        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)),
+        new goToIntakeIn(slider, arm).withTimeout(0.25));
   }
 }
