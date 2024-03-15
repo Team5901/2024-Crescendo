@@ -10,13 +10,15 @@ import frc.robot.subsystems.shoot.Shoot;
 import frc.robot.subsystems.slider.Slider;
 
 public class AutoShootSpeaker extends SequentialCommandGroup {
-    
-    public AutoShootSpeaker(Slider slider,Arm arm,Shoot shoot,Intake intake){
-        addCommands(new goToAimSpeaker(arm, slider),
-            new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot).withTimeout(2)
-            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)).withTimeout(2),
-            new WaitCommand(1),
-            new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake))
-        );
-    }
+
+  public AutoShootSpeaker(Slider slider, Arm arm, Shoot shoot, Intake intake) {
+    addCommands(
+        new goToAimSpeaker(arm, slider),
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+            .withTimeout(2)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake))
+            .withTimeout(2),
+        new WaitCommand(1),
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
+  }
 }

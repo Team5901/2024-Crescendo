@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
@@ -207,9 +206,9 @@ public class RobotContainer {
     //                 .andThen(
     //                     new InstantCommand(shoot::stop, shoot)
     //                         .alongWith(new InstantCommand(intake::stop, intake)))));
-    NamedCommands.registerCommand("zeroGyro", new InstantCommand(()-> drive.zeroGyro(),drive));
+    NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
     NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
-                            // NamedCommands.registerCommand(
+    // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
     //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
