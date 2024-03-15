@@ -30,7 +30,6 @@ import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToIntakeIn;

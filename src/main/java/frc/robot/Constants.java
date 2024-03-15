@@ -36,7 +36,7 @@ import frc.lib.util.SwerveModuleConstants2;
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
   public static final double simLoopPeriodSecs = 0.02;
-  private static final RobotType robot = RobotType.SIM;
+  private static final RobotType robot = RobotType.REAL;
   public static final boolean chassisOnly = false;
   public static final String driveCANBUS = "Drivetrain";
 
