@@ -120,7 +120,7 @@ public class RobotContainer {
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
-  private final JoystickButton zeroGyro = new JoystickButton(joystick, 10);
+  private final JoystickButton zeroGyro = new JoystickButton(joystick, 11);
   // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
   // Add joystick button to check april tag
   private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
@@ -220,6 +220,7 @@ public class RobotContainer {
         "Drive FF Characterization",
         new FeedForwardCharacterization(
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    autoChooser.addOption("BShoot", new AutoShootSpeaker(slider, arm, shoot, intake));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -265,7 +266,7 @@ public class RobotContainer {
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
-    detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
+    // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
     IntakeRollersOut_RBump.onTrue(
         new setIntakeRPM(-0.25 * Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOut_RBump.onFalse(new InstantCommand(() -> intake.stop(), intake));
