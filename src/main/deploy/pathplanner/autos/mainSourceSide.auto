@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6834660114817857,
-      "y": 6.691938312786578
+      "x": 0.6931926660061846,
+      "y": 4.367267881455193
     },
-    "rotation": 55.267217987958816
+    "rotation": -61.69268977774878
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "mainAmpSide to ampSideNote"
+            "pathName": "Shoot3End3"
           }
         }
       ]

@@ -2,19 +2,25 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.98469249068824,
-      "y": 3.456545860460142
+      "x": 1.3921973789893525,
+      "y": 5.528332498106438
     },
-    "rotation": -36.11934084947977
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "shootspeaker"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Shoot3End3"
+            "pathName": "centerSpeakerOut"
           }
         }
       ]
