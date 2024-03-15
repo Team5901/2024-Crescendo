@@ -1,13 +1,11 @@
 package frc.robot.util;
 
-
 // Copyright (c) 2024 FRC 6328
 // http://github.com/Mechanical-Advantage
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file at
 // the root directory of this project.
-
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,11 +14,9 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-
 /** Utility functions for flipping from the blue to red alliance. */
 public class AllianceFlipUtil {
 
-    
   /** Flips an x coordinate to the correct side of the field based on the current alliance color. */
   public static double apply(double xCoordinate) {
     if (shouldFlip()) {
@@ -69,29 +65,29 @@ public class AllianceFlipUtil {
   /**
    * Flips a trajectory state to the correct side of the field based on the current alliance color.
    */
-//   public static VehicleState apply(VehicleState state) {
-//     if (shouldFlip()) {
-//       return VehicleState.newBuilder()
-//           .setX(apply(state.getX()))
-//           .setY(state.getY())
-//           .setTheta(apply(new Rotation2d(state.getTheta())).getRadians())
-//           .setVx(-state.getVx())
-//           .setVy(state.getVy())
-//           .setOmega(-state.getOmega())
-//           .addAllModuleForces(
-//               state.getModuleForcesList().stream()
-//                   .map(
-//                       forces ->
-//                           VehicleTrajectoryServiceOuterClass.ModuleForce.newBuilder()
-//                               .setFx(-forces.getFx())
-//                               .setFy(forces.getFy())
-//                               .build())
-//                   .toList())
-//           .build();
-//     } else {
-//       return state;
-//     }
-//   }
+  //   public static VehicleState apply(VehicleState state) {
+  //     if (shouldFlip()) {
+  //       return VehicleState.newBuilder()
+  //           .setX(apply(state.getX()))
+  //           .setY(state.getY())
+  //           .setTheta(apply(new Rotation2d(state.getTheta())).getRadians())
+  //           .setVx(-state.getVx())
+  //           .setVy(state.getVy())
+  //           .setOmega(-state.getOmega())
+  //           .addAllModuleForces(
+  //               state.getModuleForcesList().stream()
+  //                   .map(
+  //                       forces ->
+  //                           VehicleTrajectoryServiceOuterClass.ModuleForce.newBuilder()
+  //                               .setFx(-forces.getFx())
+  //                               .setFy(forces.getFy())
+  //                               .build())
+  //                   .toList())
+  //           .build();
+  //     } else {
+  //       return state;
+  //     }
+  //   }
 
   public static boolean shouldFlip() {
     return DriverStation.getAlliance().isPresent()
