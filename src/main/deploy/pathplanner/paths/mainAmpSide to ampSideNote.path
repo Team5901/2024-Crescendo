@@ -8,10 +8,10 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.683466011481785,
-        "y": 6.691938312786578
+        "x": 2.045197644897659,
+        "y": 6.983737948518551
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "mainAmpSide"
     },
     {
@@ -20,15 +20,21 @@
         "y": 7.00319125756735
       },
       "prevControl": {
-        "x": 1.8719632794715828,
-        "y": 7.00319125756735
+        "x": 2.550983680166412,
+        "y": 7.042097875664945
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "ampSideNote"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 54.16234704572166,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
