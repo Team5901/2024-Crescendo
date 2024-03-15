@@ -238,7 +238,7 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(strafeAxis),
             () -> joystick.getRawAxis(rotationAxis) * 0.5));
 
-    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro()));
+    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro(), drive));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
