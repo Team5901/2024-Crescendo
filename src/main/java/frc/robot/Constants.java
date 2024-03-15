@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.Alert;
 import frc.lib.util.Alert.AlertType;
 import frc.lib.util.COTSFalconSwerveConstants;
@@ -35,7 +36,7 @@ import frc.lib.util.SwerveModuleConstants2;
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
   public static final double simLoopPeriodSecs = 0.02;
-  private static final RobotType robot = RobotType.REAL;
+  private static final RobotType robot = RobotType.SIM;
   public static final boolean chassisOnly = false;
   public static final String driveCANBUS = "Drivetrain";
 
@@ -348,13 +349,28 @@ public final class Constants {
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR);
 
   public static RobotType getRobot() {
-
-    return RobotType.REAL;
+    if (RobotBase.isReal()) {
+      if (robot == RobotType.SIM) { // Invalid robot selected
+        invalidRobotAlert.set(true);
+        return RobotType.REAL;
+      } else {
+        return robot;
+      }
+    } else {
+      return robot;
+    }
   }
 
   public static Mode getMode() {
+    switch (getRobot()) {
+      case REAL:
+        return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
 
-    return Mode.REAL;
+      case SIM:
+        return Mode.SIM;
+      default:
+        return Mode.REAL;
+    }
   }
   // Slider Motor
   // UPDATE: Update slider for 2024
