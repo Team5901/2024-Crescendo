@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.Alert;
 import frc.lib.util.Alert.AlertType;
 import frc.lib.util.COTSFalconSwerveConstants;
-import frc.lib.util.SwerveModuleConstants2;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
