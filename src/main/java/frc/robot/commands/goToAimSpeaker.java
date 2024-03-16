@@ -20,18 +20,18 @@ public class goToAimSpeaker extends SequentialCommandGroup {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
-              .withTimeout(.5), // Intake rotates arm in.
+              .withTimeout(.25), // Intake rotates arm in.
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeIn,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(1)
+              .withTimeout(0.75)
               .alongWith( // intake Extend's arm in
                   new ArmRotateGoToPosition(
                           Constants.ArmSubsystem.armPosSpeaker,
                           Constants.ArmSubsystem.goalTolerance,
                           arm)
-                      .withTimeout(1) // Intake rotates arm in.
+                      .withTimeout(0.75) // Intake rotates arm in.
                   ));
     } else {
       addCommands(
