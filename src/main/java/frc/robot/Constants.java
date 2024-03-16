@@ -119,9 +119,9 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4;
+    public static final double maxSpeed = 5;
     /** Radians per Second */
-    public static final double maxAngularVelocity = (2 * Math.PI); // 1;
+    public static final double maxAngularVelocity = (1.25 * 2 * Math.PI); // 1;
     // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
     public static final double maxOpenLoopThrottle = 0.2;
     /* Neutral Modes */
@@ -132,7 +132,7 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID = 0;
+      public static final int driveMotorID = 19;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 8;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.27);
@@ -142,7 +142,7 @@ public final class Constants {
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 1;
+      public static final int driveMotorID = 20;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 9;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.44);
@@ -194,10 +194,10 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 90.0;
-    public static final double maxAccelerationDegreesPerSec = 90.0;
+    public static final double maxVelocityDegreesPerSec = 180.0;
+    public static final double maxAccelerationDegreesPerSec = 270.0;
     public static final double armVolts = 6.0;
-    public static final double armVelocityRPM = (1 / 4) * 60;
+    // public static final double armVelocityRPM = (1 / 2) * 60;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
@@ -330,8 +330,8 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 30;
-    public static final double maxLinearAccelerationInchPerSec = 30;
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 60;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn =
