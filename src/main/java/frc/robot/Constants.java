@@ -288,7 +288,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 100.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 300.0;
+    public static final double shootSpeakerVelRPM = 400.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;
