@@ -132,7 +132,7 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID = 0;
+      public static final int driveMotorID = 19;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 8;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.27);
@@ -142,7 +142,7 @@ public final class Constants {
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 1;
+      public static final int driveMotorID = 20;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 9;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.44);
