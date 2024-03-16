@@ -194,10 +194,10 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 90.0;
-    public static final double maxAccelerationDegreesPerSec = 90.0;
+    public static final double maxVelocityDegreesPerSec = 180.0;
+    public static final double maxAccelerationDegreesPerSec = 270.0;
     public static final double armVolts = 6.0;
-    public static final double armVelocityRPM = (1 / 4) * 60;
+    // public static final double armVelocityRPM = (1 / 2) * 60;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
@@ -330,8 +330,8 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 30;
-    public static final double maxLinearAccelerationInchPerSec = 30;
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 60;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn =
