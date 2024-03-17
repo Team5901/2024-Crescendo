@@ -36,7 +36,7 @@ import frc.lib.util.SwerveModuleConstants2;
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
   public static final double simLoopPeriodSecs = 0.02;
-  private static final RobotType robot = RobotType.SIM;
+  private static final RobotType robot = RobotType.REAL;
   public static final boolean chassisOnly = false;
   public static final String driveCANBUS = "Drivetrain";
 
@@ -59,8 +59,8 @@ public final class Constants {
         COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
     /* Drivetrain Constants */
-    public static final double trackWidth = Units.inchesToMeters(19);
-    public static final double wheelBase = Units.inchesToMeters(28.875);
+    public static final double wheelBase = Units.inchesToMeters(19);
+    public static final double trackWidth = Units.inchesToMeters(28.875);
     public static final double wheelCircumference = chosenModule.wheelCircumference;
 
     /* Swerve Kinematics
@@ -119,9 +119,9 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4;
+    public static final double maxSpeed = 5;
     /** Radians per Second */
-    public static final double maxAngularVelocity = (2 * Math.PI); // 1;
+    public static final double maxAngularVelocity = (1.25 * 2 * Math.PI); // 1;
     // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
     public static final double maxOpenLoopThrottle = 0.2;
     /* Neutral Modes */
@@ -132,21 +132,21 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID = 0;
+      public static final int driveMotorID = 19;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 8;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.27);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 1;
+      public static final int driveMotorID = 20;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 9;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.44);
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants();
+      // public static final SwerveModuleConstants constants = new SwerveModuleConstants();
     }
 
     /* Front Left Module - Module 0 */
@@ -155,8 +155,8 @@ public final class Constants {
       public static final int angleMotorID = 7;
       public static final int canCoderID = 10;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(15.95);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
     /* Front Right Module - Module 1 */
@@ -165,114 +165,58 @@ public final class Constants {
       public static final int angleMotorID = 4;
       public static final int canCoderID = 11;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(217.83);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }
-
-  public static final class ElevatorSubsystem {
-    public static final int deviceID = 13;
-    public static final boolean isInverted = true;
-
-    // FeedForward Control
-    public static final double ks = 0.00;
-    public static final double kv = 0.04; // 0.2
-    public static final double kg = 0.5; // 0.75
-
-    // public static final double ks = 0.00;
-    // public static final double kv = 0.25;
-    // public static final double kg = 0.85;
-
-    public static final double kP = 0.05;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
-    public static final double kIz = 0;
-    public static final double kFF = 0;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
-
-    public static final double gearRatio = 25.0;
-    public static final double sprocketDiameterInch = 1.92;
-
-    // motor shaft details
-    public static final int maxCurrentAmps = 40;
-    public static final double maxAngularVelocityRPM = 100.0;
-    public static final double maxAngularAccRPMPerSec = 80.0;
-    public static final double minOutputVelocityRPM = 10.0; // requests below this no voltage output
-    public static final double allowableSmartMotionPosErrorRotations = 3.0 * gearRatio;
-    public static final double autoPositionErrorInch = 2.0;
-
-    // Elevator details
-    public static final double maxLinearVelocityInchPerSec = 28.0;
-    public static final double maxLinearAccelerationInchPerSec = 28.0;
-
-    // Inches
-    public static final double elevatorSoftLimitLowerInch = 0;
-    public static final double elevatorPosBottom = 0.0;
-    public static final double elevatorPosMid = 17.2;
-    public static final double elevatorPosAltLoading = 22.0;
-    public static final double elevatorPosLoading = 23.0;
-    public static final double elevatorPosTop = 24.2;
-    public static final double elevatorSoftLimitUpperInch = 25.25;
-
-    public static final double simCarriageWeightKg = 9.0; // ~20 lbs
-    public static final double allowableTeleopErrorInch = 1.0;
-  }
-
-  // public static final class MovementPositions {
-  //   // Angle positions for thearm at specific game angles
-  //   public static final double IntakeOutDeg = 0;
-  //   public static final double AimSpeakerDeg = 10;
-  //   public static final double IntakeInDeg = 15;
-  //   public static final double AimAmpDeg = 90;
-  //   // slider extension positions at specific game positions
-  //   public static final double IntakeOutInch = 24;
-  //   public static final double AimSpeakerInch = 18;
-  //   public static final double IntakeInInch = 0;
-  //   public static final double AimAmpInch = 0;
-  // }
 
   public static final class ArmSubsystem {
     public static final int deviceID = 14;
     public static final int deviceID2 = 15;
     public static final boolean isInverted = true;
+    public static final boolean followerInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.00;
-    public static final double kv = 0.04; // 0.2
+    public static final double kv = 1; // 0.2
     public static final double kg = 0.5; // 0.75
 
     public static final double kP = 0.05;
     public static final double kI = 0.00;
     public static final double kD = 0.0;
+    public static final double kA = 0.0;
     public static final double kIz = 0;
-    public static final double kFF = 0;
+    public static final double kFF = 0.0001;
     public static final double kMaxOutput = 1;
     public static final double kMinOutput = -1;
 
     public static final double gearRatio = 50 * (58 / 12); // Arm chain loop
     // public static final double sprocketDiameterInch = 1.92;
 
+    // Arm details
+    public static final double maxVelocityDegreesPerSec = 180.0;
+    public static final double maxAccelerationDegreesPerSec = 270.0;
+    public static final double armVolts = 6.0;
+    // public static final double armVelocityRPM = (1 / 2) * 60;
+
     // motor shaft details
     public static final int maxCurrentAmps = 30;
-    public static final double maxAngularVelocityRPM = 100.0;
-    public static final double maxAngularAccRPMPerSec = 80.0;
+    public static final double maxAngularVelocityRPM = (maxVelocityDegreesPerSec / 6) * gearRatio;
+    public static final double maxAngularAccRPMPerSec =
+        (maxAccelerationDegreesPerSec / 6) * gearRatio;
     public static final double minOutputVelocityRPM = 10.0; // requests below this no voltage output
     public static final double allowableSmartMotionPosErrorRotations = 3.0 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    // Arm details
-    public static final double maxVelocityDegreesPerSec = 15.0;
-    public static final double maxAccelerationDegreesPerSec = 15.0;
-
     // Degrees
-    public static final double armSoftLimitLowerAngle = 0;
-    public static final double armPosOut = 0.0;
-    public static final double armPosSpeaker = 20.0;
-    public static final double armPosAmp = 90.0;
+    public static final double armSoftLimitLowerAngle = -15;
+    public static final double armPosOut = -10;
+    public static final double armPosSpeaker = 15;
+
+    public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
-    public static final double armPosIn = 25.0;
-    public static final double armSoftLimitUpperAngle = 100.0;
+    public static final double armPosIn = 5;
+    public static final double armSoftLimitUpperAngle = 120.0;
     public static final double goalTolerance = 2;
     public static final double allowableTeleopErrorInch = 1.0;
   }
@@ -285,33 +229,33 @@ public final class Constants {
     public static final int LEDsparknumber = 3;
 
     // FeedForward Control
-    public static final double ks = 0.0;
+    public static final double ks = 1;
     public static final double kv = 0.000;
     // Closed Loop Control
-    public static final double kP = 0.1;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
+    public static final double kP = 0.000000625;
+    public static final double kI = 0.000000001;
+    public static final double kD = 0;
     public static final double kIz = 0;
-    public static final double kFF = 0;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
+    public static final double kFF = 0.0002;
+    public static final double kMaxOutput = 100;
+    public static final double kMinOutput = -100;
 
     // NOTE: Double check this value
-    public static final double gearRatio = 1.6;
+    public static final double gearRatio = 7;
 
-    public static final int maxCurrentAmps = 30;
+    public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 50.0;
-
-    public static final double intakeShootNoteVelRPM = 10.0;
+    public static final double intakeInNoteVelRPM = 200.0;
+    public static final double goalToleranceVelocity = 10; // RPM
+    public static final double intakeShootNoteVelRPM = 200.0;
 
     // Voltage control mode
-    public static final double holdNoteVoltage = 4.0;
+    public static final double holdNoteVoltage = 3.0;
 
     public static final double intakeInNoteVoltage = 6.0;
 
-    public static final double intakeShootNoteVoltage = 7.0;
+    public static final double intakeShootNoteVoltage = 6.0;
   }
 
   // Shoot motor
@@ -320,19 +264,20 @@ public final class Constants {
     public static final int deviceID = 16;
     public static final int deviceID2 = 17;
     public static final int LEDsparknumber = 4;
-    public static final boolean isInverted = false;
+    public static final boolean followerInverted = false;
+    public static final boolean isInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.0;
     public static final double kv = 0.000;
     // Closed Loop Control
-    public static final double kP = 0.1;
-    public static final double kI = 0.00;
-    public static final double kD = 0.0;
+    public static final double kP = 0.00015;
+    public static final double kI = 0.000001;
+    public static final double kD = 0.005;
     public static final double kIz = 0;
-    public static final double kFF = 0;
-    public static final double kMaxOutput = 1;
-    public static final double kMinOutput = -1;
+    public static final double kFF = 0.000180;
+    public static final double kMaxOutput = 100;
+    public static final double kMinOutput = -100;
 
     // UPDATE: Update value for 2024 robot
     public static final double gearRatio = 4.0 * 2.0;
@@ -341,9 +286,9 @@ public final class Constants {
     public static final int holdCurrentAmps = 10;
     // Velocity control mode
 
-    public static final double shootAmpVelRPM = 20.0;
-
-    public static final double shootSpeakerVelRPM = 50.0;
+    public static final double shootAmpVelRPM = 100.0;
+    public static final double goalToleranceVelocity = 1; // Rotations per minute
+    public static final double shootSpeakerVelRPM = 300.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;
@@ -357,7 +302,8 @@ public final class Constants {
     public static final int deviceID = 12;
     public static final int deviceID2 = 13;
     public static final int sensorResolution = 2048;
-    public static final boolean isInverted = false;
+    public static final boolean isInverted = true;
+    public static final boolean followerInverted = true;
 
     // FeedForward Control
     public static final double ks = 0.0;
@@ -384,12 +330,15 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 10;
-    public static final double maxLinearAccelerationInchPerSec = 20;
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 60;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
-    public static final double sliderIntakeIn = 0.0;
-    public static final double sliderIntakeOut = 14.6;
+    public static final double sliderIntakeIn =
+        0.0; // Possibly change to -1 or -2 depending on slack in slider system
+    public static final double sliderIntakeOut = 13;
+    public static final double sliderAmp = 0.0;
+    public static final double sliderSpeaker = 0.0;
 
     public static final double sliderSoftLimitUpperInch = 15.0;
 

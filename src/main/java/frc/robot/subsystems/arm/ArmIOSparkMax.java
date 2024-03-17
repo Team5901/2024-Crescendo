@@ -15,6 +15,7 @@ public class ArmIOSparkMax implements ArmIO {
   private final RelativeEncoder armEncoder;
   private final SparkPIDController armPidController;
   private static final double gearRatio = Constants.ArmSubsystem.gearRatio;
+  private double motorVelocitySetPointRPM = 0.0;
 
   public double angleArmSetPointDegrees = 0.0;
   public double angleArmDegrees = 0.0;
@@ -28,14 +29,14 @@ public class ArmIOSparkMax implements ArmIO {
   public ArmIOSparkMax() {
     armMotor = new CANSparkMax(Constants.ArmSubsystem.deviceID, MotorType.kBrushless);
     armMotor2 = new CANSparkMax(Constants.ArmSubsystem.deviceID2, MotorType.kBrushless);
-    armMotor2.follow(armMotor, !Constants.ArmSubsystem.isInverted);
+    armMotor2.follow(armMotor, Constants.ArmSubsystem.followerInverted);
 
     armEncoder = armMotor.getEncoder();
     armPidController = armMotor.getPIDController();
     armMotor.setInverted(Constants.ArmSubsystem.isInverted);
 
-    armMotor.burnFlash();
-    armMotor2.burnFlash();
+    // armMotor.burnFlash();
+    // armMotor2.burnFlash();
   }
 
   @Override
@@ -63,9 +64,19 @@ public class ArmIOSparkMax implements ArmIO {
     angleArmSetPointDegrees = positionSetAngle;
     positionMotorSetPointRot = (positionSetAngle / 360) * gearRatio;
 
-    // TODO: Change to speed
     armPidController.setReference(
         positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
+  }
+
+  public void setVoltage(double volts) {
+
+    armMotor.setVoltage(volts);
+  }
+
+  public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
+    motorVelocitySetPointRPM = motorVelocitySetRPM;
+    armPidController.setReference(
+        motorVelocitySetPointRPM, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   @Override
@@ -73,7 +84,7 @@ public class ArmIOSparkMax implements ArmIO {
     positionMotorShaftRot = armEncoder.getPosition();
     velocityMotorRPM = armEncoder.getVelocity();
     angleArmDegrees = (positionMotorShaftRot / gearRatio) * 360;
-    velocityAngleArmPerSec = (velocityMotorRPM / gearRatio) * 360;
+    velocityAngleArmPerSec = (velocityMotorRPM / gearRatio) * 360 / 60;
     appliedVolts = armMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = armMotor.getOutputCurrent();
   }
@@ -87,7 +98,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     int smartMotionSlot = 0;
     armMotor.restoreFactoryDefaults();
-    armMotor.setInverted(Constants.ArmSubsystem.isInverted);
+    // armMotor.setInverted(Constants.ArmSubsystem.isInverted);
     armMotor.enableVoltageCompensation(12.0);
     armMotor.setSmartCurrentLimit(Constants.ArmSubsystem.maxCurrentAmps);
 
@@ -96,7 +107,7 @@ public class ArmIOSparkMax implements ArmIO {
     armPidController.setD(kD);
     armPidController.setOutputRange(
         Constants.ArmSubsystem.kMinOutput, Constants.ArmSubsystem.kMaxOutput);
-
+    // armPidController.setFF(Constants.ArmSubsystem.kFF);
     armPidController.setSmartMotionMaxVelocity(
         Constants.ArmSubsystem.maxAngularVelocityRPM, smartMotionSlot);
     armPidController.setSmartMotionMinOutputVelocity(
@@ -104,6 +115,6 @@ public class ArmIOSparkMax implements ArmIO {
     armPidController.setSmartMotionMaxAccel(
         Constants.ArmSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
 
-    armMotor.burnFlash();
+    // armMotor.burnFlash();
   }
 }

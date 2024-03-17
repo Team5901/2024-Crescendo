@@ -15,19 +15,19 @@ public class Slider extends SubsystemBase {
   private static final double maxLinearAccelerationInchPerSec =
       Constants.SliderSubsystem.maxLinearAccelerationInchPerSec;
 
-  private final TrapezoidProfile.Constraints m_constraints =
-      new TrapezoidProfile.Constraints(
-          maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
+  private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
-
+  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
+  private TrapezoidProfile profile;
   private final ElevatorFeedforward ffModel;
-
-  private double positionSetPointInch = 0.0;
 
   /** Creates a new slider. */
   public Slider(SliderIO io) {
     this.io = io;
+    m_constraints =
+        new TrapezoidProfile.Constraints(
+            maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
+    profile = new TrapezoidProfile(m_constraints);
 
     ffModel =
         new ElevatorFeedforward(
@@ -40,31 +40,27 @@ public class Slider extends SubsystemBase {
         "Slider INPUT",
         inputs.positionSliderInch); // creates an input number area so we can adjust the slider's
     // position at will
+
+    // m_current = profile.calculate(0, m_current, m_goal);
   }
 
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("slider", inputs);
+    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
-    // Log slider speed in RPM
-    // Logger.getInstance().recordOutput("SliderSpeedRPM",
-    // getVelocityRPMFromRadsPerSec());
-    Logger.recordOutput("SliderSetpointInch", positionSetPointInch);
+    io.setPosition(m_current.position, ffModel.calculate(m_current.velocity));
 
-    var profile = new TrapezoidProfile(m_constraints);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
-
-    io.setPosition(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
     Logger.recordOutput("SliderPosErrorInch", getError());
     SmartDashboard.putNumber(
         "Slider Position",
         inputs.positionSliderInch); // constantly updates slider position for the operators benefit
+    SmartDashboard.putNumber("Slider SetPoint", m_goal.position);
   }
 
   public void setPositionSetPoint(double positionSetInch) {
     m_goal = new TrapezoidProfile.State(positionSetInch, 0);
-    positionSetPointInch = positionSetInch;
   }
 
   public double getPosition() {

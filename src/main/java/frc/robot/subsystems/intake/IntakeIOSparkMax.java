@@ -87,6 +87,6 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakePidController.setOutputRange(
         Constants.IntakeSubsystem.kMinOutput, Constants.IntakeSubsystem.kMaxOutput);
     intakeMotor.setIdleMode(IdleMode.kCoast);
-    intakeMotor.burnFlash();
+    // intakeMotor.burnFlash();
   }
 }

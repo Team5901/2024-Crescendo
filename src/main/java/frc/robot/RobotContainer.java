@@ -15,19 +15,28 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmMovement;
+import frc.robot.commands.ArmDashboardRotate;
+import frc.robot.commands.ArmDashboardSlider;
+import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.LimelightCommands;
+import frc.robot.commands.goToAimAmp;
+import frc.robot.commands.goToAimSpeaker;
+import frc.robot.commands.goToIntakeIn;
+import frc.robot.commands.goToIntakeOut;
+import frc.robot.commands.setIntakeRPM;
+import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSim;
@@ -72,20 +81,26 @@ public class RobotContainer {
   private final LimelightIOInputs inputs;
   private final Arm arm;
   private final Slider slider;
+  private final DutyCycleEncoder encoder;
+  private final DigitalInput IntakeNoteDetector = new DigitalInput(8);
   // Commands
-  private ArmMovement armMovementCommand;
+  // private final ArmMovement armMovementCommand;
   // Controller and joystick
   private final Joystick joystick = new Joystick(0);
   private final XboxController controller_2 = new XboxController(1);
 
   // Intake movement buttons
-  private final JoystickButton aimAmp =
+  private final JoystickButton aimAmpA =
       new JoystickButton(controller_2, XboxController.Button.kA.value);
-  private final JoystickButton intakeOut =
+  // private final JoystickButton armSetVolts =
+  //    new JoystickButton(controller_2, XboxController.Button.kB.value);
+  private final JoystickButton intakeOutB =
       new JoystickButton(controller_2, XboxController.Button.kB.value);
-  private final JoystickButton aimSpeaker =
+  private final JoystickButton aimSpeakerY =
       new JoystickButton(controller_2, XboxController.Button.kY.value);
-  private final JoystickButton intakeIn =
+  // private final JoystickButton armSetNegativeVolts =
+  //    new JoystickButton(controller_2, XboxController.Button.kX.value);
+  private final JoystickButton intakeInX =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimCustom =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
@@ -93,15 +108,20 @@ public class RobotContainer {
   // shooting/roller buttons
   private final JoystickButton IntakeRollersOn =
       new JoystickButton(controller_2, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton IntakeRollersOut_RBump =
+      new JoystickButton(controller_2, XboxController.Button.kRightBumper.value);
   // Trigger triggerOperatorLeft = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
-  private final JoystickButton shootAmp =
-      new JoystickButton(controller_2, XboxController.Axis.kLeftTrigger.value);
-  Trigger shootSpeaker = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
+  private final Trigger shootSpeaker = new Trigger(() -> controller_2.getLeftTriggerAxis() > 0.25);
+  private final Trigger shootAmp = new Trigger(() -> controller_2.getRightTriggerAxis() > 0.25);
 
+  private final Trigger detectNoteTrigger = new Trigger(() -> IntakeNoteDetector.get());
+
+  // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
-
+  private final JoystickButton zeroGyro = new JoystickButton(joystick, 11);
+  // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
   // Add joystick button to check april tag
   private final JoystickButton alignAprilTag = new JoystickButton(joystick, 8);
 
@@ -153,6 +173,7 @@ public class RobotContainer {
         shoot = new Shoot(new ShootIOSim() {}, intake);
         slider = new Slider(new SliderIOSim() {});
         arm = new Arm(new ArmIOSim() {});
+
         break;
 
       default:
@@ -173,21 +194,33 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {});
         break;
     }
+    // Initializes a duty cycle encoder on DIO pins 0
+    encoder = new DutyCycleEncoder(9);
+    // Configures the encoder to return a distance of 4 for every rotation
+    encoder.setDistancePerRotation(360.0);
 
     // Set up auto routines
-    NamedCommands.registerCommand(
-        "shootspeaker",
-        Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
-    NamedCommands.registerCommand(
-        "Pick_Up_Note",
-        Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
+    // NamedCommands.registerCommand(
+    //     "shootspeaker",
+    //     new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+    //         .andThen(
+    //             new WaitCommand(3)
+    //                 .andThen(
+    //                     new InstantCommand(shoot::stop, shoot)
+    //                         .alongWith(new InstantCommand(intake::stop, intake)))));
+    NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
+    NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
+    // NamedCommands.registerCommand(
+    //     "Pick_Up_Note",
+    //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up feedforward characterization
-    autoChooser.addOption(
-        "Drive FF Characterization",
-        new FeedForwardCharacterization(
-            drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    // autoChooser.addOption(
+    //     "Drive FF Characterization",
+    //     new FeedForwardCharacterization(
+    //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    autoChooser.addOption("BShoot", new AutoShootSpeaker(slider, arm, shoot, intake));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -200,60 +233,78 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
             () -> -joystick.getRawAxis(translationAxis),
             () -> -joystick.getRawAxis(strafeAxis),
-            () -> -joystick.getRawAxis(rotationAxis)));
+            () -> joystick.getRawAxis(rotationAxis) * 0.5));
 
-    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
-    /*controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
+    // this resets our drive pose by over writing it with a blank pose, with roation of said pose
+    // depending on alliance color
+    zeroGyro.onTrue(
+        new InstantCommand(() -> drive.zeroGyro(), drive)
+            .alongWith(
+                new InstantCommand(
                     () ->
                         drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
-    controller
-        .a()
-        .whileTrue(
-            Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));*/
+                            new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
+    
+    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
+    // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
+    // TODO add in this command so we can stop really nicely
+    // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    /*controller
+    .b()
+    .onTrue(
+        Commands.runOnce(
+                () ->
+                    drive.setPose(
+                        new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+                drive)
+            .ignoringDisable(true));*/
 
-    // Intake
-    IntakeRollersOn.whileTrue(
-        new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
-    intakeOut.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToIntakeOut(slider, arm);
-            }));
-    // aimSpeaker.onTrue(
-    //     new InstantCommand(
-    //         () -> {
-    //           armMovementCommand.goToAimSpeaker();
-    //         }));
-    intakeIn.onTrue(
-        new InstantCommand(
-            () -> {
-              armMovementCommand.goToIntakeIn(slider, arm);
-            }));
-    // aimAmp.onTrue(
-    //     new InstantCommand(
-    //         () -> {
-    //           armMovementCommand.goToAimAmp();
-    //         }));
-    shootAmp.whileTrue(new StartEndCommand(() -> shoot.shootAmp(), shoot::stop, shoot));
-    shootSpeaker.whileTrue(new StartEndCommand(() -> shoot.shootSpeaker(), shoot::stop, shoot));
+    // Intake left bumper
+    IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+    IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
+    // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
+    IntakeRollersOut_RBump.onTrue(
+        new setIntakeRPM(-0.25 * Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+    IntakeRollersOut_RBump.onFalse(new InstantCommand(() -> intake.stop(), intake));
+
+    // Positions
+    // B Button. Go to Intake Out position
+    intakeOutB.onTrue(new goToIntakeOut(slider, arm));
+    // X Button. Go to Intake In position
+    intakeInX.onTrue(new goToIntakeIn(slider, arm));
+    // A Button. Go to Aim Amp position
+    aimAmpA.onTrue(new goToAimAmp(arm, slider));
+    // Y Button. Go to Aim Speaker position
+    aimSpeakerY.onTrue(new goToAimSpeaker(arm, slider));
+
+    // Shooter
+    shootSpeaker.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
+    shootSpeaker.onFalse(
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
+
+    shootAmp.onTrue(
+        new setShooterRPM(Constants.ShootSubsystem.shootAmpVelRPM, shoot)
+            .andThen(new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)));
+    shootAmp.onFalse(
+        new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
+
     // Add code here to print out if tag in view when april tag button pressed
     alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
-    aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
+    // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
-        new InstantCommand(() -> armMovementCommand.goToSLIDERSmartDashboard(slider)));
+        new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
+    // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
+    aimCustom.onTrue( // start button
+        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder));
+    // aimCustom.onFalse((new InstantCommand(arm::stop, arm)));
   }
 
   /**

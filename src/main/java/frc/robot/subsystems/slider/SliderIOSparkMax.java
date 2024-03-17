@@ -37,13 +37,13 @@ public class SliderIOSparkMax implements SliderIO {
     sliderMotor = new CANSparkMax(Constants.SliderSubsystem.deviceID, MotorType.kBrushless);
     sliderEncoder = sliderMotor.getEncoder();
     sliderMotor2 = new CANSparkMax(Constants.SliderSubsystem.deviceID2, MotorType.kBrushless);
-    sliderMotor2.follow(sliderMotor, !Constants.SliderSubsystem.isInverted);
+    sliderMotor2.follow(sliderMotor, Constants.SliderSubsystem.followerInverted);
 
     sliderPidController = sliderMotor.getPIDController();
     sliderMotor.setInverted(Constants.SliderSubsystem.isInverted);
 
-    sliderMotor.burnFlash();
-    sliderMotor2.burnFlash();
+    // sliderMotor.burnFlash();
+    // sliderMotor2.burnFlash();
   }
 
   @Override
@@ -120,7 +120,8 @@ public class SliderIOSparkMax implements SliderIO {
         Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
     // sliderPidController.setSmartMotionAllowedClosedLoopError(
     // Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
-    sliderMotor.setIdleMode(IdleMode.kCoast);
-    sliderMotor.burnFlash();
+    sliderMotor.setIdleMode(IdleMode.kBrake);
+    sliderMotor2.setIdleMode(IdleMode.kBrake);
+    // sliderMotor.burnFlash();
   }
 }

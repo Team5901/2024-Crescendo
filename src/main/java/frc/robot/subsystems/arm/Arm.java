@@ -1,6 +1,6 @@
 package frc.robot.subsystems.arm;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,24 +15,28 @@ public class Arm extends SubsystemBase {
       Constants.ArmSubsystem.maxVelocityDegreesPerSec;
   private static final double maxAccelerationDegreesPerSec =
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
-
-  private final TrapezoidProfile.Constraints m_constraints =
-      new TrapezoidProfile.Constraints(maxVelocityDegreesPerSec, maxAccelerationDegreesPerSec);
+  private TrapezoidProfile profile;
+  private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
 
   // UPDATE: Figure out how to update this for arm
-  private final ElevatorFeedforward ffModel;
+  private final ArmFeedforward ffModel;
 
   /** Creates a new arm. */
   public Arm(ArmIO io) {
     this.io = io;
+    m_constraints =
+        new TrapezoidProfile.Constraints(
+            (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
+    profile = new TrapezoidProfile(m_constraints);
 
     ffModel =
-        new ElevatorFeedforward(
-            Constants.ElevatorSubsystem.ks,
-            Constants.ElevatorSubsystem.kg,
-            Constants.ElevatorSubsystem.kv);
+        new ArmFeedforward(
+            Constants.ArmSubsystem.ks,
+            Constants.ArmSubsystem.kg,
+            Constants.ArmSubsystem.kv,
+            Constants.ArmSubsystem.kA);
     io.configurePID(
         Constants.ArmSubsystem.kP, Constants.ArmSubsystem.kI, Constants.ArmSubsystem.kD);
     SmartDashboard.putNumber(
@@ -45,12 +49,14 @@ public class Arm extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
 
-    var profile = new TrapezoidProfile(m_constraints);
-    m_setpoint = profile.calculate(Constants.simLoopPeriodSecs, m_goal, m_setpoint);
+    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
 
-    io.setAngle(m_setpoint.position, ffModel.calculate(m_setpoint.velocity));
+    io.setAngle(
+        m_current.position,
+        ffModel.calculate(Math.toRadians(m_current.position), Math.toRadians(m_current.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
-    Logger.recordOutput("armFF", ffModel.calculate(m_setpoint.velocity));
+    Logger.recordOutput("m_goal position", m_goal.position);
+    Logger.recordOutput("m_current position", m_current.position);
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
@@ -60,6 +66,11 @@ public class Arm extends SubsystemBase {
   // trapezoid profile worksion
   public void setAngleSetPoint(double angleDegrees) {
     m_goal = new TrapezoidProfile.State(angleDegrees, 0);
+  }
+
+  public void setVoltage(double volts) {
+
+    io.setVoltage(volts);
   }
 
   // UPDATE: Angle or inch?
@@ -78,6 +89,15 @@ public class Arm extends SubsystemBase {
 
   public boolean atSetpoint(double goal_tolerance) {
     return ((Math.abs(m_goal.position - inputs.angleArmDegrees)) < goal_tolerance);
+  }
+
+  public void setVelocity(double armVelocityRPM) {
+    io.setVelocity(
+        armVelocityRPM * Constants.ArmSubsystem.gearRatio,
+        0.0); // ffModel.calculate(wheelVelocitySetRPM*gearRatio)
+
+    // Log intake setpoint
+    Logger.recordOutput("ArmSetpointRPM", armVelocityRPM);
   }
 
   // public void setAngleAmp() {
