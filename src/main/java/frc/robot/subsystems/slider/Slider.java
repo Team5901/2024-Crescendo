@@ -30,6 +30,9 @@ public class Slider extends SubsystemBase {
             maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
     profile = new TrapezoidProfile(m_constraints);
 
+    m_last.position=inputs.positionSliderInch;
+    m_last.velocity=inputs.velocitySliderInchPerSec;
+
     ffModel =
         new ElevatorFeedforward(
             Constants.SliderSubsystem.ks,
@@ -49,8 +52,8 @@ public class Slider extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("slider", inputs);
-    m_last.position=inputs.positionSliderInch;
-    m_last.velocity=inputs.velocitySliderInchPerSec;
+    m_last.position=m_next.position;
+    m_last.velocity= m_next.velocity;
     m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal);
 
     io.setPosition(m_next.position, ffModel.calculate(m_next.velocity));

@@ -36,6 +36,8 @@ public class Arm extends SubsystemBase {
             (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
     profile = new TrapezoidProfile(m_constraints);
 
+    m_last.position=encoder.getDistance(); // moving this line from periodic to here so that our arm isnt slow.
+
     ffModel =
         new ArmFeedforward(
             Constants.ArmSubsystem.ks,
@@ -53,7 +55,7 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-    m_last.position=encoder.getDistance(); // get our current position from our encoder and the previous state's velocity
+    m_last.position=m_next.position; // get our current position from our encoder and the previous state's velocity
     m_last.velocity=m_next.velocity;
     m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal); // calculate our next point in the trapezoid using our good encoder;
 
