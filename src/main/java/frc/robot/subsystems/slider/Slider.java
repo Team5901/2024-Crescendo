@@ -30,8 +30,7 @@ public class Slider extends SubsystemBase {
             maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
     profile = new TrapezoidProfile(m_constraints);
 
-    m_last.position=inputs.positionSliderInch;
-    m_last.velocity=inputs.velocitySliderInchPerSec;
+    m_last.position=inputs.positionSliderInch; //arm is set to current location on initialization, so that we dont snap back to reality.
 
     ffModel =
         new ElevatorFeedforward(

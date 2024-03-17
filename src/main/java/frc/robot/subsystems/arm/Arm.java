@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase {
             (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
     profile = new TrapezoidProfile(m_constraints);
 
-    m_last.position=encoder.getDistance(); // moving this line from periodic to here so that our arm isnt slow.
+    m_last.position=encoder.getDistance(); // moving this line from periodic to here so that our arm isnt slow, and doesnt snap back to reality
 
     ffModel =
         new ArmFeedforward(
