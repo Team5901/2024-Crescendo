@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.Alert;
 import frc.lib.util.Alert.AlertType;
 import frc.lib.util.COTSFalconSwerveConstants;
-import frc.lib.util.SwerveModuleConstants2;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -36,7 +34,7 @@ import frc.lib.util.SwerveModuleConstants2;
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
   public static final double simLoopPeriodSecs = 0.02;
-  private static final RobotType robot = RobotType.SIM;
+  private static final RobotType robot = RobotType.REAL;
   public static final boolean chassisOnly = false;
   public static final String driveCANBUS = "Drivetrain";
 
@@ -122,9 +120,9 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4;
+    public static final double maxSpeed = 5;
     /** Radians per Second */
-    public static final double maxAngularVelocity = (2 * Math.PI); // 1;
+    public static final double maxAngularVelocity = (1.25 * 2 * Math.PI); // 1;
     // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
     public static final double maxOpenLoopThrottle = 0.2;
     /* Neutral Modes */
@@ -135,21 +133,21 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID = 0;
+      public static final int driveMotorID = 19;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 8;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.27);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 1;
+      public static final int driveMotorID = 20;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 9;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.44);
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants();
+      // public static final SwerveModuleConstants constants = new SwerveModuleConstants();
     }
 
     /* Front Left Module - Module 0 */
@@ -158,8 +156,8 @@ public final class Constants {
       public static final int angleMotorID = 7;
       public static final int canCoderID = 10;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(15.95);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
     /* Front Right Module - Module 1 */
@@ -168,8 +166,8 @@ public final class Constants {
       public static final int angleMotorID = 4;
       public static final int canCoderID = 11;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(217.83);
-      public static final SwerveModuleConstants2 constants =
-          new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }
 
@@ -197,10 +195,10 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 90.0;
-    public static final double maxAccelerationDegreesPerSec = 90.0;
+    public static final double maxVelocityDegreesPerSec = 180.0;
+    public static final double maxAccelerationDegreesPerSec = 270.0;
     public static final double armVolts = 6.0;
-    public static final double armVelocityRPM = (1 / 4) * 60;
+    // public static final double armVelocityRPM = (1 / 2) * 60;
 
     // motor shaft details
     public static final int maxCurrentAmps = 30;
@@ -291,7 +289,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 100.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 300.0;
+    public static final double shootSpeakerVelRPM = 400.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;
@@ -333,8 +331,8 @@ public final class Constants {
     public static final double allowableSmartMotionPosErrorRotations = 1.4 * gearRatio;
     public static final double autoPositionErrorInch = 2.0;
 
-    public static final double maxLinearVelocityInchPerSec = 30;
-    public static final double maxLinearAccelerationInchPerSec = 30;
+    public static final double maxLinearVelocityInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 60;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn =

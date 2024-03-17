@@ -15,12 +15,12 @@ public class goToIntakeOut extends SequentialCommandGroup {
     if (startAngle <= 45) {
 
       addCommands(
-          new ArmRotateGoToPosition(5, Constants.ArmSubsystem.goalTolerance, arm),
+          new ArmRotateGoToPosition(5, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(1), // Extends the intake arm with a timeout of 1 second
+              .withTimeout(.5), // Extends the intake arm with a timeout of 1 second
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosOut,
               Constants.ArmSubsystem.goalTolerance,
@@ -28,12 +28,12 @@ public class goToIntakeOut extends SequentialCommandGroup {
           );
     } else {
       addCommands(
-          new ArmRotateGoToPosition(45, Constants.ArmSubsystem.goalTolerance, arm),
+          new ArmRotateGoToPosition(45, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(1), // Extends the intake arm with a timeout of 1 second
+              .withTimeout(.5), // Extends the intake arm with a timeout of 1 second
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm));
     }

@@ -14,6 +14,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -25,8 +28,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
+import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.LimelightCommands;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToIntakeIn;
@@ -116,10 +120,10 @@ public class RobotContainer {
   // joystick button to goto specific slider spot
   private final JoystickButton customSliderPositionButton =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
-  private final JoystickButton zeroGyro = new JoystickButton(joystick, 10);
+  private final JoystickButton zeroGyro = new JoystickButton(joystick, 11);
   // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
   // Add joystick button to check april tag
-  private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
+  private final JoystickButton alignAprilTag = new JoystickButton(joystick, 8);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -146,15 +150,15 @@ public class RobotContainer {
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
-          shoot = new Shoot(new ShootIO() {}, intake);
+          shoot = new Shoot(new ShootIO() {});
           slider = new Slider(new SliderIO() {});
-          arm = new Arm(new ArmIO() {}, encoder);
+          arm = new Arm(new ArmIO() {},encoder);
 
         } else {
           intake = new Intake(new IntakeIOSparkMax());
-          shoot = new Shoot(new ShootIOSparkMax(), intake);
+          shoot = new Shoot(new ShootIOSparkMax());
           slider = new Slider(new SliderIOSparkMax() {});
-          arm = new Arm(new ArmIOSparkMax() {}, encoder);
+          arm = new Arm(new ArmIOSparkMax() {},encoder);
         }
         break;
 
@@ -171,9 +175,9 @@ public class RobotContainer {
         inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIOSim());
-        shoot = new Shoot(new ShootIOSim() {}, intake);
+        shoot = new Shoot(new ShootIOSim() {});
         slider = new Slider(new SliderIOSim() {});
-        arm = new Arm(new ArmIOSim() {}, encoder);
+        arm = new Arm(new ArmIOSim() {},encoder);
 
         break;
 
@@ -190,7 +194,7 @@ public class RobotContainer {
         inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIO() {});
-        shoot = new Shoot(new ShootIO() {}, intake);
+        shoot = new Shoot(new ShootIO() {});
         slider = new Slider(new SliderIO() {});
         arm = new Arm(new ArmIO() {},encoder);
         break;
@@ -199,17 +203,25 @@ public class RobotContainer {
     // Set up auto routines
     // NamedCommands.registerCommand(
     //     "shootspeaker",
-    //     Commands.startEnd(() -> shoot.shootSpeaker(), shoot::stop, shoot).withTimeout(3.0));
+    //     new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
+    //         .andThen(
+    //             new WaitCommand(3)
+    //                 .andThen(
+    //                     new InstantCommand(shoot::stop, shoot)
+    //                         .alongWith(new InstantCommand(intake::stop, intake)))));
+    NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
+    NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
     //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up feedforward characterization
-    autoChooser.addOption(
-        "Drive FF Characterization",
-        new FeedForwardCharacterization(
-            drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    // autoChooser.addOption(
+    //     "Drive FF Characterization",
+    //     new FeedForwardCharacterization(
+    //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    autoChooser.addOption("BShoot", new AutoShootSpeaker(slider, arm, shoot, intake));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -230,7 +242,17 @@ public class RobotContainer {
             () -> -joystick.getRawAxis(strafeAxis),
             () -> joystick.getRawAxis(rotationAxis) * 0.5));
 
-    zeroGyro.onTrue(new InstantCommand(() -> drive.zeroGyro()));
+    // this resets our drive pose by over writing it with a blank pose, with roation of said pose
+    // depending on alliance color
+    zeroGyro.onTrue(
+        new InstantCommand(() -> drive.zeroGyro(), drive)
+            .alongWith(
+                new InstantCommand(
+                    () ->
+                        drive.setPose(
+                            new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
+    
+    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -247,7 +269,7 @@ public class RobotContainer {
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
-    detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
+    // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
     IntakeRollersOut_RBump.onTrue(
         new setIntakeRPM(-0.25 * Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
     IntakeRollersOut_RBump.onFalse(new InstantCommand(() -> intake.stop(), intake));
@@ -276,7 +298,7 @@ public class RobotContainer {
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
     // Add code here to print out if tag in view when april tag button pressed
-    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
+    alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
