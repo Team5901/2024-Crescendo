@@ -16,7 +16,7 @@ public class Shoot extends SubsystemBase {
   private static final double gearRatio = Constants.ShootSubsystem.gearRatio;
 
   /** Creates a new Shoot. */
-  public Shoot(ShootIO io, Intake intake) {
+  public Shoot(ShootIO io) {
     this.io = io;
 
     // Switch constants based on mode (the physics simulator is treated as a

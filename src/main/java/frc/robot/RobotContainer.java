@@ -130,6 +130,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // Initializes a duty cycle encoder on DIO pins 0
+    encoder = new DutyCycleEncoder(9);
+    // Configures the encoder to return a distance of 4 for every rotation
+    encoder.setDistancePerRotation(360.0);
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -145,15 +149,15 @@ public class RobotContainer {
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
-          shoot = new Shoot(new ShootIO() {}, intake);
+          shoot = new Shoot(new ShootIO() {});
           slider = new Slider(new SliderIO() {});
-          arm = new Arm(new ArmIO() {});
+          arm = new Arm(new ArmIO() {},encoder);
 
         } else {
           intake = new Intake(new IntakeIOSparkMax());
-          shoot = new Shoot(new ShootIOSparkMax(), intake);
+          shoot = new Shoot(new ShootIOSparkMax());
           slider = new Slider(new SliderIOSparkMax() {});
-          arm = new Arm(new ArmIOSparkMax() {});
+          arm = new Arm(new ArmIOSparkMax() {},encoder);
         }
         break;
 
@@ -170,9 +174,9 @@ public class RobotContainer {
         inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIOSim());
-        shoot = new Shoot(new ShootIOSim() {}, intake);
+        shoot = new Shoot(new ShootIOSim() {});
         slider = new Slider(new SliderIOSim() {});
-        arm = new Arm(new ArmIOSim() {});
+        arm = new Arm(new ArmIOSim() {},encoder);
 
         break;
 
@@ -189,15 +193,12 @@ public class RobotContainer {
         inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIO() {});
-        shoot = new Shoot(new ShootIO() {}, intake);
+        shoot = new Shoot(new ShootIO() {});
         slider = new Slider(new SliderIO() {});
-        arm = new Arm(new ArmIO() {});
+        arm = new Arm(new ArmIO() {},encoder);
         break;
     }
-    // Initializes a duty cycle encoder on DIO pins 0
-    encoder = new DutyCycleEncoder(9);
-    // Configures the encoder to return a distance of 4 for every rotation
-    encoder.setDistancePerRotation(360.0);
+    
 
     // Set up auto routines
     // NamedCommands.registerCommand(
