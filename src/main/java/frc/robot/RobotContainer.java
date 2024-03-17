@@ -30,6 +30,7 @@ import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.LimelightCommands;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToIntakeIn;
@@ -122,7 +123,7 @@ public class RobotContainer {
   private final JoystickButton zeroGyro = new JoystickButton(joystick, 11);
   // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
   // Add joystick button to check april tag
-  private final JoystickButton checkAprilTag = new JoystickButton(joystick, 8);
+  private final JoystickButton alignAprilTag = new JoystickButton(joystick, 8);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -249,6 +250,8 @@ public class RobotContainer {
                     () ->
                         drive.setPose(
                             new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
+    
+    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -294,7 +297,7 @@ public class RobotContainer {
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
     // Add code here to print out if tag in view when april tag button pressed
-    checkAprilTag.whileTrue(new InstantCommand(() -> limelight.tagCenterButton(inputs)));
+    alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
