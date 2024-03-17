@@ -130,10 +130,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Initializes a duty cycle encoder on DIO pins 0
+
     encoder = new DutyCycleEncoder(9);
     // Configures the encoder to return a distance of 4 for every rotation
     encoder.setDistancePerRotation(360.0);
+    encoder.setPositionOffset(Constants.encoder.encoderOffset);
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -198,7 +199,6 @@ public class RobotContainer {
         arm = new Arm(new ArmIO() {},encoder);
         break;
     }
-    
 
     // Set up auto routines
     // NamedCommands.registerCommand(

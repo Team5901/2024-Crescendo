@@ -20,8 +20,9 @@ public class Arm extends SubsystemBase {
   private TrapezoidProfile profile;
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
-  private TrapezoidProfile.State m_current = new TrapezoidProfile.State();
-
+  private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
+  private DutyCycleEncoder encoder;
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
 
@@ -29,6 +30,7 @@ public class Arm extends SubsystemBase {
   public Arm(ArmIO io,DutyCycleEncoder encoder) {
     encoder.reset(); // TODO change this out for a better system soon
     this.io = io;
+    this.encoder=encoder;
     m_constraints =
         new TrapezoidProfile.Constraints(
             (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
@@ -51,19 +53,20 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-
-    m_current = profile.calculate(Constants.simLoopPeriodSecs, m_current, m_goal);
+    m_last.position=encoder.getDistance(); // get our current position from our encoder and the previous state's velocity
+    m_last.velocity=m_next.velocity;
+    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal); // calculate our next point in the trapezoid using our good encoder;
 
     io.setAngle(
-        m_current.position,
-        ffModel.calculate(Math.toRadians(m_current.position), Math.toRadians(m_current.velocity)));
+        m_next.position,
+        ffModel.calculate(Math.toRadians(m_next.position), Math.toRadians(m_next.velocity)));
     Logger.recordOutput("ArmPosErrorInch", getError());
     Logger.recordOutput("m_goal position", m_goal.position);
-    Logger.recordOutput("m_current position", m_current.position);
+    Logger.recordOutput("m_current position", m_next.position);
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
-    
+    SmartDashboard.putNumber("encoder distance",encoder.getDistance());
       }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
@@ -79,7 +82,7 @@ public class Arm extends SubsystemBase {
 
   // UPDATE: Angle or inch?
   public double getAngle() {
-    return inputs.angleArmDegrees;
+    return encoder.getDistance();
   }
 
   public double getError() {
