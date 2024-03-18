@@ -3,7 +3,6 @@ package frc.robot.subsystems.shoot;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.intake.Intake;
 import org.littletonrobotics.junction.Logger;
 
 public class Shoot extends SubsystemBase {

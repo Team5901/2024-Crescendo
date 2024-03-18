@@ -3,7 +3,6 @@ package frc.robot.subsystems.arm;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -27,16 +26,19 @@ public class Arm extends SubsystemBase {
   private final ArmFeedforward ffModel;
 
   /** Creates a new arm. */
-  public Arm(ArmIO io,DutyCycleEncoder encoder) {
+  public Arm(ArmIO io, DutyCycleEncoder encoder) {
     encoder.reset(); // TODO change this out for a better system soon
     this.io = io;
-    this.encoder=encoder;
+    this.encoder = encoder;
     m_constraints =
         new TrapezoidProfile.Constraints(
             (maxVelocityDegreesPerSec), (maxAccelerationDegreesPerSec));
     profile = new TrapezoidProfile(m_constraints);
 
-    m_last.position=encoder.getDistance(); // moving this line from periodic to here so that our arm isnt slow, and doesnt snap back to reality
+    m_last.position =
+        encoder
+            .getDistance(); // moving this line from periodic to here so that our arm isnt slow, and
+    // doesnt snap back to reality
 
     ffModel =
         new ArmFeedforward(
@@ -55,9 +57,15 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("arm", inputs);
-    m_last.position=m_next.position; // get our current position from our encoder and the previous state's velocity
-    m_last.velocity=m_next.velocity;
-    m_next = profile.calculate(Constants.simLoopPeriodSecs, m_last, m_goal); // calculate our next point in the trapezoid using our good encoder;
+    m_last.position =
+        m_next.position; // get our current position from our encoder and the previous state's
+    // velocity
+    m_last.velocity = m_next.velocity;
+    m_next =
+        profile.calculate(
+            Constants.simLoopPeriodSecs,
+            m_last,
+            m_goal); // calculate our next point in the trapezoid using our good encoder;
 
     io.setAngle(
         m_next.position,
@@ -68,8 +76,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
-    SmartDashboard.putNumber("encoder distance",encoder.getDistance());
-      }
+    SmartDashboard.putNumber("encoder distance", encoder.getDistance());
+  }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
   // trapezoid profile worksion

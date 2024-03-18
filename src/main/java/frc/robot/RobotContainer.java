@@ -30,7 +30,6 @@ import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.LimelightCommands;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToIntakeIn;
@@ -44,8 +43,6 @@ import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
-import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
-import frc.robot.subsystems.drive.LimelightIONetwork;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -77,8 +74,8 @@ public class RobotContainer {
   private final Drive drive;
   private final Intake intake;
   private final Shoot shoot;
-  private final LimelightIONetwork limelight;
-  private final LimelightIOInputs inputs;
+  // private final LimelightIONetwork limelight;
+  // private final LimelightIOInputs inputs;
   private final Arm arm;
   private final Slider slider;
   private final DutyCycleEncoder encoder;
@@ -145,20 +142,20 @@ public class RobotContainer {
                 new ModuleIOTalonFX(1),
                 new ModuleIOTalonFX(2),
                 new ModuleIOTalonFX(3));
-        limelight = new LimelightIONetwork();
-        inputs = new LimelightIOInputs();
+        // limelight = new LimelightIONetwork();
+        // inputs = new LimelightIOInputs();
 
         if (Constants.chassisOnly) {
           intake = new Intake(new IntakeIO() {});
           shoot = new Shoot(new ShootIO() {});
           slider = new Slider(new SliderIO() {});
-          arm = new Arm(new ArmIO() {},encoder);
+          arm = new Arm(new ArmIO() {}, encoder);
 
         } else {
           intake = new Intake(new IntakeIOSparkMax());
           shoot = new Shoot(new ShootIOSparkMax());
           slider = new Slider(new SliderIOSparkMax() {});
-          arm = new Arm(new ArmIOSparkMax() {},encoder);
+          arm = new Arm(new ArmIOSparkMax() {}, encoder);
         }
         break;
 
@@ -171,13 +168,13 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
-        limelight = new LimelightIONetwork();
-        inputs = new LimelightIOInputs();
+        // limelight = new LimelightIONetwork();
+        // inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIOSim());
         shoot = new Shoot(new ShootIOSim() {});
         slider = new Slider(new SliderIOSim() {});
-        arm = new Arm(new ArmIOSim() {},encoder);
+        arm = new Arm(new ArmIOSim() {}, encoder);
 
         break;
 
@@ -190,13 +187,13 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        limelight = new LimelightIONetwork();
-        inputs = new LimelightIOInputs();
+        // limelight = new LimelightIONetwork();
+        // inputs = new LimelightIOInputs();
 
         intake = new Intake(new IntakeIO() {});
         shoot = new Shoot(new ShootIO() {});
         slider = new Slider(new SliderIO() {});
-        arm = new Arm(new ArmIO() {},encoder);
+        arm = new Arm(new ArmIO() {}, encoder);
         break;
     }
 
@@ -251,8 +248,8 @@ public class RobotContainer {
                     () ->
                         drive.setPose(
                             new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
-    
-    limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
+
+    // limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
     // TODO add in this command so we can stop really nicely
     // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -298,7 +295,8 @@ public class RobotContainer {
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
     // Add code here to print out if tag in view when april tag button pressed
-    alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
+    // alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive,
+    // limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));

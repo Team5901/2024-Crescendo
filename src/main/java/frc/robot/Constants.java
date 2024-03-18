@@ -48,10 +48,11 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
   public static final class encoder {
-    public static final double encoderOffset= -39.680929;
-    
+    public static final double encoderOffset = -39.680929;
   }
+
   public static final class Swerve {
     public static final int pigeonID = 1;
     public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
