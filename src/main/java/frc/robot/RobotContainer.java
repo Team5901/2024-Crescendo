@@ -209,7 +209,8 @@ public class RobotContainer {
     //                 .andThen(
     //                     new InstantCommand(shoot::stop, shoot)
     //                         .alongWith(new InstantCommand(intake::stop, intake)))));
-    NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
+    //Commented out for simple drive
+    //NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
     NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
@@ -238,19 +239,20 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -joystick.getRawAxis(translationAxis),
-            () -> -joystick.getRawAxis(strafeAxis),
-            () -> joystick.getRawAxis(rotationAxis) * 0.5));
+            () -> -joystick.getRawAxis(translationAxis), //() -> -controller.getLeftY()
+            () -> -joystick.getRawAxis(strafeAxis), //() -> -controller.getLeftX(),
+            () -> joystick.getRawAxis(rotationAxis) * 0.5)); //() -> -controller.getRightX()));
 
     // this resets our drive pose by over writing it with a blank pose, with roation of said pose
     // depending on alliance color
-    zeroGyro.onTrue(
-        new InstantCommand(() -> drive.zeroGyro(), drive)
-            .alongWith(
-                new InstantCommand(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
+    //Commented out for simple drive
+    // zeroGyro.onTrue(
+    //     new InstantCommand(() -> drive.zeroGyro(), drive)
+    //         .alongWith(
+    //             new InstantCommand(
+    //                 () ->
+    //                     drive.setPose(
+    //                         new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
     
     limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
     // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
@@ -298,7 +300,8 @@ public class RobotContainer {
         new InstantCommand(shoot::stop, shoot).alongWith(new InstantCommand(intake::stop, intake)));
 
     // Add code here to print out if tag in view when april tag button pressed
-    alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
+    //Commented out for simple drive
+    //alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive, limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
     customSliderPositionButton.onTrue(
         new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));

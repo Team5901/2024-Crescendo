@@ -26,5 +26,6 @@ public interface GyroIO {
 
   public default void updateInputs(GyroIOInputs inputs) {}
 
-  public default void zeroGyro() {}
+  //Commenting out for simple drive
+  //public default void zeroGyro() {}
 }

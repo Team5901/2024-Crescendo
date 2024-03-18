@@ -42,9 +42,10 @@ public class GyroIOPigeon2 implements GyroIO {
     inputs.yawVelocityRadPerSec = Units.degreesToRadians(yawVelocity.getValueAsDouble());
   }
 
-  public void zeroGyro() {
-    pigeon.setYaw(-1 * pigeon.getAngle());
-  }
+  //Commenting out for simple drive
+  // public void zeroGyro() {
+  //   pigeon.setYaw(-1 * pigeon.getAngle());
+  // }
   // public void calibrateGyro() {
   //   pigeon.
   // }
