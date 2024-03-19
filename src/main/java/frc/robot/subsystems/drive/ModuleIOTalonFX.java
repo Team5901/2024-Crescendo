@@ -64,28 +64,31 @@ public class ModuleIOTalonFX implements ModuleIO {
   public ModuleIOTalonFX(int index) {
     switch (index) {
       case 0:
-        driveTalon = new TalonFX(0);
-        turnTalon = new TalonFX(1);
-        cancoder = new CANcoder(2);
-        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
+        driveTalon = new TalonFX(Constants.Swerve.Mod0.driveMotorID);
+        turnTalon = new TalonFX(Constants.Swerve.Mod0.angleMotorID);
+        cancoder = new CANcoder(Constants.Swerve.Mod0.canCoderID);
+        absoluteEncoderOffset = Constants.Swerve.Mod0.angleOffset; // MUST BE CALIBRATED
         break;
+        // Front Right=Module 1
       case 1:
-        driveTalon = new TalonFX(3);
-        turnTalon = new TalonFX(4);
-        cancoder = new CANcoder(5);
-        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
+        driveTalon = new TalonFX(Constants.Swerve.Mod1.driveMotorID);
+        turnTalon = new TalonFX(Constants.Swerve.Mod1.angleMotorID);
+        cancoder = new CANcoder(Constants.Swerve.Mod1.canCoderID);
+        absoluteEncoderOffset = Constants.Swerve.Mod1.angleOffset; // MUST BE CALIBRATED
         break;
+        // Back Left Module=Module 2
       case 2:
-        driveTalon = new TalonFX(6);
-        turnTalon = new TalonFX(7);
-        cancoder = new CANcoder(8);
-        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
+        driveTalon = new TalonFX(Constants.Swerve.Mod2.driveMotorID);
+        turnTalon = new TalonFX(Constants.Swerve.Mod2.angleMotorID);
+        cancoder = new CANcoder(Constants.Swerve.Mod2.canCoderID);
+        absoluteEncoderOffset = Constants.Swerve.Mod2.angleOffset; // MUST BE CALIBRATED
         break;
+        // Back Right=Module3
       case 3:
-        driveTalon = new TalonFX(9);
-        turnTalon = new TalonFX(10);
-        cancoder = new CANcoder(11);
-        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
+        driveTalon = new TalonFX(Constants.Swerve.Mod3.driveMotorID);
+        turnTalon = new TalonFX(Constants.Swerve.Mod3.angleMotorID);
+        cancoder = new CANcoder(Constants.Swerve.Mod3.canCoderID);
+        absoluteEncoderOffset = Constants.Swerve.Mod3.angleOffset; // MUST BE CALIBRATED
         break;
       default:
         throw new RuntimeException("Invalid module index");
