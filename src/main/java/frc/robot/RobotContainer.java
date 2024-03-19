@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmDashboardRotate;
 import frc.robot.commands.ArmDashboardSlider;
+import frc.robot.commands.AutoPickupNote;
+import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.goToAimAmp;
@@ -208,6 +210,8 @@ public class RobotContainer {
     //                         .alongWith(new InstantCommand(intake::stop, intake)))));
     NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
     NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
+    NamedCommands.registerCommand("PickupNote", new AutoPickupNote(slider, arm, intake));
+    NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
     //     Commands.startEnd(() -> intake.intakeIn(), intake::stop, intake).withTimeout(1.0));

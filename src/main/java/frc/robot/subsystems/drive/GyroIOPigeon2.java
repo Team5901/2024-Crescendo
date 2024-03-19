@@ -43,7 +43,7 @@ public class GyroIOPigeon2 implements GyroIO {
   }
 
   public void zeroGyro() {
-    pigeon.setYaw(-1 * pigeon.getAngle());
+    pigeon.setYaw(0);
   }
   // public void calibrateGyro() {
   //   pigeon.

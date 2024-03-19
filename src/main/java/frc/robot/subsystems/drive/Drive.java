@@ -73,7 +73,7 @@ public class Drive extends SubsystemBase {
             MAX_LINEAR_SPEED, DRIVE_BASE_RADIUS, new ReplanningConfig()),
         () ->
             DriverStation.getAlliance().isPresent()
-                && DriverStation.getAlliance().get() == Alliance.Red,
+                && DriverStation.getAlliance().get() == Alliance.Blue,
         this);
     Pathfinding.setPathfinder(new LocalADStarAK());
     PathPlannerLogging.setLogActivePathCallback(

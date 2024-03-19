@@ -64,6 +64,7 @@ public final class Constants {
     public static final double wheelBase = Units.inchesToMeters(19);
     public static final double trackWidth = Units.inchesToMeters(28.875);
     public static final double wheelCircumference = chosenModule.wheelCircumference;
+    public static final double wheelRadius = 2 * (0.803 / 1);
 
     /* Swerve Kinematics
      * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -290,7 +291,7 @@ public final class Constants {
 
     public static final double shootAmpVelRPM = 100.0;
     public static final double goalToleranceVelocity = 1; // Rotations per minute
-    public static final double shootSpeakerVelRPM = 400.0;
+    public static final double shootSpeakerVelRPM = 300.0;
     // Voltage control mode
 
     public static final double holdVoltage = 4.0;

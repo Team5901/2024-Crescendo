@@ -1,0 +1,130 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7358234536288891,
+        "y": 6.71165450439009
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.595580848819355,
+        "y": 6.933527380568275
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.035198622275843,
+        "y": 6.997131024415746
+      },
+      "prevControl": {
+        "x": 1.595580848819355,
+        "y": 6.952016786916457
+      },
+      "nextControl": {
+        "x": 2.212662583085483,
+        "y": 7.015342643142128
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.4257832092030136,
+        "y": 6.862558322455052
+      },
+      "prevControl": {
+        "x": 3.224401938532297,
+        "y": 7.206856121861786
+      },
+      "nextControl": {
+        "x": 3.62716447987373,
+        "y": 6.518260523048318
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7358234536288891,
+        "y": 6.71165450439009
+      },
+      "prevControl": {
+        "x": 2.2202360874717972,
+        "y": 6.795271971474706
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pick_Up_Note"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pick_Up_Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 57.166101435322894,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 57.33908727832618,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
