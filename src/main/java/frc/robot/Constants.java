@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -33,5 +35,46 @@ public final class Constants {
 
     /** Replaying from a log file. */
     REPLAY
+  }
+
+  public static class Swerve {
+
+    public static final class Mod3 {
+      public static final int driveMotorID = 19;
+      public static final int angleMotorID = 2;
+      public static final int canCoderID = 8;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.27);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    }
+
+    /* Back Left Module - Module 2 */
+    public static final class Mod2 {
+      public static final int driveMotorID = 20;
+      public static final int angleMotorID = 3;
+      public static final int canCoderID = 9;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.44);
+      // public static final SwerveModuleConstants constants = new SwerveModuleConstants();
+    }
+
+    /* Front Left Module - Module 0 */
+    public static final class Mod0 {
+      public static final int driveMotorID = 5;
+      public static final int angleMotorID = 7;
+      public static final int canCoderID = 10;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(15.95);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    }
+
+    /* Front Right Module - Module 1 */
+    public static final class Mod1 {
+      public static final int driveMotorID = 6;
+      public static final int angleMotorID = 4;
+      public static final int canCoderID = 11;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(217.83);
+      // public static final SwerveModuleConstants2 constants =
+      //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    }
   }
 }
