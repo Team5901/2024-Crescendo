@@ -74,16 +74,4 @@ public class DriveCommands {
         },
         drive);
   }
-
-  //Commenting out for simple drive
-  // public static Command alignToAprilTag(Drive drive, double angleDelta) {
-  //   return Commands.run(
-  //       () -> {
-  //         ChassisSpeeds speeds =
-  //             ChassisSpeeds.fromRobotRelativeSpeeds(
-  //                 0, 0, 2 * angleDelta * (Math.PI / 180), drive.getRotation());
-  //         drive.runVelocity(speeds);
-  //       },
-  //       drive);
-  // }
 }

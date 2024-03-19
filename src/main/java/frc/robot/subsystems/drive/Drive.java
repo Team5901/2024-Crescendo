@@ -32,20 +32,17 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
 import frc.robot.util.LocalADStarAK;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
-  private static final double MAX_LINEAR_SPEED = Constants.Swerve.maxSpeed; //Units.feetToMeters(14.5);
-  private static final double TRACK_WIDTH_X = Constants.Swerve.trackWidth; //Units.inchesToMeters(25.0);
-  private static final double TRACK_WIDTH_Y = Constants.Swerve.wheelBase; //Units.inchesToMeters(25.0);
+  private static final double MAX_LINEAR_SPEED = Units.feetToMeters(14.5);
+  private static final double TRACK_WIDTH_X = Units.inchesToMeters(25.0);
+  private static final double TRACK_WIDTH_Y = Units.inchesToMeters(25.0);
   private static final double DRIVE_BASE_RADIUS =
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
   private static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
@@ -120,21 +117,12 @@ public class Drive extends SubsystemBase {
                 this));
   }
 
-  //Commenting out for simple drive
-  // public void zeroGyro() {
-  //   gyroIO.zeroGyro();
-  // }
-
   public void periodic() {
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
     for (var module : modules) {
       module.periodic();
     }
-    // SmartDashboard.putNumber("Mod 0 Angle Value: ", modules[0].getAngle().getDegrees());
-    // SmartDashboard.putNumber("Mod 1 Angle Value: ", modules[1].getAngle().getDegrees());
-    // SmartDashboard.putNumber("Mod 2 Angle Value: ", modules[2].getAngle().getDegrees());
-    // SmartDashboard.putNumber("Mod 3 Angle Value: ", modules[3].getAngle().getDegrees());
 
     // Stop moving when disabled
     if (DriverStation.isDisabled()) {

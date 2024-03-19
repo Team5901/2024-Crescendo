@@ -25,7 +25,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
 
 /**
  * Module IO implementation for Talon FX drive motor controller, Talon FX turn motor controller, and
@@ -62,50 +61,45 @@ public class ModuleIOTalonFX implements ModuleIO {
   private final boolean isTurnMotorInverted = true;
   private final Rotation2d absoluteEncoderOffset;
 
-  // all of these will be on the Canivore, Constants.CANBUS
   public ModuleIOTalonFX(int index) {
     switch (index) {
-        // Front left Module=Module 0
       case 0:
-        driveTalon = new TalonFX(Constants.Swerve.Mod0.driveMotorID, Constants.driveCANBUS); //new TalonFX(0);
-        turnTalon = new TalonFX(Constants.Swerve.Mod0.angleMotorID, Constants.driveCANBUS); //new TalonFX(1);
-        cancoder = new CANcoder(Constants.Swerve.Mod0.canCoderID, Constants.driveCANBUS); //new CANcoder(2);
-        absoluteEncoderOffset = Constants.Swerve.Mod0.angleOffset; // MUST BE CALIBRATED //new Rotation2d(0.0);
+        driveTalon = new TalonFX(0);
+        turnTalon = new TalonFX(1);
+        cancoder = new CANcoder(2);
+        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
         break;
-        // Front Right=Module 1
       case 1:
-        driveTalon = new TalonFX(Constants.Swerve.Mod1.driveMotorID, Constants.driveCANBUS); //new TalonFX(3);
-        turnTalon = new TalonFX(Constants.Swerve.Mod1.angleMotorID, Constants.driveCANBUS); //new TalonFX(4);
-        cancoder = new CANcoder(Constants.Swerve.Mod1.canCoderID, Constants.driveCANBUS); //new CANcoder(5);
-        absoluteEncoderOffset = Constants.Swerve.Mod1.angleOffset; // MUST BE CALIBRATED //new Rotation2d(0.0);
+        driveTalon = new TalonFX(3);
+        turnTalon = new TalonFX(4);
+        cancoder = new CANcoder(5);
+        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
         break;
-        // Back Left Module=Module 2
       case 2:
-        driveTalon = new TalonFX(Constants.Swerve.Mod2.driveMotorID, Constants.driveCANBUS); //new TalonFX(6);
-        turnTalon = new TalonFX(Constants.Swerve.Mod2.angleMotorID, Constants.driveCANBUS); //new TalonFX(7);
-        cancoder = new CANcoder(Constants.Swerve.Mod2.canCoderID, Constants.driveCANBUS); //new CANcoder(8);
-        absoluteEncoderOffset = Constants.Swerve.Mod2.angleOffset; // MUST BE CALIBRATED //new Rotation2d(0.0);
+        driveTalon = new TalonFX(6);
+        turnTalon = new TalonFX(7);
+        cancoder = new CANcoder(8);
+        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
         break;
-        // Back Right=Module3
       case 3:
-        driveTalon = new TalonFX(Constants.Swerve.Mod3.driveMotorID, Constants.driveCANBUS); //new TalonFX(9);
-        turnTalon = new TalonFX(Constants.Swerve.Mod3.angleMotorID, Constants.driveCANBUS); //new TalonFX(10);
-        cancoder = new CANcoder(Constants.Swerve.Mod3.canCoderID, Constants.driveCANBUS); //new CANcoder(11);
-        absoluteEncoderOffset = Constants.Swerve.Mod3.angleOffset; // MUST BE CALIBRATED //new Rotation2d(0.0);
+        driveTalon = new TalonFX(9);
+        turnTalon = new TalonFX(10);
+        cancoder = new CANcoder(11);
+        absoluteEncoderOffset = new Rotation2d(0.0); // MUST BE CALIBRATED
         break;
       default:
         throw new RuntimeException("Invalid module index");
     }
 
     var driveConfig = new TalonFXConfiguration();
-    driveConfig.CurrentLimits.StatorCurrentLimit = 40.0;
-    driveConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    driveConfig.CurrentLimits.SupplyCurrentLimit = 40.0;
+    driveConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     driveTalon.getConfigurator().apply(driveConfig);
     setDriveBrakeMode(true);
 
     var turnConfig = new TalonFXConfiguration();
-    turnConfig.CurrentLimits.StatorCurrentLimit = 30.0;
-    turnConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    turnConfig.CurrentLimits.SupplyCurrentLimit = 30.0;
+    turnConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     turnTalon.getConfigurator().apply(turnConfig);
     setTurnBrakeMode(true);
 
@@ -114,13 +108,13 @@ public class ModuleIOTalonFX implements ModuleIO {
     drivePosition = driveTalon.getPosition();
     driveVelocity = driveTalon.getVelocity();
     driveAppliedVolts = driveTalon.getMotorVoltage();
-    driveCurrent = driveTalon.getStatorCurrent();
+    driveCurrent = driveTalon.getSupplyCurrent();
 
     turnAbsolutePosition = cancoder.getAbsolutePosition();
     turnPosition = turnTalon.getPosition();
     turnVelocity = turnTalon.getVelocity();
     turnAppliedVolts = turnTalon.getMotorVoltage();
-    turnCurrent = turnTalon.getStatorCurrent();
+    turnCurrent = turnTalon.getSupplyCurrent();
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         100.0, drivePosition, turnPosition); // Required for odometry, use faster rate
