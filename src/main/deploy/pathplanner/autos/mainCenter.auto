@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7635575631525251,
-      "y": 6.711654504391443
+      "x": 1.3921973789893525,
+      "y": 5.528332498106438
     },
-    "rotation": 60.255118703114015
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "mainAmpSide to pickupA1"
+            "pathName": "centerSpeaker to pickupC1"
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "pickupA1 to pickupA2"
+            "pathName": "pickupC1 to pickupC2"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "pickupA2 to mainAmpSide"
+            "pathName": "pickupC2 to centerSpeaker"
           }
         },
         {

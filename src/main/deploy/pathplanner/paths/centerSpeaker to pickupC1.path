@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3921973789893496,
-        "y": 5.528332498106438
+        "x": 1.835943131345722,
+        "y": 5.509843091758257
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "centerSpeaker"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 2.0578160075239067,
+        "y": 5.528332498106438
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 1.6880278805602655,
+        "y": 5.519087794932347
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "pickupS1"
     }
   ],
   "rotationTargets": [],

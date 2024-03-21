@@ -11,21 +11,21 @@
         "x": 2.125289196568399,
         "y": 7.003454140123416
       },
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "mainAmpSide"
     },
     {
       "anchor": {
-        "x": 2.871963279471583,
-        "y": 7.00319125756735
+        "x": 2.0300818980016335,
+        "y": 6.998240302786913
       },
       "prevControl": {
-        "x": 2.554288469220796,
-        "y": 7.041697295173504
+        "x": 1.604825551993446,
+        "y": 6.915037974220092
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": "ampSideNote"
+      "isLocked": true,
+      "linkedName": "pickupA1"
     }
   ],
   "rotationTargets": [
