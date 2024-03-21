@@ -12,7 +12,8 @@ public class goToIntakeOut extends SequentialCommandGroup {
 
   public goToIntakeOut(Slider slider, Arm arm) {
     startAngle = arm.getAngle();
-    if (startAngle <= 45) {
+    //If arm above 0 degrees, raise to 5 degrees, extend slider, move arm down
+    if (startAngle >= 0) {
 
       addCommands(
           new ArmRotateGoToPosition(5, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
@@ -26,9 +27,10 @@ public class goToIntakeOut extends SequentialCommandGroup {
               Constants.ArmSubsystem.goalTolerance,
               arm) // Rotate's the arm intake
           );
+      //Else already at intake out and just reaffirm position setpoints
     } else {
       addCommands(
-          new ArmRotateGoToPosition(45, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
+          //new ArmRotateGoToPosition(45, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
