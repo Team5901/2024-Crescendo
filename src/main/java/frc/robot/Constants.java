@@ -54,7 +54,7 @@ public final class Constants {
   }
 
   public static final class Swerve {
-    public static final int pigeonID = 1;
+    public static final int pigeonID = 21;
     public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
     public static final COTSFalconSwerveConstants chosenModule =
@@ -249,7 +249,7 @@ public final class Constants {
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 200.0;
+    public static final double intakeInNoteVelRPM = 250.0;
     public static final double goalToleranceVelocity = 10; // RPM
     public static final double intakeShootNoteVelRPM = 200.0;
 

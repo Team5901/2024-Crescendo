@@ -10,7 +10,7 @@ public class AutoPickupNote extends SequentialCommandGroup {
 
   public AutoPickupNote(Slider slider, Arm arm, Intake intake) {
     addCommands(
-        new goToIntakeOut(slider, arm).withTimeout(.5),
-        new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+        new goToIntakeOut(slider, arm).withTimeout(1),
+        new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake).withTimeout(2));
   }
 }
