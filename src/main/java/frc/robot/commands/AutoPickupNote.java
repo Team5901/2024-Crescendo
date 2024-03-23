@@ -9,11 +9,13 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shoot.Shoot;
 import frc.robot.subsystems.slider.Slider;
+import java.util.function.BooleanSupplier;
 
 public class AutoPickupNote extends SequentialCommandGroup {
 
   public AutoPickupNote(
       Slider slider, Arm arm, Intake intake, Shoot shoot, DigitalInput intakesensor) {
+    BooleanSupplier flippedIntake = () -> !intakesensor.get();
     addCommands(
         new goToIntakeOut(slider, arm)
             .withTimeout(1)
@@ -21,6 +23,7 @@ public class AutoPickupNote extends SequentialCommandGroup {
                 new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake)
                     .withTimeout(2),
                 new setShooterRPM(Constants.ShootSubsystem.holdNoteVelRPM, shoot)),
-        new WaitUntilCommand(intakesensor::get).andThen(new InstantCommand(intake::stop, intake)));
+        new WaitUntilCommand(flippedIntake),
+        (new InstantCommand(intake::stop, intake)));
   }
 }
