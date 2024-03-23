@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "shootspeaker"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "straight_path"
