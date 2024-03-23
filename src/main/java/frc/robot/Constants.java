@@ -132,9 +132,8 @@ public final class Constants {
     public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
     /* Module Specific Constants */
-
-    /* Back Right Module - Module 3 */
-    public static final class Mod3 {
+    /* Front Left Module - Module 0 */
+    public static final class Mod0 {
       public static final int driveMotorID = 19;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 8;
@@ -143,8 +142,8 @@ public final class Constants {
       //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    /* Back Left Module - Module 2 */
-    public static final class Mod2 {
+    /* Front Right Module - Module 1 */
+    public static final class Mod1 {
       public static final int driveMotorID = 20;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 9;
@@ -152,8 +151,8 @@ public final class Constants {
       // public static final SwerveModuleConstants constants = new SwerveModuleConstants();
     }
 
-    /* Front Left Module - Module 0 */
-    public static final class Mod0 {
+    /* Back Right Module - Module 3 */    
+    public static final class Mod3 {
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 7;
       public static final int canCoderID = 10;
@@ -162,8 +161,8 @@ public final class Constants {
       //     new SwerveModuleConstants2(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    /* Front Right Module - Module 1 */
-    public static final class Mod1 {
+    /* Back Left Module - Module 2 */
+    public static final class Mod2 {    
       public static final int driveMotorID = 6;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 11;
