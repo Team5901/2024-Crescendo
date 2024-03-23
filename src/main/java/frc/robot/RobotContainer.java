@@ -26,14 +26,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmDashboardRotate;
-import frc.robot.commands.ArmDashboardSlider;
 import frc.robot.commands.AutoPickupNote;
 import frc.robot.commands.AutoPickupNoteP2;
+import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.goToAimAmp;
+import frc.robot.commands.goToAimFarSpeaker;
 import frc.robot.commands.goToAimSpeaker;
+import frc.robot.commands.goToAimYeetIt;
 import frc.robot.commands.goToIntakeIn;
 import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
@@ -101,7 +102,7 @@ public class RobotContainer {
   //    new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton intakeInX =
       new JoystickButton(controller_2, XboxController.Button.kX.value);
-  private final JoystickButton aimCustom =
+  private final JoystickButton aimFarSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
 
   // shooting/roller buttons
@@ -117,7 +118,7 @@ public class RobotContainer {
 
   // private final JoystickButton moveArm = new ;
   // joystick button to goto specific slider spot
-  private final JoystickButton customSliderPositionButton =
+  private final JoystickButton aimYeetIt =
       new JoystickButton(controller_2, XboxController.Button.kBack.value);
   private final JoystickButton zeroGyro = new JoystickButton(joystick, 11);
   // private final JoystickButton calibrate = new JoystickButton(joystick, 12);
@@ -211,7 +212,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
     NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
     NamedCommands.registerCommand(
-        "PickupNote", new AutoPickupNote(slider, arm, intake, IntakeNoteDetector));
+        "shootFarSpeaker", new AutoShootFarSpeaker(slider, arm, shoot, intake));
+    NamedCommands.registerCommand(
+        "PickupNote", new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector));
     NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
@@ -303,11 +306,10 @@ public class RobotContainer {
     // alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive,
     // limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
-    customSliderPositionButton.onTrue(
-        new ArmDashboardSlider(Constants.SliderSubsystem.goalTolerance, slider));
+    aimFarSpeaker.onTrue(new goToAimFarSpeaker(arm, slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
-    aimCustom.onTrue( // start button
-        new ArmDashboardRotate(Constants.ArmSubsystem.goalTolerance, arm, encoder));
+    aimYeetIt.onTrue( // start button
+        new goToAimYeetIt(arm, slider));
     // aimCustom.onFalse((new InstantCommand(arm::stop, arm)));
   }
 

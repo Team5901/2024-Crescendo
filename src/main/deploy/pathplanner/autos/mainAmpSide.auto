@@ -30,15 +30,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "pickupA2 to mainAmpSide"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "shootspeaker"
+            "name": "shootFarSpeaker"
           }
         }
       ]

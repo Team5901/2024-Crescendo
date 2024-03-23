@@ -8,29 +8,69 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5108064630543674,
-        "y": 6.998240302786913
+        "x": 2.3074229932243644,
+        "y": 6.988995599612821
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "pickupA1"
     },
     {
       "anchor": {
-        "x": 2.8990839963661905,
-        "y": 6.998240302786913
+        "x": 2.9,
+        "y": 7.0
       },
       "prevControl": {
-        "x": 1.8990839963661905,
-        "y": 6.998240302786913
+        "x": 2.77952409801216,
+        "y": 7.0
+      },
+      "nextControl": {
+        "x": 3.0204759019878398,
+        "y": 7.0
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8990839963661905,
+        "y": 7.0
+      },
+      "prevControl": {
+        "x": 2.851945074484127,
+        "y": 7.0
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "pickupA2"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PickUpNoteP2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 1.0,
     "maxAcceleration": 3.0,
@@ -39,7 +79,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 30.0,
     "rotateFast": false
   },
   "reversed": false,
