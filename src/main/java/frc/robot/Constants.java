@@ -214,6 +214,8 @@ public final class Constants {
     public static final double armSoftLimitLowerAngle = -15;
     public static final double armPosOut = -10;
     public static final double armPosSpeaker = 15;
+    public static final double armPosFarSpeaker = 20;
+    public static final double armYeetIt = 35;
 
     public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
@@ -248,7 +250,7 @@ public final class Constants {
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 250.0;
+    public static final double intakeInNoteVelRPM = 450.0;
     public static final double goalToleranceVelocity = 10; // RPM
     public static final double intakeShootNoteVelRPM = 200.0;
 

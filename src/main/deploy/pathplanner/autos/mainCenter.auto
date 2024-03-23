@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "shootspeaker"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "centerSpeaker to pickupC1"
@@ -45,12 +39,6 @@
           "type": "path",
           "data": {
             "pathName": "pickupC2 to centerSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootspeaker"
           }
         }
       ]

@@ -24,21 +24,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "PickupNote"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "pickupA1 to pickupA2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PickUpNoteP2"
           }
         },
         {

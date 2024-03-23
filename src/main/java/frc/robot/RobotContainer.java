@@ -210,7 +210,8 @@ public class RobotContainer {
     //                         .alongWith(new InstantCommand(intake::stop, intake)))));
     NamedCommands.registerCommand("zeroGyro", new InstantCommand(() -> drive.zeroGyro(), drive));
     NamedCommands.registerCommand("shootspeaker", new AutoShootSpeaker(slider, arm, shoot, intake));
-    NamedCommands.registerCommand("PickupNote", new AutoPickupNote(slider, arm, intake));
+    NamedCommands.registerCommand(
+        "PickupNote", new AutoPickupNote(slider, arm, intake, IntakeNoteDetector));
     NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",

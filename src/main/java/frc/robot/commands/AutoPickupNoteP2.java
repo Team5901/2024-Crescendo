@@ -9,6 +9,6 @@ import frc.robot.subsystems.slider.Slider;
 public class AutoPickupNoteP2 extends SequentialCommandGroup {
 
   public AutoPickupNoteP2(Slider slider, Arm arm, Intake intake) {
-    addCommands(new InstantCommand(intake::stop, intake), new goToIntakeIn(slider, arm));
+    addCommands(new InstantCommand(intake::stop, intake).alongWith(new goToIntakeIn(slider, arm)));
   }
 }
