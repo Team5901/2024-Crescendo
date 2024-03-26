@@ -15,11 +15,11 @@ public class AutoShootFarSpeaker extends SequentialCommandGroup {
     addCommands(
         new goToAimFarSpeaker(arm, slider),
         new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
-            .withTimeout(2)
+            .withTimeout(1)
             .andThen(
                 new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)
-                    .withTimeout(2)),
-        new WaitCommand(1),
+                    .withTimeout(1)),
+        new WaitCommand(0.5),
         new InstantCommand(shoot::stop, shoot)
             .withTimeout(0.25)
             .alongWith(new InstantCommand(intake::stop, intake))

@@ -12,15 +12,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "centerSpeaker to pickupC1"
+            "name": "shootspeaker"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "PickupNote"
+            "pathName": "centerSpeaker to pickupC1"
           }
         },
         {
@@ -30,15 +30,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "PickUpNoteP2"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "pickupC2 to centerSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootspeaker"
           }
         }
       ]

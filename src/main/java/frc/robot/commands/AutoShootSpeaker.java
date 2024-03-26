@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.intake.Intake;
@@ -19,8 +18,7 @@ public class AutoShootSpeaker extends SequentialCommandGroup {
                     .withTimeout(2)
                     .andThen(
                         new setIntakeRPM(Constants.IntakeSubsystem.intakeShootNoteVelRPM, intake)
-                            .withTimeout(2))),
-        new WaitCommand(0.5),
+                            .withTimeout(1))),
         new InstantCommand(shoot::stop, shoot)
             .withTimeout(0.25)
             .alongWith(new InstantCommand(intake::stop, intake))

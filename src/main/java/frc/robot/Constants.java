@@ -196,8 +196,8 @@ public final class Constants {
     // public static final double sprocketDiameterInch = 1.92;
 
     // Arm details
-    public static final double maxVelocityDegreesPerSec = 180.0;
-    public static final double maxAccelerationDegreesPerSec = 270.0;
+    public static final double maxVelocityDegreesPerSec = 270.0;
+    public static final double maxAccelerationDegreesPerSec = 360.0;
     public static final double armVolts = 6.0;
     // public static final double armVelocityRPM = (1 / 2) * 60;
 
@@ -214,7 +214,7 @@ public final class Constants {
     public static final double armSoftLimitLowerAngle = -15;
     public static final double armPosOut = -10;
     public static final double armPosSpeaker = 15;
-    public static final double armPosFarSpeaker = 40;
+    public static final double armPosFarSpeaker = 38.5;
     public static final double armYeetIt = 40;
 
     public static final double armPosAmp = 108.0;
@@ -336,7 +336,7 @@ public final class Constants {
     public static final double autoPositionErrorInch = 2.0;
 
     public static final double maxLinearVelocityInchPerSec = 60;
-    public static final double maxLinearAccelerationInchPerSec = 60;
+    public static final double maxLinearAccelerationInchPerSec = 90;
     // Inches
     public static final double sliderSoftLimitLowerInch = 0.0;
     public static final double sliderIntakeIn =

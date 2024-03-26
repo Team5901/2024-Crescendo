@@ -13,7 +13,7 @@ public class goToIntakeOut extends SequentialCommandGroup {
   public goToIntakeOut(Slider slider, Arm arm) {
     startAngle = arm.getAngle();
     // If arm above 0 degrees, raise to 5 degrees, extend slider, move arm down
-    if (startAngle >= 0) {
+    if (startAngle >= 30) {
 
       addCommands(
           new ArmRotateGoToPosition(5, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
@@ -36,7 +36,7 @@ public class goToIntakeOut extends SequentialCommandGroup {
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(.5), // Extends the intake arm with a timeout of 1 second
+              .withTimeout(.25), // Extends the intake arm with a timeout of 1 second
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm));
     }
