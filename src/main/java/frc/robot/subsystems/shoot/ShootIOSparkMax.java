@@ -13,14 +13,14 @@ import frc.robot.Constants;
 import frc.robot.subsystems.shoot.ShootIO.ShootIOInputs;
 
 public class ShootIOSparkMax implements ShootIO {
-  private final CANSparkMax shootMotor;
-  private final CANSparkMax shootMotor2;
-  private final RelativeEncoder shootEncoder;
+  private final CANSparkMax shootMotor,shootMotor2;
+ 
+  private final RelativeEncoder shootEncoder,shootEncoder2;
 
-  private final SparkPIDController shootPidController;
-  private final Spark lightStrips = new Spark(Constants.ShootSubsystem.LEDsparknumber);
+  private final SparkPIDController shootPidController, shootPidController2;
+  //private final Spark lightStrips = new Spark(Constants.ShootSubsystem.LEDsparknumber);
   private double motorVelocitySetPointRPM = 0.0;
-
+  private double motorVelocitySetPointRPM2 = 0.0;
   public double motorVelocityRPM = 0.0;
 
   private double motorVoltageSetPoint = 0.0;
@@ -28,10 +28,13 @@ public class ShootIOSparkMax implements ShootIO {
   public ShootIOSparkMax() {
     shootMotor = new CANSparkMax(Constants.ShootSubsystem.deviceID, MotorType.kBrushless);
     shootMotor2 = new CANSparkMax(Constants.ShootSubsystem.deviceID2, MotorType.kBrushless);
-    shootMotor2.follow(shootMotor, Constants.ShootSubsystem.followerInverted);
+    //shootMotor2.follow(shootMotor, Constants.ShootSubsystem.followerInverted);
     shootEncoder = shootMotor.getEncoder();
+     shootEncoder2 = shootMotor2.getEncoder();
     shootPidController = shootMotor.getPIDController();
+     shootPidController2 = shootMotor2.getPIDController();
     shootMotor.setInverted(!Constants.ShootSubsystem.isInverted);
+    shootMotor2.setInverted(!Constants.ShootSubsystem.isInverted);
 
     // shootMotor.burnFlash();
     // shootMotor2.burnFlash();
@@ -43,13 +46,21 @@ public class ShootIOSparkMax implements ShootIO {
     inputs.appliedVolts = shootMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     inputs.currentAmps = shootMotor.getOutputCurrent();
     inputs.motorVoltageSetPoint = motorVoltageSetPoint;
+
+    
   }
+
+  
 
   @Override
   public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
     motorVelocitySetPointRPM = motorVelocitySetRPM;
     shootPidController.setReference(
         motorVelocitySetPointRPM, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
+    
+    motorVelocitySetPointRPM2 = motorVelocitySetRPM*0.95;
+    shootPidController2.setReference(
+        motorVelocitySetPointRPM2, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   public void setVoltage(double voltageSet, double ffVolts) {
@@ -84,5 +95,20 @@ public class ShootIOSparkMax implements ShootIO {
         Constants.ShootSubsystem.kMinOutput, Constants.ShootSubsystem.kMaxOutput);
     shootMotor.setIdleMode(IdleMode.kCoast);
     // shootMotor.burnFlash();
+
+
+    shootMotor2.restoreFactoryDefaults();
+    shootMotor2.setInverted(Constants.ShootSubsystem.isInverted);
+    shootMotor2.enableVoltageCompensation(12.0);
+    shootMotor2.setSmartCurrentLimit(Constants.ShootSubsystem.maxCurrentAmps);
+
+    shootPidController2.setP(kP);
+    shootPidController2.setI(kI);
+    shootPidController2.setD(kD);
+    shootPidController2.setIZone(Constants.ShootSubsystem.kIz);
+    shootPidController2.setFF(Constants.ShootSubsystem.kFF);
+    shootPidController2.setOutputRange(
+        Constants.ShootSubsystem.kMinOutput, Constants.ShootSubsystem.kMaxOutput);
+    shootMotor2.setIdleMode(IdleMode.kCoast);
   }
 }
