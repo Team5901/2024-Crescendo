@@ -24,7 +24,7 @@ public class TuneNotePosition extends Command {
     @Override
     public void initialize() {
         timecheck = new Timer();
-        changeFlag=false;
+        changeFlag= false;
         
     }
 
@@ -37,10 +37,10 @@ public class TuneNotePosition extends Command {
             timecheck.reset();
         }
         if (!front && !rear) {
-            intake.runVelocity(inSpeed);
+            intake.runVelocity(inSpeed); // not in the intake? try to pull notes in
             changeFlag=true;
         } else if (front && rear) {
-            intake.runVelocity(outSpeed);
+            intake.runVelocity(outSpeed); // too far? try to spit it out a bit.
             changeFlag=true;
         } else {
             timecheck.start();
