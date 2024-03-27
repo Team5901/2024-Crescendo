@@ -3,15 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
 
 public class TuneNotePosition extends Command {
     private Intake intake;
     private DigitalInput FrontSensor,RearSensor;
     private boolean front,rear,changeFlag,killSwitch,goodOnFirstCheck;
-    private double inSpeed=100;
-    private double outSpeed=-100;
+    private double inSpeed=Constants.IntakeSubsystem.intakeInNoteVelRPM;
+    private double outSpeed=-Constants.IntakeSubsystem.intakeInNoteVelRPM;
     private Timer timecheck;
     private double goalTime=0.25; // seconds to wait 
     public TuneNotePosition(Intake intake, DigitalInput FrontSensor, DigitalInput RearSensor) {
