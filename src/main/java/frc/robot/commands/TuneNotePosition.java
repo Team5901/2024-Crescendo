@@ -9,7 +9,7 @@ import frc.robot.subsystems.intake.Intake;
 public class TuneNotePosition extends Command {
     private Intake intake;
     private DigitalInput FrontSensor,RearSensor;
-    private boolean front,rear,changeFlag;
+    private boolean front,rear,changeFlag,killSwitch,goodOnFirstCheck;
     private double inSpeed=100;
     private double outSpeed=-100;
     private Timer timecheck;
@@ -25,6 +25,8 @@ public class TuneNotePosition extends Command {
     public void initialize() {
         timecheck = new Timer();
         changeFlag= false;
+        killSwitch=false;
+        goodOnFirstCheck=true;
         
     }
 
@@ -35,13 +37,15 @@ public class TuneNotePosition extends Command {
         if (front == rear) {
             timecheck.stop();
             timecheck.reset();
+            goodOnFirstCheck=false;
+            changeFlag=true;
+
         }
         if (!front && !rear) {
             intake.runVelocity(inSpeed); // not in the intake? try to pull notes in
-            changeFlag=true;
         } else if (front && rear) {
             intake.runVelocity(outSpeed); // too far? try to spit it out a bit.
-            changeFlag=true;
+            
         } else {
             timecheck.start();
             intake.stop();
@@ -49,13 +53,24 @@ public class TuneNotePosition extends Command {
             inSpeed=inSpeed*0.75;// ONE time within our goal area, we slow down the motors a bit.
             outSpeed=outSpeed*0.75;
             changeFlag=false;
+            if (goodOnFirstCheck) { //if  the operator runs this command while there is a note in our goal zone, end immediately;
+                killSwitch = true;
+            }
+
             }
         }
+    }
+    @Override
+    public void end(boolean Interrupted) {
+        if (Interrupted) {
+            intake.stop();
+        }
+        
     }
 
     @Override
     public boolean isFinished() {
-        return timecheck.get() > goalTime; //if were inside our goal tolerance for a certain amount of time, then call it good and quit
+        return (timecheck.get() > goalTime) || killSwitch; //if were inside our goal tolerance for a certain amount of time, then call it good and quit
         
         
     }
