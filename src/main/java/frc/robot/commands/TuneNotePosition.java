@@ -9,11 +9,12 @@ import frc.robot.subsystems.intake.Intake;
 public class TuneNotePosition extends Command {
   private Intake intake;
   private DigitalInput FrontSensor, RearSensor;
-  private boolean front, rear, changeFlag, killSwitch, goodOnFirstCheck;
+  private boolean front, rear, killSwitch, passedRear,change1,change2,change3;
   private double inSpeed = Constants.IntakeSubsystem.intakeInNoteVelRPM;
   private double outSpeed = -Constants.IntakeSubsystem.intakeInNoteVelRPM;
-  private Timer timecheck;
-  private double goalTime = 0.25; // seconds to wait
+  private double inSpeedSlow=inSpeed/2;
+  private double outSpeedSlow=outSpeed/3;
+
 
   public TuneNotePosition(Intake intake, DigitalInput FrontSensor, DigitalInput RearSensor) {
     this.intake = intake;
@@ -24,54 +25,48 @@ public class TuneNotePosition extends Command {
 
   @Override
   public void initialize() {
-    timecheck = new Timer();
-    changeFlag = false;
     killSwitch = false;
-    goodOnFirstCheck = true;
+    passedRear=false;
+    change1=false;
+    change2=false;
+    change3=false;
   }
 
   @Override
   public void execute() {
     front = !FrontSensor.get();
     rear = !RearSensor.get();
-    if (front == rear) {
-      timecheck.stop();
-      timecheck.reset();
-      goodOnFirstCheck = false;
-      changeFlag = true;
-    }
-    if (!front && !rear) {
-      intake.runVelocity(inSpeed); // not in the intake? try to pull notes in
-    } else if (front && rear) {
-      intake.runVelocity(outSpeed); // too far? try to spit it out a bit.
 
-    } else {
-      timecheck.start();
-      intake.stop();
-      if (changeFlag) { // this flag only turns true when we exit our goal area, then is true for
-        // one loop while we are in our goal;
-        inSpeed = inSpeed * 0.75; // ONE time within our goal area, we slow down the motors a bit.
-        outSpeed = outSpeed * 0.75;
-        changeFlag = false;
-        if (goodOnFirstCheck) { // if  the operator runs this command while there is a note in our
-          // goal zone, end immediately;
-          killSwitch = true;
-        }
-      }
+    if (!front && !rear && !change1){ // here, we havent triggered either sensor, so move inward at full speed;
+        intake.runVelocity(inSpeed); // default speed
+        change1=true; // these variables are used as a "latch" they allow each if statement to run only one time.
     }
+    if (front && !rear && !passedRear && !change2) { // if we have triggered front sensor, not the back sensor, and we never hit the back sensor move in slower;
+        intake.runVelocity(inSpeedSlow); // go in slower, no need to rush with a note this far in our robot.
+        change2=true;
+    }
+    if (rear && !change3) { // if we have finally hit the back sensor, move outward slowly
+        passedRear=true; // a flag that means what is says: we have passed the rear;
+        intake.runVelocity(outSpeedSlow); // go outward very slowly
+        change3=true;
+    }
+    if (front && !rear && passedRear) { // if we are back in between the two sensors, AND we hit the back sensor, we're done!
+        killSwitch=true; // gets used in isFinished()
+    }
+    //most loops this code runs, it doesn't do anything at all. 
+    //once we set our motor spped, we don't need to keep setting it every robot periodic loop (20ms)
+    //by adding these latches, the Can bus will likely be used fewer times. If theres issues, we can simply remove them
+    
   }
 
   @Override
   public void end(boolean Interrupted) {
-    if (Interrupted) {
       intake.stop();
-    }
   }
 
   @Override
   public boolean isFinished() {
-    return (timecheck.get() > goalTime)
-        || killSwitch; // if were inside our goal tolerance for a certain amount of time, then call
-    // it good and quit
+    return killSwitch; 
+    // see logic above for end condition.
   }
 }
