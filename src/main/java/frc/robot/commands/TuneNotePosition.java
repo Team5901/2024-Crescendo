@@ -52,6 +52,7 @@ public class TuneNotePosition extends Command {
     }
     if (front && !rear && passedRear) { // if we are back in between the two sensors, AND we hit the back sensor, we're done!
         killSwitch=true; // gets used in isFinished()
+        intake.stop();
     }
     //most loops this code runs, it doesn't do anything at all. 
     //once we set our motor spped, we don't need to keep setting it every robot periodic loop (20ms)
