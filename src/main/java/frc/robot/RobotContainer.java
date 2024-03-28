@@ -274,7 +274,8 @@ public class RobotContainer {
             .ignoringDisable(true));*/
 
     // Intake left bumper
-    IntakeRollersOn.onTrue(new TuneNotePosition(intake, IntakeNoteDetector, IntakeNoteDetectorRear));
+    IntakeRollersOn.onTrue(
+        new TuneNotePosition(intake, IntakeNoteDetector, IntakeNoteDetectorRear));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
     // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
     IntakeRollersOut_RBump.onTrue(
