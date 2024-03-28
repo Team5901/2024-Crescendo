@@ -13,6 +13,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.CANdleConfiguration;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -79,6 +82,7 @@ public class RobotContainer {
   private final Shoot shoot;
   // private final LimelightIONetwork limelight;
   // private final LimelightIOInputs inputs;
+  private final CANdle candle;
   private final Arm arm;
   private final Slider slider;
   private final DutyCycleEncoder encoder;
@@ -135,6 +139,15 @@ public class RobotContainer {
     // Configures the encoder to return a distance of 4 for every rotation
     encoder.setDistancePerRotation(360.0);
     encoder.setPositionOffset(Constants.encoder.encoderOffset);
+
+    //CANdle config
+    candle = new CANdle(40);
+    CANdleConfiguration config = new CANdleConfiguration();
+    config.stripType = LEDStripType.RGB; // set the strip type to RGB
+    config.brightnessScalar = 0.5; // dim the LEDs to half brightness
+    candle.configAllSettings(config);
+    candle.setLEDs(255, 255, 255);
+    
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -159,6 +172,7 @@ public class RobotContainer {
           shoot = new Shoot(new ShootIOSparkMax());
           slider = new Slider(new SliderIOSparkMax() {});
           arm = new Arm(new ArmIOSparkMax() {}, encoder);
+          
         }
         break;
 
