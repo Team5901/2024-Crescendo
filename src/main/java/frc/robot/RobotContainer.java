@@ -263,9 +263,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -joystick.getRawAxis(translationAxis) * (joystick.getRawButton(7) ? 1d :0.71d),
-            () -> -joystick.getRawAxis(strafeAxis) * (joystick.getRawButton(7) ? 1d :0.71d),
-            () -> -joystick.getRawAxis(rotationAxis) * (joystick.getRawButton(7) ? 1d : 0.5d)));
+            () -> -joystick.getRawAxis(translationAxis) * (joystick.getRawButton(1) ? 1d : 0.71d),
+            () -> -joystick.getRawAxis(strafeAxis) * (joystick.getRawButton(1) ? 1d : 0.71d),
+            () -> -joystick.getRawAxis(rotationAxis) * (joystick.getRawButton(1) ? 1d : 0.5d)));
 
     // this resets our drive pose by over writing it with a blank pose, with roation of said pose
     // depending on alliance color
