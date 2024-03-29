@@ -111,7 +111,7 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimFarSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
-private final JoystickButton CLIMB_J8 = new JoystickButton(joystick, 8);
+  private final JoystickButton CLIMB_J8 = new JoystickButton(joystick, 8);
 
   // shooting/roller buttons
   private final JoystickButton IntakeRollersOn =
