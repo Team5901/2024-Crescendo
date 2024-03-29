@@ -14,15 +14,10 @@ import java.util.function.BooleanSupplier;
 public class AutoPickupNote extends SequentialCommandGroup {
 
   public AutoPickupNote(
-      Slider slider, Arm arm, Intake intake, Shoot shoot, DigitalInput intakesensor) {
-    BooleanSupplier flippedIntake = () -> !intakesensor.get();
+      Slider slider, Arm arm, Intake intake, Shoot shoot, DigitalInput FrontSensor,DigitalInput RearSensor) {
+    
     addCommands(
         new goToIntakeOut(slider, arm)
-            .alongWith(
-                new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake)
-                    .withTimeout(2),
-                new setShooterRPM(Constants.ShootSubsystem.holdNoteVelRPM, shoot)),
-        new WaitUntilCommand(flippedIntake),
-        (new InstantCommand(intake::stop, intake)));
+            .alongWith(new TuneNotePosition(intake, FrontSensor, RearSensor)));
   }
 }
