@@ -39,6 +39,8 @@ import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
 import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToAimYeetIt;
+import frc.robot.commands.goToClimbPos;
+import frc.robot.commands.goToClimbPos2;
 import frc.robot.commands.goToIntakeIn;
 import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
@@ -110,6 +112,8 @@ public class RobotContainer {
       new JoystickButton(controller_2, XboxController.Button.kX.value);
   private final JoystickButton aimFarSpeaker =
       new JoystickButton(controller_2, XboxController.Button.kStart.value);
+  private final JoystickButton CLIMB_J8 = new JoystickButton(joystick, 8);
+  private final JoystickButton CLIMB_J10 = new JoystickButton(joystick, 10);
 
   // shooting/roller buttons
   private final JoystickButton IntakeRollersOn =
@@ -229,7 +233,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shootFarSpeaker", new AutoShootFarSpeaker(slider, arm, shoot, intake));
     NamedCommands.registerCommand(
-        "PickupNote", new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector));
+        "PickupNote",
+        new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector, IntakeNoteDetectorRear));
     NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
@@ -286,6 +291,8 @@ public class RobotContainer {
                 drive)
             .ignoringDisable(true));*/
 
+    CLIMB_J8.onTrue(new goToClimbPos(arm, slider));
+    CLIMB_J10.onTrue(new goToClimbPos2(arm, slider));
     detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
     detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(255, 0, 0)));
 
