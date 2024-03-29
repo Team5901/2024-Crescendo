@@ -56,7 +56,8 @@ public class TuneNotePosition extends Command {
     }
     if (rear && !change3) { // if we have finally hit the back sensor, move outward slowly
       passedRear = true; // a flag that means what is says: we have passed the rear;
-      intake.runVelocity(outSpeedSlow); // go outward very slowly
+      intake.stop();
+      killSwitch = true; // go outward very slowly
       change3 = true;
     }
     if (front
