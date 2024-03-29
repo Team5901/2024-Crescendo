@@ -16,7 +16,7 @@ public class goToIntakeOut extends SequentialCommandGroup {
     if (startAngle >= 30) {
 
       addCommands(
-          new ArmRotateGoToPosition(5, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.5),
+          new ArmRotateGoToPosition(10, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.75),
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,

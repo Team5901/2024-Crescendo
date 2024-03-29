@@ -18,7 +18,7 @@ public class Arm extends SubsystemBase {
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
   private TrapezoidProfile profile;
   private TrapezoidProfile.Constraints m_constraints;
-  private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
+  private TrapezoidProfile.State m_goal = new TrapezoidProfile.State(5,0);
   private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
   private DutyCycleEncoder encoder;
