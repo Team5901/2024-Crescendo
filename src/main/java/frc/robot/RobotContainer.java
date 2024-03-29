@@ -233,7 +233,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shootFarSpeaker", new AutoShootFarSpeaker(slider, arm, shoot, intake));
     NamedCommands.registerCommand(
-        "PickupNote", new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector,IntakeNoteDetectorRear));
+        "PickupNote",
+        new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector, IntakeNoteDetectorRear));
     NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
