@@ -86,7 +86,7 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   private final DutyCycleEncoder encoder;
-  private final DigitalInput IntakeNoteDetector = new DigitalInput(8);
+  private final DigitalInput IntakeNoteDetector = new DigitalInput(7);
   // Commands
   // private final ArmMovement armMovementCommand;
   // Controller and joystick
@@ -140,14 +140,14 @@ public class RobotContainer {
     encoder.setDistancePerRotation(360.0);
     encoder.setPositionOffset(Constants.encoder.encoderOffset);
 
-    //CANdle config
+    // CANdle config
     candle = new CANdle(40);
     CANdleConfiguration config = new CANdleConfiguration();
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 0.5; // dim the LEDs to half brightness
     candle.configAllSettings(config);
     candle.setLEDs(255, 255, 255);
-    
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -172,7 +172,6 @@ public class RobotContainer {
           shoot = new Shoot(new ShootIOSparkMax());
           slider = new Slider(new SliderIOSparkMax() {});
           arm = new Arm(new ArmIOSparkMax() {}, encoder);
-          
         }
         break;
 
@@ -285,8 +284,8 @@ public class RobotContainer {
                 drive)
             .ignoringDisable(true));*/
 
-    detectNoteTrigger.onFalse(new InstantCommand(()-> candle.setLEDs(0, 255,0)));
-    detectNoteTrigger.onTrue(new InstantCommand(()-> candle.setLEDs(0, 0,255)));
+    detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
+    detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(0, 0, 255)));
 
     // Intake left bumper
     IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
