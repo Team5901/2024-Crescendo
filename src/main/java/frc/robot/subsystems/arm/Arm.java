@@ -117,23 +117,10 @@ public class Arm extends SubsystemBase {
     Logger.recordOutput("ArmSetpointRPM", armVelocityRPM);
   }
 
-  // public void setAngleAmp() {
-  //   setAngleSetPoint(Constants.ArmSubsystem.armPosAmp);
-  // }
-
-  // public void setAngleSpeaker() {
-  //   setAngleSetPoint(Constants.ArmSubsystem.armPosSpeaker);
-  // }
-
-  // public void setAngleGround() {
-  //   setAngleSetPoint(Constants.ArmSubsystem.armPosOut);
-  // }
-
-  // public void setAngleIntakeIn() {
-  //   setAngleSetPoint(Constants.MovementPositions.IntakeInDeg);
-  // }
-
-  // public void setAngleTrap() {
-  //   setAngleSetPoint(Constants.ArmSubsystem.armPosTrap);
-  // }
+  public void setConstraints(double armSpeedDegrees, double ArmAccDegrees){
+    m_constraints =
+        new TrapezoidProfile.Constraints(
+            (armSpeedDegrees), (ArmAccDegrees));
+    this.profile = new TrapezoidProfile(m_constraints);
+  }
 }
