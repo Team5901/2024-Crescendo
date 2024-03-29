@@ -15,11 +15,9 @@ public class goToClimbPos2 extends SequentialCommandGroup {
                     Constants.ArmSubsystem.maxVelocityDegreesPerSec * 0.5,
                     Constants.ArmSubsystem.maxAccelerationDegreesPerSec * 0.5),
             arm),
-            new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderIntakeIn, 1, slider)
+        new ArmSliderGoToPosition(Constants.SliderSubsystem.sliderIntakeIn, 1, slider)
             .withTimeout(1),
-        new ArmRotateGoToPosition(Constants.ArmSubsystem.armPosIn, 1, arm)
-            ,
-                
+        new ArmRotateGoToPosition(-10, 1, arm),
         new InstantCommand(
             () ->
                 arm.setConstraints(
