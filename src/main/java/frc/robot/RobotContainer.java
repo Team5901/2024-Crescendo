@@ -34,6 +34,7 @@ import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.TuneNotePosition;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
 import frc.robot.commands.goToAimSpeaker;
@@ -86,7 +87,8 @@ public class RobotContainer {
   private final Arm arm;
   private final Slider slider;
   private final DutyCycleEncoder encoder;
-  private final DigitalInput IntakeNoteDetector = new DigitalInput(7);
+  private final DigitalInput IntakeNoteDetector = new DigitalInput(8);
+  private final DigitalInput IntakeNoteDetectorRear = new DigitalInput(7);
   // Commands
   // private final ArmMovement armMovementCommand;
   // Controller and joystick
@@ -288,7 +290,8 @@ public class RobotContainer {
     detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(0, 0, 255)));
 
     // Intake left bumper
-    IntakeRollersOn.onTrue(new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));
+    IntakeRollersOn.onTrue(
+        new TuneNotePosition(intake, IntakeNoteDetector, IntakeNoteDetectorRear));
     IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
     // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
     IntakeRollersOut_RBump.onTrue(
