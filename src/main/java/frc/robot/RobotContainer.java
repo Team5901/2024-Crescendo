@@ -146,7 +146,7 @@ public class RobotContainer {
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 0.5; // dim the LEDs to half brightness
     candle.configAllSettings(config);
-    candle.setLEDs(0,255,0);
+    candle.setLEDs(0, 255, 0);
 
     switch (Constants.currentMode) {
       case REAL:
