@@ -287,7 +287,7 @@ public class RobotContainer {
             .ignoringDisable(true));*/
 
     detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
-    detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(0, 0, 255)));
+    detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(255, 0, 0)));
 
     // Intake left bumper
     IntakeRollersOn.onTrue(
