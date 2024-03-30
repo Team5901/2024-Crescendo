@@ -24,6 +24,6 @@ public class AutoShootFarSpeaker extends SequentialCommandGroup {
             .withTimeout(0.25)
             .alongWith(new InstantCommand(intake::stop, intake))
             .withTimeout(0.25),
-        new goToIntakeIn(slider, arm).withTimeout(0.25));
+        new SmartIntakeIn(arm, slider).withTimeout(0.25));
   }
 }

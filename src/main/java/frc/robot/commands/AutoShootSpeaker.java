@@ -12,7 +12,7 @@ public class AutoShootSpeaker extends SequentialCommandGroup {
 
   public AutoShootSpeaker(Slider slider, Arm arm, Shoot shoot, Intake intake) {
     addCommands(
-        new goToAimSpeaker(arm, slider)
+        new SmartAimSpeaker(arm, slider)
             .alongWith(
                 new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
                     .withTimeout(2)
@@ -23,6 +23,6 @@ public class AutoShootSpeaker extends SequentialCommandGroup {
             .withTimeout(0.25)
             .alongWith(new InstantCommand(intake::stop, intake))
             .withTimeout(0.25),
-        new goToIntakeIn(slider, arm).withTimeout(0.25));
+        new SmartIntakeIn(arm, slider).withTimeout(0.25));
   }
 }

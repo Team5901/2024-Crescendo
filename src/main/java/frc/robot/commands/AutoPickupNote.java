@@ -18,7 +18,7 @@ public class AutoPickupNote extends SequentialCommandGroup {
       DigitalInput RearSensor) {
 
     addCommands(
-        new goToIntakeOut(slider, arm)
+        new SmartIntakeOut(arm, slider)
             .alongWith(new TuneNotePosition(intake, FrontSensor, RearSensor)));
   }
 }
