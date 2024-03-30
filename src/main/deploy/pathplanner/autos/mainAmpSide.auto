@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PickUpNoteP2"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.0

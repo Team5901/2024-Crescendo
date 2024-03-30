@@ -40,6 +40,7 @@ public class TuneNotePosition extends Command {
 
     if (!front && !rear
         && !change1) { // here, we havent triggered either sensor, so move inward at full speed;
+      System.out.println("Condition 1");
       intake.runVelocity(inSpeed); // default speed
       change1 =
           true; // these variables are used as a "latch" they allow each if statement to run only
@@ -50,20 +51,27 @@ public class TuneNotePosition extends Command {
         && !passedRear
         && !change2) { // if we have triggered front sensor, not the back sensor, and we never hit
       // the back sensor move in slower;
+      System.out.println("Condition 2");
+
       intake.runVelocity(
           inSpeedSlow); // go in slower, no need to rush with a note this far in our robot.
       change2 = true;
     }
     if (rear && !change3) { // if we have finally hit the back sensor, move outward slowly
       passedRear = true; // a flag that means what is says: we have passed the rear;
-      intake.stop();
-      killSwitch = true; // go outward very slowly
+      // intake.stop();
+      System.out.println("Condition 3");
+
+      intake.runVelocity(outSpeedSlow);
+      // killSwitch = true; // go outward very slowly
       change3 = true;
     }
     if (front
         && !rear
         && passedRear) { // if we are back in between the two sensors, AND we hit the back sensor,
       // we're done!
+      System.out.println("Condition 4");
+
       killSwitch = true; // gets used in isFinished()
       intake.stop();
     }

@@ -34,7 +34,6 @@ import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.SmartIntakeOut;
 import frc.robot.commands.TuneNotePosition;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
@@ -43,6 +42,7 @@ import frc.robot.commands.goToAimYeetIt;
 import frc.robot.commands.goToClimbPos;
 import frc.robot.commands.goToClimbPos2;
 import frc.robot.commands.goToIntakeIn;
+import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -233,8 +233,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shootFarSpeaker", new AutoShootFarSpeaker(slider, arm, shoot, intake));
     NamedCommands.registerCommand(
-        "PickupNote",
-        new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector, IntakeNoteDetectorRear));
+        "PickupNote", new AutoPickupNote(slider, arm, intake, shoot, IntakeNoteDetector));
     NamedCommands.registerCommand("PickUpNoteP2", new AutoPickupNoteP2(slider, arm, intake));
     // NamedCommands.registerCommand(
     //     "Pick_Up_Note",
@@ -307,7 +306,7 @@ public class RobotContainer {
 
     // Positions
     // B Button. Go to Intake Out position
-    intakeOutB.onTrue(new SmartIntakeOut(arm, slider));
+    intakeOutB.onTrue(new goToIntakeOut(slider, arm));
     // X Button. Go to Intake In position
     intakeInX.onTrue(new goToIntakeIn(slider, arm));
     // A Button. Go to Aim Amp position
