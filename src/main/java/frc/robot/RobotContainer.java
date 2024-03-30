@@ -35,14 +35,14 @@ import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.SmartAimAmp;
+import frc.robot.commands.SmartAimFarSpeaker;
 import frc.robot.commands.SmartAimSpeaker;
+import frc.robot.commands.SmartClimbPos;
+import frc.robot.commands.SmartClimbPos2;
 import frc.robot.commands.SmartIntakeIn;
 import frc.robot.commands.SmartIntakeOut;
 import frc.robot.commands.TuneNotePosition;
-import frc.robot.commands.goToAimFarSpeaker;
 import frc.robot.commands.goToAimYeetIt;
-import frc.robot.commands.goToClimbPos;
-import frc.robot.commands.goToClimbPos2;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -277,22 +277,10 @@ public class RobotContainer {
                         drive.setPose(
                             new Pose2d(drive.getPose().getTranslation(), (new Rotation2d()))))));
 
-    // limelight.setDefaultCommand(LimelightCommands.updateInputs(inputs, limelight));
-    // calibrate.onTrue(new InstantCommand(() -> drive.calibrateGyro()));
-    // TODO add in this command so we can stop really nicely
-    // controller_2.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    /*controller
-    .b()
-    .onTrue(
-        Commands.runOnce(
-                () ->
-                    drive.setPose(
-                        new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                drive)
-            .ignoringDisable(true));*/
+    
 
-    CLIMB_J8.onTrue(new goToClimbPos(arm, slider));
-    CLIMB_J10.onTrue(new goToClimbPos2(arm, slider));
+    CLIMB_J8.onTrue(new SmartClimbPos(arm, slider));
+    CLIMB_J10.onTrue(new SmartClimbPos2(arm, slider));
     detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
     detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(255, 0, 0)));
 
@@ -332,7 +320,7 @@ public class RobotContainer {
     // alignAprilTag.whileTrue(DriveCommands.alignToAprilTag(drive,
     // limelight.alignAprilTag(inputs)));
     // aimCustom.onTrue(new InstantCommand(() -> armMovementCommand.goToANGLESmartDashboard(arm)));
-    aimFarSpeaker.onTrue(new goToAimFarSpeaker(arm, slider));
+    aimFarSpeaker.onTrue(new SmartAimFarSpeaker(arm, slider));
     // aimSpeaker.whileTrue(new StartEndCommand(() -> arm.setVoltage(4), arm::stop, arm));
     aimYeetIt.onTrue( // start button
         new goToAimYeetIt(arm, slider));

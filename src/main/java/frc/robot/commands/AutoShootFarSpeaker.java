@@ -13,7 +13,7 @@ public class AutoShootFarSpeaker extends SequentialCommandGroup {
 
   public AutoShootFarSpeaker(Slider slider, Arm arm, Shoot shoot, Intake intake) {
     addCommands(
-        new goToAimFarSpeaker(arm, slider),
+        new SmartAimFarSpeaker(arm, slider),
         new setShooterRPM(Constants.ShootSubsystem.shootSpeakerVelRPM, shoot)
             .withTimeout(1)
             .andThen(
