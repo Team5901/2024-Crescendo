@@ -12,7 +12,7 @@ import frc.robot.subsystems.slider.Slider;
 public class SmartAimAmp extends Command {
   private Arm arm;
   private Slider slider;
-  private boolean a,b;
+  private boolean a, b;
   /** Creates a new IntakeOutStateMachine. */
   public SmartAimAmp(Arm arm, Slider slider) {
     this.arm = arm;
@@ -25,8 +25,8 @@ public class SmartAimAmp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    a=false;
-    b=false;
+    a = false;
+    b = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,8 +45,12 @@ public class SmartAimAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    a=Math.abs(slider.getPosition()-Constants.SliderSubsystem.sliderIntakeIn) < Constants.SliderSubsystem.goalTolerance;
-    b=Math.abs(arm.getAngle() - Constants.ArmSubsystem.armPosAmp) <Constants.ArmSubsystem.goalTolerance;
-    return  a && b;
+    a =
+        Math.abs(slider.getPosition() - Constants.SliderSubsystem.sliderIntakeIn)
+            < Constants.SliderSubsystem.goalTolerance;
+    b =
+        Math.abs(arm.getAngle() - Constants.ArmSubsystem.armPosAmp)
+            < Constants.ArmSubsystem.goalTolerance;
+    return a && b;
   }
 }
