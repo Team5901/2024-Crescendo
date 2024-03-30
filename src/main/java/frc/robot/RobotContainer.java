@@ -34,15 +34,15 @@ import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.SmartAimAmp;
+import frc.robot.commands.SmartAimSpeaker;
+import frc.robot.commands.SmartIntakeIn;
 import frc.robot.commands.SmartIntakeOut;
 import frc.robot.commands.TuneNotePosition;
-import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
-import frc.robot.commands.goToAimSpeaker;
 import frc.robot.commands.goToAimYeetIt;
 import frc.robot.commands.goToClimbPos;
 import frc.robot.commands.goToClimbPos2;
-import frc.robot.commands.goToIntakeIn;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -309,11 +309,11 @@ public class RobotContainer {
     // B Button. Go to Intake Out position
     intakeOutB.onTrue(new SmartIntakeOut(arm, slider));
     // X Button. Go to Intake In position
-    intakeInX.onTrue(new goToIntakeIn(slider, arm));
+    intakeInX.onTrue(new SmartIntakeIn(arm, slider));
     // A Button. Go to Aim Amp position
-    aimAmpA.onTrue(new goToAimAmp(arm, slider));
+    aimAmpA.onTrue(new SmartAimAmp(arm, slider));
     // Y Button. Go to Aim Speaker position
-    aimSpeakerY.onTrue(new goToAimSpeaker(arm, slider));
+    aimSpeakerY.onTrue(new SmartAimSpeaker(arm, slider));
 
     // Shooter
     shootSpeaker.onTrue(
