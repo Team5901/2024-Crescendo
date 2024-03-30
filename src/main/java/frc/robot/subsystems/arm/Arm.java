@@ -18,12 +18,13 @@ public class Arm extends SubsystemBase {
       Constants.ArmSubsystem.maxAccelerationDegreesPerSec;
   private TrapezoidProfile profile;
   private TrapezoidProfile.Constraints m_constraints;
-  private TrapezoidProfile.State m_goal = new TrapezoidProfile.State(5,0);
+  private TrapezoidProfile.State m_goal = new TrapezoidProfile.State(5, 0);
   private TrapezoidProfile.State m_next = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_last = new TrapezoidProfile.State();
   private DutyCycleEncoder encoder;
   // UPDATE: Figure out how to update this for arm
   private final ArmFeedforward ffModel;
+  private double encoderPosition;
 
   /** Creates a new arm. */
   public Arm(ArmIO io, DutyCycleEncoder encoder) {
@@ -38,6 +39,7 @@ public class Arm extends SubsystemBase {
     m_last.position =
         encoder
             .getDistance(); // moving this line from periodic to here so that our arm isnt slow, and
+    encoderPosition = m_last.position;
     // doesnt snap back to reality
 
     ffModel =
@@ -76,7 +78,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "Arm Angle",
         inputs.angleArmDegrees); // adds an arm angle position indicator, for operator's benefit
-    SmartDashboard.putNumber("encoder distance", encoder.getDistance());
+    encoderPosition = encoder.getDistance();
+    SmartDashboard.putNumber("encoder distance", encoderPosition);
   }
 
   // UPDATE: Might need another function to convert from angle to set point inch? Unclear how
@@ -92,7 +95,8 @@ public class Arm extends SubsystemBase {
 
   // UPDATE: Angle or inch?
   public double getAngle() {
-    return encoder.getDistance();
+    SmartDashboard.putNumber("encoder distance2", encoderPosition);
+    return encoderPosition;
   }
 
   public double getError() {

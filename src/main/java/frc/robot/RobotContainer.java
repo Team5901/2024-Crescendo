@@ -34,6 +34,7 @@ import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.SmartIntakeOut;
 import frc.robot.commands.TuneNotePosition;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
@@ -42,7 +43,6 @@ import frc.robot.commands.goToAimYeetIt;
 import frc.robot.commands.goToClimbPos;
 import frc.robot.commands.goToClimbPos2;
 import frc.robot.commands.goToIntakeIn;
-import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
@@ -143,7 +143,7 @@ public class RobotContainer {
 
     encoder = new DutyCycleEncoder(9);
     // Configures the encoder to return a distance of 4 for every rotation
-    encoder.setDistancePerRotation(360.0);
+    encoder.setDistancePerRotation(-360.0);
     encoder.setPositionOffset(Constants.encoder.encoderOffset);
 
     // CANdle config
@@ -307,7 +307,7 @@ public class RobotContainer {
 
     // Positions
     // B Button. Go to Intake Out position
-    intakeOutB.onTrue(new goToIntakeOut(slider, arm));
+    intakeOutB.onTrue(new SmartIntakeOut(arm, slider));
     // X Button. Go to Intake In position
     intakeInX.onTrue(new goToIntakeIn(slider, arm));
     // A Button. Go to Aim Amp position

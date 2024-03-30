@@ -17,7 +17,7 @@ public class goToIntakeIn extends SequentialCommandGroup {
       addCommands(
           new ArmRotateGoToPosition(
                   Constants.ArmSubsystem.armPosIn, Constants.ArmSubsystem.goalTolerance, arm)
-              .withTimeout(1), // Intake rotates arm in.
+              .withTimeout(.1), // Intake rotates arm in.
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeIn,
                   Constants.SliderSubsystem.goalTolerance,

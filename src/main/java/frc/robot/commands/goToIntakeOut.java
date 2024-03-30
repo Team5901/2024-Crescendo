@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
@@ -12,16 +13,17 @@ public class goToIntakeOut extends SequentialCommandGroup {
 
   public goToIntakeOut(Slider slider, Arm arm) {
     startAngle = arm.getAngle();
+    SmartDashboard.putNumber("startAngle", startAngle);
     // If arm above 0 degrees, raise to 5 degrees, extend slider, move arm down
     if (startAngle >= 30) {
 
       addCommands(
-          new ArmRotateGoToPosition(10, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(.75),
+          new ArmRotateGoToPosition(10, Constants.ArmSubsystem.goalTolerance, arm).withTimeout(1),
           new ArmSliderGoToPosition(
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(.5), // Extends the intake arm with a timeout of 1 second
+              .withTimeout(.75), // Extends the intake arm with a timeout of 1 second
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosOut,
               Constants.ArmSubsystem.goalTolerance,
@@ -36,7 +38,7 @@ public class goToIntakeOut extends SequentialCommandGroup {
                   Constants.SliderSubsystem.sliderIntakeOut,
                   Constants.SliderSubsystem.goalTolerance,
                   slider)
-              .withTimeout(.25), // Extends the intake arm with a timeout of 1 second
+              .withTimeout(.4), // Extends the intake arm with a timeout of 1 second
           new ArmRotateGoToPosition(
               Constants.ArmSubsystem.armPosOut, Constants.ArmSubsystem.goalTolerance, arm));
     }

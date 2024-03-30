@@ -221,7 +221,7 @@ public final class Constants {
     public static final double armPosTrap = 75.0;
     public static final double armPosIn = 5;
     public static final double armSoftLimitUpperAngle = 120.0;
-    public static final double goalTolerance = 2;
+    public static final double goalTolerance = 1;
     public static final double allowableTeleopErrorInch = 1.0;
   }
 
