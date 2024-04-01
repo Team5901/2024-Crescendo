@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.5139505774507043,
-      "y": 6.998240302786913
+      "x": 0.717334047280707,
+      "y": 4.317276382300513
     },
-    "rotation": 0
+    "rotation": -59.85861444792468
   },
   "command": {
     "type": "sequential",
@@ -15,12 +15,6 @@
           "type": "named",
           "data": {
             "name": "shootspeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "straight_path"
           }
         }
       ]

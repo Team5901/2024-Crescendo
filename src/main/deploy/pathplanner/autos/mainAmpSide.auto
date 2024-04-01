@@ -46,6 +46,18 @@
           "data": {
             "name": "shootFarSpeaker"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "cheese2"
+          }
         }
       ]
     }
