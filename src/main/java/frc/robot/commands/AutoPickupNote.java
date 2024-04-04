@@ -15,6 +15,7 @@ public class AutoPickupNote extends SequentialCommandGroup {
 
   public AutoPickupNote(
       Slider slider, Arm arm, Intake intake, Shoot shoot, DigitalInput intakesensor) {
+    addRequirements(arm, slider, intake);
     BooleanSupplier flippedIntake = () -> !intakesensor.get();
     addCommands(
         new goToIntakeOut(slider, arm)
@@ -23,6 +24,7 @@ public class AutoPickupNote extends SequentialCommandGroup {
                     .withTimeout(1),
                 new setShooterRPM(Constants.ShootSubsystem.holdNoteVelRPM, shoot)),
         new WaitUntilCommand(flippedIntake),
+        // new WaitCommand(1),
         (new InstantCommand(intake::stop, intake)));
   }
 }

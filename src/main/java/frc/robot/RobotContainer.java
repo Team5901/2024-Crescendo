@@ -292,7 +292,9 @@ public class RobotContainer {
 
     CLIMB_J8.onTrue(new goToClimbPos(arm, slider));
     CLIMB_J10.onTrue(new goToClimbPos2(arm, slider));
-    detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
+    detectNoteTrigger.onFalse(
+        new InstantCommand(
+            () -> candle.setLEDs(0, 255, 0)));//.andThen(new goToIntakeIn(slider, arm)).withTimeout(1));
     detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(255, 0, 0)));
 
     // Intake left bumper

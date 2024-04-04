@@ -215,11 +215,11 @@ public final class Constants {
     public static final double armPosOut = -10;
     public static final double armPosSpeaker = 18;
     public static final double armPosFarSpeaker = 44.5;
-    public static final double armYeetIt = 40;
+    public static final double armYeetIt = 70;
 
     public static final double armPosAmp = 108.0;
     public static final double armPosTrap = 75.0;
-    public static final double armPosIn = 5;
+    public static final double armPosIn = 10;
     public static final double armSoftLimitUpperAngle = 120.0;
     public static final double goalTolerance = 1;
     public static final double allowableTeleopErrorInch = 1.0;

@@ -12,6 +12,7 @@ public class goToIntakeIn extends SequentialCommandGroup {
 
   public goToIntakeIn(Slider slider, Arm arm) {
     startAngle = arm.getAngle();
+    addRequirements(slider, arm);
 
     if (startAngle <= 10) {
       addCommands(
