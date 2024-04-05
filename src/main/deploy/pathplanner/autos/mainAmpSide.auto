@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
@@ -50,13 +50,25 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "cheese2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "cheese3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PickUpNoteP2"
           }
         }
       ]

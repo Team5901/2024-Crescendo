@@ -3,58 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9,
-        "y": 7.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 3.9,
-        "y": 7.0
-      },
-      "isLocked": false,
-      "linkedName": "pickupA2"
-    },
-    {
-      "anchor": {
         "x": 7.392009738974433,
         "y": 7.441986055143282
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.392009738974433,
+        "y": 7.441986055143282
+      },
+      "isLocked": false,
+      "linkedName": "cheese2"
+    },
+    {
+      "anchor": {
+        "x": 8.584576448432175,
+        "y": 7.441986055143282
+      },
       "prevControl": {
-        "x": 6.392009738974433,
+        "x": 7.584576448432175,
         "y": 7.441986055143282
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "cheese2"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PickupNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -69,7 +45,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -0.16301755386684208,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

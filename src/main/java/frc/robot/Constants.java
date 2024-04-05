@@ -122,7 +122,7 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 6;
+    public static final double maxSpeed = 7;
     /** Radians per Second */
     public static final double maxAngularVelocity = (1.25 * 2 * Math.PI); // 1;
     // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
@@ -250,7 +250,7 @@ public final class Constants {
     public static final int maxCurrentAmps = 60;
     public static final int holdNoteCurrentAmps = 10;
     // Velocity control mode
-    public static final double intakeInNoteVelRPM = 450.0;
+    public static final double intakeInNoteVelRPM = 475.0;
     public static final double goalToleranceVelocity = 10; // RPM
     public static final double intakeShootNoteVelRPM = 200.0;
 

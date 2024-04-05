@@ -34,7 +34,6 @@ import frc.robot.commands.AutoPickupNoteP2;
 import frc.robot.commands.AutoShootFarSpeaker;
 import frc.robot.commands.AutoShootSpeaker;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.TuneNotePosition;
 import frc.robot.commands.goToAimAmp;
 import frc.robot.commands.goToAimFarSpeaker;
 import frc.robot.commands.goToAimSpeaker;
@@ -44,6 +43,7 @@ import frc.robot.commands.goToClimbPos2;
 import frc.robot.commands.goToIntakeIn;
 import frc.robot.commands.goToIntakeOut;
 import frc.robot.commands.setIntakeRPM;
+import frc.robot.commands.setIntakeRPMDetectNote;
 import frc.robot.commands.setShooterRPM;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
@@ -292,15 +292,14 @@ public class RobotContainer {
 
     CLIMB_J8.onTrue(new goToClimbPos(arm, slider));
     CLIMB_J10.onTrue(new goToClimbPos2(arm, slider));
-    detectNoteTrigger.onFalse(
-        new InstantCommand(
-            () -> candle.setLEDs(0, 255, 0)));//.andThen(new goToIntakeIn(slider, arm)).withTimeout(1));
+    detectNoteTrigger.onFalse(new InstantCommand(() -> candle.setLEDs(0, 255, 0)));
     detectNoteTrigger.onTrue(new InstantCommand(() -> candle.setLEDs(255, 0, 0)));
 
     // Intake left bumper
     IntakeRollersOn.onTrue(
-        new TuneNotePosition(intake, IntakeNoteDetector, IntakeNoteDetectorRear));
-    IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
+        new setIntakeRPMDetectNote(
+            Constants.IntakeSubsystem.intakeInNoteVelRPM, intake, IntakeNoteDetector, slider, arm));
+    // IntakeRollersOn.onFalse(new InstantCommand(() -> intake.stop(), intake));
     // detectNoteTrigger.onTrue(new InstantCommand(() -> intake.stop(), intake));
     IntakeRollersOut_RBump.onTrue(
         new setIntakeRPM(-0.25 * Constants.IntakeSubsystem.intakeInNoteVelRPM, intake));

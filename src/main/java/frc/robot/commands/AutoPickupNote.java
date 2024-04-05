@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.intake.Intake;
@@ -19,12 +17,18 @@ public class AutoPickupNote extends SequentialCommandGroup {
     BooleanSupplier flippedIntake = () -> !intakesensor.get();
     addCommands(
         new goToIntakeOut(slider, arm)
-            .alongWith(
-                new setIntakeRPM(Constants.IntakeSubsystem.intakeInNoteVelRPM, intake)
-                    .withTimeout(1),
-                new setShooterRPM(Constants.ShootSubsystem.holdNoteVelRPM, shoot)),
-        new WaitUntilCommand(flippedIntake),
-        // new WaitCommand(1),
-        (new InstantCommand(intake::stop, intake)));
+            .andThen(
+                new setShooterRPM(Constants.ShootSubsystem.holdNoteVelRPM, shoot)
+                    .alongWith(
+                        new setIntakeRPMDetectNote(
+                                Constants.IntakeSubsystem.intakeInNoteVelRPM,
+                                intake,
+                                intakesensor,
+                                slider,
+                                arm)
+                            .withTimeout(0.5))));
+    // new WaitUntilCommand(flippedIntake),
+    // new WaitCommand(1),
+    // (new InstantCommand(intake::stop, intake)));
   }
 }
